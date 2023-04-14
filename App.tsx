@@ -12,26 +12,28 @@ import useViews from './src/ui';
 import theme from './src/styles';
 
 const App = (): JSX.Element => {
-  const { useScreens } = useViews();
-  const { Home, Login, Forgot, Register } = useScreens();
+  const { useScreens, useComponents } = useViews();
+  const { Home, Login, Forgot, Register, Account } = useScreens();
+  const { TabsComponent } = useComponents();
 
   const Stack = createNativeStackNavigator();
 
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle='light-content' />
       <NativeBaseProvider theme={theme}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
               headerShown: false,
             }}
-            initialRouteName='Home'
+            initialRouteName='Dashboard'
           >
             <Stack.Screen name='Home' component={Home} />
             <Stack.Screen name='Login' component={Login} />
             <Stack.Screen name='Forgot' component={Forgot} />
             <Stack.Screen name='Register' component={Register} />
+            <Stack.Screen name='Dashboard' component={TabsComponent} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

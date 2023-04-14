@@ -1,6 +1,5 @@
-import { Dimensions } from 'react-native';
 import { View, Center, Text, Pressable, ArrowBackIcon, Button, HStack } from 'native-base';
-import { CommonActions, useNavigation } from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/native';
 
 // Controllers
 import useControllers from '../../../../controllers';
@@ -9,14 +8,12 @@ import useControllers from '../../../../controllers';
 import useComponents from '../../../components';
 
 const Forgot = () => {
-  const navigation = useNavigation();
-  var { height } = Dimensions.get('window');
 
   const { InputControl } = useComponents();
 
   const { useScreenHooks } = useControllers();
   const { useForgot } = useScreenHooks();
-  const { errors, control, handleSubmit, onSubmit, isLoading } = useForgot();
+  const { errors, control, handleSubmit, onSubmit, isLoading, height, navigation } = useForgot();
 
   return (
     <View bg='primary.800' h={height} justifyContent='space-between' py='10'>

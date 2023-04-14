@@ -43,6 +43,7 @@ const useRegister = () => {
   const onSubmit = (data: Form) => {
     setIsLoading(true);
     console.log('submiting with ', data);
+    navigation.navigate('Dash')
   };
 
   return {

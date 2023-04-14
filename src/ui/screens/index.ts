@@ -1,15 +1,17 @@
-import Home from "./Auth/Home"
-import Login from "./Auth/Login"
-import Forgot from "./Auth/Forgot"
-import Register from "./Auth/Register"
+import Home from './Auth/Home';
+import Login from './Auth/Login';
+import Forgot from './Auth/Forgot';
+import Register from './Auth/Register';
+import Account from './Account';
 
 const useScreens = () => {
-    return {
-        Home,
-        Login,
-        Forgot,
-        Register,
-    }
-}
+  return {
+    Home,
+    Login,
+    Forgot,
+    Register,
+    Account,
+  };
+};
 
-export default useScreens
+export default useScreens;

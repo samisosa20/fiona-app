@@ -5,16 +5,15 @@ import { useForm } from 'react-hook-form';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 
-
-import useHelpers from '../../../../helpers'
+import useHelpers from '../../../helpers';
 
 interface Form {
-    email: string;
+  email: string;
 }
 
-const useForgot = () => {
-    const [isLoading, setIsLoading] = useState(false)
-    const { height } = Dimensions.get('window');
+const useAccount = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { height } = Dimensions.get('window');
 
   // Validators
   const { useValidators } = useHelpers();
@@ -36,9 +35,9 @@ const useForgot = () => {
   });
 
   const onSubmit = (data: Form) => {
-    setIsLoading(true)
+    setIsLoading(true);
     console.log('submiting with ', data);
-    navigation.navigate('Home')
+    navigation.navigate('Home');
   };
 
   return {
@@ -52,4 +51,4 @@ const useForgot = () => {
   };
 };
 
-export default useForgot;
+export default useAccount;
