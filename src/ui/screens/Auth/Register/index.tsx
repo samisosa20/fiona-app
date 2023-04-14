@@ -8,15 +8,15 @@ import useControllers from '../../../../controllers';
 // Component
 import useComponents from '../../../components';
 
-const Login = () => {
+const Register = () => {
   const navigation = useNavigation();
   var { height } = Dimensions.get('window');
 
   const { InputControl } = useComponents();
 
   const { useScreenHooks } = useControllers();
-  const { useLogin } = useScreenHooks();
-  const { errors, control, handleSubmit, onSubmit, isLoading } = useLogin();
+  const { useRegister } = useScreenHooks();
+  const { errors, control, handleSubmit, onSubmit, isLoading } = useRegister();
 
   return (
     <View bg='primary.800' h={height} justifyContent='space-between' py='10'>
@@ -29,10 +29,17 @@ const Login = () => {
             ¡Bienvenido!
           </Text>
           <Text color='white' fontSize='md'>
-            Ingresa tus credenciales para continuar.
+            Estas a un paso de cambiar tu vida.
           </Text>
         </Center>
         <Center w='90%' marginX='auto' mt='8'>
+          <InputControl
+            label='Nombre'
+            placeholder='Escribe tu nombre aqui'
+            name='name'
+            control={control}
+            errors={errors}
+          />
           <InputControl
             label='Email'
             placeholder='Escribe tu email aqui'
@@ -40,21 +47,22 @@ const Login = () => {
             control={control}
             errors={errors}
           />
-          <View w='100%' alignItems='flex-end'>
-            <InputControl
-              label='Contraseña'
-              placeholder='Escribe tu contraseña aqui'
-              type='password'
-              name='password'
-              control={control}
-              errors={errors}
-            />
-            <Pressable onPress={() => navigation.navigate('Forgot')}>
-              <Text underline fontWeight='bold' fontSize='xs'>
-                ¿Olvidaste tu contraseña?
-              </Text>
-            </Pressable>
-          </View>
+          <InputControl
+            label='Contraseña'
+            placeholder='Escribe tu contraseña aqui'
+            type='password'
+            name='password'
+            control={control}
+            errors={errors}
+          />
+          <InputControl
+            label='Contraseña'
+            placeholder='Escribe tu contraseña aqui'
+            type='password'
+            name='passwordConfirmation'
+            control={control}
+            errors={errors}
+          />
         </Center>
       </View>
       <Center>
@@ -67,17 +75,17 @@ const Login = () => {
               variant='ghost'
               w='100%'
             >
-              Iniciar sesion
+              Registrarme
             </Button>
           </Center>
           <Center>
             <HStack mt='4' justifyContent='center'>
               <Text color='white' fontSize='sm'>
-                Soy un nuevo usuario.{' '}
+                Ya tengo una cuenta.{' '}
               </Text>
-              <Pressable onPress={() => navigation.navigate('Register')}>
+              <Pressable onPress={() => navigation.navigate('Login')}>
                 <Text underline fontWeight='bold'>
-                  Registrarme
+                  Iniciar sesion
                 </Text>
               </Pressable>
             </HStack>
@@ -88,4 +96,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

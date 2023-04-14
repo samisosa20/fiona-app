@@ -14,6 +14,40 @@ const theme = extendTheme({
         800: "#19181F",
       },
     },
+    fontConfig: {
+      100: {
+        normal: "Poppins-Thin",
+      },
+      200: {
+        normal: "Poppins-ExtraLight",
+      },
+      300: {
+        normal: "Poppins-Light",
+      },
+      400: {
+        normal: "Poppins-Regular",
+      },
+      500: {
+        normal: "Poppins-Medium",
+      },
+      600: {
+        normal: "Poppins-Semibold",
+      },
+      700: {
+        normal: "Poppins-Bold",
+      },
+      800: {
+        normal: "Poppins-ExtraBold",
+      },
+      900: {
+        normal: "Poppins-Black",
+      },
+    },
+    fonts: {
+      heading: "Poppins",
+      body: "Poppins",
+      mono: "Poppins",
+    },
     config: {
       // Changing initialColorMode to 'dark'
       initialColorMode: "dark",

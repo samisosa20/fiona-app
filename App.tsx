@@ -13,7 +13,7 @@ import theme from './src/styles';
 
 const App = (): JSX.Element => {
   const { useScreens } = useViews();
-  const { Home, Login } = useScreens();
+  const { Home, Login, Forgot, Register } = useScreens();
 
   const Stack = createNativeStackNavigator();
 
@@ -30,6 +30,8 @@ const App = (): JSX.Element => {
           >
             <Stack.Screen name='Home' component={Home} />
             <Stack.Screen name='Login' component={Login} />
+            <Stack.Screen name='Forgot' component={Forgot} />
+            <Stack.Screen name='Register' component={Register} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
