@@ -5,16 +5,24 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint .",
+    "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
+    "lint:fix": "eslint --fix src/**/*.{js,jsx,ts,tsx,json}",
+    "format": "prettier --write src/**/*.{js,jsx,ts,tsx,css,md,json,scss} --config ./.prettierrc",
     "start": "react-native start",
     "test": "jest"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.0.1",
+    "@react-navigation/native": "^6.1.6",
+    "@react-navigation/native-stack": "^6.9.12",
     "native-base": "^3.4.28",
     "react": "18.2.0",
+    "react-hook-form": "^7.43.9",
     "react-native": "0.71.6",
-    "react-native-safe-area-context": "^3.3.2",
-    "react-native-svg": "^12.1.1"
+    "react-native-safe-area-context": "^3.4.1",
+    "react-native-screens": "^3.20.0",
+    "react-native-svg": "^12.1.1",
+    "yup": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
