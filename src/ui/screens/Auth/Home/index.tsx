@@ -1,11 +1,12 @@
 import { Dimensions } from 'react-native';
 import { View, Center, Text, Pressable, Image } from 'native-base';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, ParamListBase } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import imgHome from '../../../../assets/img/img-login.png';
 
 const Home = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>()
   const { height } = Dimensions.get('window');
 
   return (

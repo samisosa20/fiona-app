@@ -1,20 +1,26 @@
 import { useState } from 'react';
+import { Dimensions } from 'react-native';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation, ParamListBase } from '@react-navigation/native';
 
-
-import useHelpers from '../../../../helpers'
+import useHelpers from '../../../../helpers';
 
 interface Form {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 const useLogin = () => {
-    const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const { height } = Dimensions.get('window');
+  
   // Validators
   const { useValidators } = useHelpers();
   const { loginValidator } = useValidators();
+
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   // Form State
   const {
@@ -31,7 +37,7 @@ const useLogin = () => {
   });
 
   const onSubmit = (data: Form) => {
-    setIsLoading(true)
+    setIsLoading(true);
     console.log('submiting with ', data);
   };
 
@@ -41,6 +47,8 @@ const useLogin = () => {
     errors,
     onSubmit,
     isLoading,
+    navigation,
+    height,
   };
 };
 
