@@ -22,7 +22,7 @@ const TabsComponent = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           paddingTop: 15,
-          height: 100
+          height: 80
         }
       }}
       initialRouteName='Dashboard'
@@ -34,7 +34,7 @@ const TabsComponent = () => {
           tabBarIcon: ({ focused }) => (
           <View alignItems='center' justifyContent='center'>
             <Image source={iconHome} alt="home" w='25' h='25' resizeMode="contain" tintColor={ focused ? 'black': 'blue'}/>
-            <Text fontSize='12' color={ focused ? 'black': 'blue'}>Home</Text>
+            <Text fontSize='10' color={ focused ? 'black': 'blue'}>Home</Text>
           </View>),
         }}
       />
@@ -45,7 +45,7 @@ const TabsComponent = () => {
           tabBarIcon: ({ focused }) => (
           <View alignItems='center' justifyContent='center'>
             <Image source={iconReport} alt="home" w='25' h='25' resizeMode="contain" tintColor={ focused ? 'black': 'blue'}/>
-            <Text fontSize='12' color={ focused ? 'black': 'blue'}>Reportes</Text>
+            <Text fontSize='10' color={ focused ? 'black': 'blue'}>Reportes</Text>
           </View>),
         }}
       />
@@ -56,7 +56,7 @@ const TabsComponent = () => {
           tabBarIcon: ({ focused }) => (
           <View alignItems='center' justifyContent='center'>
             <Image source={iconSetting} alt="home" w='25' h='25' resizeMode="contain" tintColor={ focused ? 'black': 'blue'}/>
-            <Text fontSize='12' color={ focused ? 'black': 'blue'}>Configuraciones</Text>
+            <Text fontSize='10' color={ focused ? 'black': 'blue'}>Configuraciones</Text>
           </View>),
         }}
       />
@@ -67,7 +67,7 @@ const TabsComponent = () => {
           tabBarIcon: ({ focused }) => (
           <View alignItems='center' justifyContent='center'>
             <Image source={iconUser} alt="home" w='25' h='25' resizeMode="contain" tintColor={ focused ? 'black': 'blue'}/>
-            <Text fontSize='12' color={ focused ? 'black': 'blue'}>Perfil</Text>
+            <Text fontSize='10' color={ focused ? 'black': 'blue'}>Perfil</Text>
           </View>),
         }}
       />

@@ -1,8 +1,10 @@
 import InputControl from './InputControl'
+import Carousel from './Carousel'
 
 const useComponents = () => {
     return {
         InputControl,
+        Carousel,
     }
 }
 

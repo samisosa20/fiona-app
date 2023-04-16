@@ -27,7 +27,7 @@ const App = (): JSX.Element => {
             screenOptions={{
               headerShown: false,
             }}
-            initialRouteName='Home'
+            initialRouteName='Dashboard'
           >
             <Stack.Screen name='Home' component={Home} />
             <Stack.Screen name='Login' component={Login} />

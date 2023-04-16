@@ -13,6 +13,14 @@ const theme = extendTheme({
         700: "#26252B",
         800: "#19181F",
       },
+      neon: {
+        pink: "#FF11778",
+        red: "#FE0000",
+        yellow: "#FFF205",
+        cyan: "#01FFF4",
+        blue: "#000AFF",
+        green: "#7CFF01",
+      }
     },
     fontConfig: {
       100: {
