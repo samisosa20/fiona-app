@@ -7,14 +7,14 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // UI
 import useViews from './src/ui';
+import TabsComponent from './src/ui/components/TabsComponent'
 
 //styles
 import theme from './src/styles';
 
 const App = (): JSX.Element => {
-  const { useScreens, useComponents } = useViews();
-  const { Home, Login, Forgot, Register, Account } = useScreens();
-  const { TabsComponent } = useComponents();
+  const { useScreens } = useViews();
+  const { Home, Login, Forgot, Register } = useScreens();
 
   const Stack = createNativeStackNavigator();
 
@@ -27,7 +27,7 @@ const App = (): JSX.Element => {
             screenOptions={{
               headerShown: false,
             }}
-            initialRouteName='Dashboard'
+            initialRouteName='Home'
           >
             <Stack.Screen name='Home' component={Home} />
             <Stack.Screen name='Login' component={Login} />
