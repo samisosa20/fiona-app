@@ -38,7 +38,7 @@ const useForgot = () => {
   const onSubmit = (data: Form) => {
     setIsLoading(true)
     console.log('submiting with ', data);
-    navigation.navigate('Home')
+    navigation.navigate('Welcome')
   };
 
   return {

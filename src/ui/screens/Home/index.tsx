@@ -9,7 +9,7 @@ import useComponents from '../../components';
 // Helper
 import useHelpers from '../../../helpers';
 
-const Account = () => {
+const Home = () => {
   const { useScreenHooks } = useControllers();
   const { useAccount } = useScreenHooks();
   const { height, accounts, events, budgets, heritages } = useAccount();
@@ -66,4 +66,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Home;

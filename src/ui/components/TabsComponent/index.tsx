@@ -13,7 +13,7 @@ import iconReport from '../../../assets/icons/icon-report.png'
 const TabsComponent = () => {
   const Tab = createBottomTabNavigator();
 
-  const { Account } = useScreens();
+  const { Home } = useScreens();
 
   return (
     <Tab.Navigator
@@ -26,11 +26,10 @@ const TabsComponent = () => {
           borderStartColor: '#201D2C'
         }
       }}
-      initialRouteName='Dashboard'
     >
       <Tab.Screen
-        name='Account'
-        component={Account}
+        name='Home'
+        component={Home}
         options={{
           tabBarIcon: ({ focused }) => (
           <View alignItems='center' justifyContent='center' py='2' px='3' rounded='full'>
@@ -40,7 +39,7 @@ const TabsComponent = () => {
       />
       <Tab.Screen
         name='Report'
-        component={Account}
+        component={Home}
         options={{
           tabBarIcon: ({ focused }) => (
           <View alignItems='center' justifyContent='center'>
@@ -50,7 +49,7 @@ const TabsComponent = () => {
       />
       <Tab.Screen
         name='Setting'
-        component={Account}
+        component={Home}
         options={{
           tabBarIcon: ({ focused }) => (
           <View alignItems='center' justifyContent='center'>
@@ -60,7 +59,7 @@ const TabsComponent = () => {
       />
       <Tab.Screen
         name='Settingss'
-        component={Account}
+        component={Home}
         options={{
           tabBarIcon: ({ focused }) => (
           <View alignItems='center' justifyContent='center'>

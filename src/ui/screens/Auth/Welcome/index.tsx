@@ -5,7 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import imgHome from '../../../../assets/img/img-login.png';
 
-const Home = () => {
+const Welcome = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>()
   const { height } = Dimensions.get('window');
 
@@ -42,4 +42,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Welcome;

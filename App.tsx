@@ -20,7 +20,7 @@ const config = {
 
 const App = (): JSX.Element => {
   const { useScreens } = useViews();
-  const { Home, Login, Forgot, Register } = useScreens();
+  const { Welcome, Login, Forgot, Register } = useScreens();
 
   const Stack = createNativeStackNavigator();
 
@@ -35,7 +35,7 @@ const App = (): JSX.Element => {
             }}
             initialRouteName='Dashboard'
           >
-            <Stack.Screen name='Home' component={Home} />
+            <Stack.Screen name='Welcome' component={Welcome} />
             <Stack.Screen name='Login' component={Login} />
             <Stack.Screen name='Forgot' component={Forgot} />
             <Stack.Screen name='Register' component={Register} />

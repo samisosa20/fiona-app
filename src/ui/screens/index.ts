@@ -1,16 +1,16 @@
-import Home from './Auth/Home';
+import Welcome from './Auth/Welcome';
 import Login from './Auth/Login';
 import Forgot from './Auth/Forgot';
 import Register from './Auth/Register';
-import Account from './Account';
+import Home from './Home';
 
 const useScreens = () => {
   return {
-    Home,
+    Welcome,
     Login,
     Forgot,
     Register,
-    Account,
+    Home,
   };
 };
 
