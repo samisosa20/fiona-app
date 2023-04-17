@@ -1,4 +1,6 @@
 import { View, Center, Text, Pressable, ScrollView, Box } from 'native-base';
+import { useNavigation, ParamListBase } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 // Helpers
 import useHelper from '../../../helpers';
@@ -9,6 +11,8 @@ import { CarouselProp } from './Carousel.interface'
 const Carousel = (props: CarouselProp) => {
   const { listAccount, label, type, listEvent, listBudget, listHeritage } = props;
 
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>()
+
   const { useQuickFunctions } = useHelper();
   const { currencyFormat } = useQuickFunctions();
   return (
@@ -17,13 +21,13 @@ const Carousel = (props: CarouselProp) => {
         <Text fontSize='lg' fontWeight='700'>
           {label}
         </Text>
-        <Pressable>
+        <Pressable onPress={() => navigation.navigate(type)}>
           <Text underline>Ver mas</Text>
         </Pressable>
       </View>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {listAccount && listAccount.map((account) => (
-          <Pressable key={label + account.id}>
+          <Pressable key={label + account.id} onPress={() => navigation.navigate('AccountDetail', {id: account.id})}>
             <Box h='100px' w='210' bg='contrast' rounded='xl' mr='3' py='3' px='2' borderColor='#344155' borderWidth='1'>
               <Text fontSize='md' fontWeight='600' lineHeight='xs' isTruncated noOfLines={2} h='10'>
                 {account.name}
@@ -116,11 +120,10 @@ const Carousel = (props: CarouselProp) => {
         ))}
         <Pressable>
           <Center
-            h={type === 'account' ? '100px' : '80px'}
+            h={type === 'Account' ? '100px' : '80px'}
             w='40'
             borderColor='white'
             rounded='md'
-            shadow={3}
             mr='4'
             borderStyle='dashed'
             borderWidth='2'

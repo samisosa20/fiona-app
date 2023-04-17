@@ -34,5 +34,5 @@ export interface CarouselProp {
   listBudget?: listBudget[];
   listHeritage?: ListHeritage[];
   label: string;
-  type: 'account'| 'event' | 'budget' | 'budget';
+  type: 'Account'| 'Event' | 'Budget' | 'Heritage';
 }

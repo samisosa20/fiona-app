@@ -20,7 +20,7 @@ const config = {
 
 const App = (): JSX.Element => {
   const { useScreens } = useViews();
-  const { Welcome, Login, Forgot, Register } = useScreens();
+  const { Welcome, Login, Forgot, Register, Account, AccountDetail } = useScreens();
 
   const Stack = createNativeStackNavigator();
 
@@ -40,6 +40,8 @@ const App = (): JSX.Element => {
             <Stack.Screen name='Forgot' component={Forgot} />
             <Stack.Screen name='Register' component={Register} />
             <Stack.Screen name='Dashboard' component={TabsComponent} />
+            <Stack.Screen name='Account' component={Account} />
+            <Stack.Screen name='AccountDetail' component={AccountDetail} />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

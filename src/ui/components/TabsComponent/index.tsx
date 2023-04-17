@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Text, Image } from 'native-base';
+import { View, Image } from 'native-base';
 
 // Screens
 import useScreens from '../../screens';
@@ -23,7 +23,6 @@ const TabsComponent = () => {
         tabBarStyle: {
           paddingTop: 8,
           backgroundColor: '#201D2C',
-          borderStartColor: '#201D2C'
         }
       }}
     >

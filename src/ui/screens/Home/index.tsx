@@ -20,7 +20,7 @@ const Home = () => {
   const { currencyFormat } = useQuickFunctions();
 
   return (
-    <View bg='primary.800' h={height} py='10' pl='4'>
+    <View bg='bg' h={height} py='10' pl='4'>
       <HStack space={2} justifyContent='flex-start'>
         <Text fontSize='3xl' fontWeight='600' mt='4'>
           ¡Hola!
@@ -57,10 +57,10 @@ const Home = () => {
             </Text>
           </Box>
         </Center>
-        <Carousel listAccount={accounts} label='Cuentas' type='account' />
-        <Carousel listEvent={events} label='Eventos' type='event' />
-        <Carousel listBudget={budgets} label='Presupuesto' type='budget' />
-        <Carousel listHeritage={heritages} label='Patrimonio' type='budget' />
+        <Carousel listAccount={accounts} label='Cuentas' type='Account' />
+        <Carousel listEvent={events} label='Eventos' type='Event' />
+        <Carousel listBudget={budgets} label='Presupuesto' type='Budget' />
+        <Carousel listHeritage={heritages} label='Patrimonio' type='Heritage' />
       </ScrollView>
     </View>
   );

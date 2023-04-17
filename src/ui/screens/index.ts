@@ -3,6 +3,8 @@ import Login from './Auth/Login';
 import Forgot from './Auth/Forgot';
 import Register from './Auth/Register';
 import Home from './Home';
+import Account from './Account';
+import AccountDetail from './Account/Detail';
 
 const useScreens = () => {
   return {
@@ -11,6 +13,8 @@ const useScreens = () => {
     Forgot,
     Register,
     Home,
+    Account,
+    AccountDetail,
   };
 };
 
