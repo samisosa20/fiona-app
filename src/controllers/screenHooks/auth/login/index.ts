@@ -5,8 +5,11 @@ import { useForm } from 'react-hook-form';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 
+// Helper
 import useHelpers from '../../../../helpers';
 
+// Actions
+import useActions from '../../../../api/actions';
 interface Form {
   email: string;
   password: string;
@@ -15,12 +18,16 @@ interface Form {
 const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { height } = Dimensions.get('window');
-  
+
   // Validators
   const { useValidators } = useHelpers();
   const { loginValidator } = useValidators();
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
+  // Actions
+  const { dispatch, useAuthActions } = useActions();
+  const { actLogin } = useAuthActions();
 
   // Form State
   const {
@@ -38,8 +45,14 @@ const useLogin = () => {
 
   const onSubmit = (data: Form) => {
     setIsLoading(true);
-    console.log('submiting with ', data);
-    navigation.navigate('Dashboard')
+    const onSucces = () => {
+      setIsLoading(false);
+      navigation.navigate('Dashboard');
+    };
+    const onError = () => {
+      setIsLoading(false);
+    };
+    dispatch(actLogin(data, onSucces, onError))
   };
 
   return {
