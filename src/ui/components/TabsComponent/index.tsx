@@ -21,8 +21,9 @@ const TabsComponent = () => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          paddingTop: 15,
-          height: 80
+          paddingTop: 8,
+          backgroundColor: '#201D2C',
+          borderStartColor: '#201D2C'
         }
       }}
       initialRouteName='Dashboard'
@@ -32,9 +33,8 @@ const TabsComponent = () => {
         component={Account}
         options={{
           tabBarIcon: ({ focused }) => (
-          <View alignItems='center' justifyContent='center'>
-            <Image source={iconHome} alt="home" w='25' h='25' resizeMode="contain" tintColor={ focused ? 'black': 'blue'}/>
-            <Text fontSize='10' color={ focused ? 'black': 'blue'}>Home</Text>
+          <View alignItems='center' justifyContent='center' py='2' px='3' rounded='full'>
+            <Image source={iconHome} alt="home" w='20px' h='20px' resizeMode="contain" tintColor={ focused ? '#5d5d9c': '#7B7C89'}/>
           </View>),
         }}
       />
@@ -44,8 +44,7 @@ const TabsComponent = () => {
         options={{
           tabBarIcon: ({ focused }) => (
           <View alignItems='center' justifyContent='center'>
-            <Image source={iconReport} alt="home" w='25' h='25' resizeMode="contain" tintColor={ focused ? 'black': 'blue'}/>
-            <Text fontSize='10' color={ focused ? 'black': 'blue'}>Reportes</Text>
+            <Image source={iconReport} alt="home" w='20px' h='20px' resizeMode="contain" tintColor={ focused ? '#5d5d9c': '#7B7C89'}/>
           </View>),
         }}
       />
@@ -55,8 +54,7 @@ const TabsComponent = () => {
         options={{
           tabBarIcon: ({ focused }) => (
           <View alignItems='center' justifyContent='center'>
-            <Image source={iconSetting} alt="home" w='25' h='25' resizeMode="contain" tintColor={ focused ? 'black': 'blue'}/>
-            <Text fontSize='10' color={ focused ? 'black': 'blue'}>Configuraciones</Text>
+            <Image source={iconSetting} alt="home" w='20px' h='20px' resizeMode="contain" tintColor={ focused ? '#5d5d9c': '#7B7C89'}/>
           </View>),
         }}
       />
@@ -66,8 +64,7 @@ const TabsComponent = () => {
         options={{
           tabBarIcon: ({ focused }) => (
           <View alignItems='center' justifyContent='center'>
-            <Image source={iconUser} alt="home" w='25' h='25' resizeMode="contain" tintColor={ focused ? 'black': 'blue'}/>
-            <Text fontSize='10' color={ focused ? 'black': 'blue'}>Perfil</Text>
+            <Image source={iconUser} alt="home" w='20px' h='20px' resizeMode="contain" tintColor={ focused ? '#5d5d9c': '#7B7C89'}/>
           </View>),
         }}
       />

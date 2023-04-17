@@ -13,7 +13,7 @@ const Carousel = (props: CarouselProp) => {
   const { currencyFormat } = useQuickFunctions();
   return (
     <View mt='4'>
-      <View flexDirection='row' justifyContent='space-between' alignItems='center' mb='2'>
+      <View flexDirection='row' justifyContent='space-between' alignItems='center' mb='2' pr='4'>
         <Text fontSize='lg' fontWeight='700'>
           {label}
         </Text>
@@ -24,16 +24,14 @@ const Carousel = (props: CarouselProp) => {
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {listAccount && listAccount.map((account) => (
           <Pressable key={label + account.id}>
-            <Box h='100px' w='210' bg='primary.100' rounded='md' shadow={3} mr='4' p='2'>
-              <Text fontSize='lg' fontWeight='600' lineHeight='20' isTruncated noOfLines={2} h='10'>
+            <Box h='100px' w='210' bg='contrast' rounded='xl' mr='3' py='3' px='2' borderColor='#344155' borderWidth='1'>
+              <Text fontSize='md' fontWeight='600' lineHeight='xs' isTruncated noOfLines={2} h='10'>
                 {account.name}
               </Text>
               <Text
-                fontSize='sm'
+                fontSize='md'
                 fontWeight='600'
-                lineHeight='20'
                 isTruncated
-                noOfLines={2}
                 color={account.balance < 0 ? 'neon.red' : 'neon.green'}
                 textAlign='right'
               >
@@ -47,12 +45,12 @@ const Carousel = (props: CarouselProp) => {
         ))}
         {listEvent && listEvent.map(event =>(
             <Pressable key={label + event.id}>
-            <Box h='80px' w='210' bg='primary.100' rounded='md' shadow={3} mr='4' p='2'>
-              <Text fontSize='lg' fontWeight='600' lineHeight='20' isTruncated noOfLines={2} h='10'>
+            <Box h='80px' w='210' bg='contrast' rounded='xl' mr='3' py='3' px='2' borderColor='#344155' borderWidth='1'>
+              <Text fontSize='md' fontWeight='600' lineHeight='20' isTruncated noOfLines={2} h='10'>
                 {event.name}
               </Text>
               <Text
-                fontSize='sm'
+                fontSize='md'
                 fontWeight='600'
                 lineHeight='20'
                 isTruncated
@@ -67,12 +65,12 @@ const Carousel = (props: CarouselProp) => {
         ))}
         {listBudget && listBudget.map(budget =>(
             <Pressable key={label + budget.id}>
-            <Box h='80px' w='210' bg='primary.100' rounded='md' shadow={3} mr='4' p='2'>
-              <Text fontSize='lg' fontWeight='600' lineHeight='20' isTruncated noOfLines={2}>
+            <Box h='80px' w='210' bg='contrast' rounded='xl' mr='3' py='3' px='2' borderColor='#344155' borderWidth='1'>
+              <Text fontSize='md' fontWeight='600' lineHeight='20' isTruncated noOfLines={2}>
                 {budget.name}
               </Text>
               <Text
-                fontSize='sm'
+                fontSize='md'
                 fontWeight='600'
                 lineHeight='20'
                 isTruncated
@@ -83,7 +81,7 @@ const Carousel = (props: CarouselProp) => {
                 {currencyFormat(budget.income) + ' ' + budget.currency}
               </Text>
               <Text
-                fontSize='sm'
+                fontSize='md'
                 fontWeight='600'
                 lineHeight='20'
                 isTruncated
@@ -98,12 +96,12 @@ const Carousel = (props: CarouselProp) => {
         ))}
         {listHeritage && listHeritage.map(heritage =>(
             <Pressable key={label + heritage.id}>
-            <Box h='80px' w='210' bg='primary.100' rounded='md' shadow={3} mr='4' p='2'>
-              <Text fontSize='lg' fontWeight='600' lineHeight='20' isTruncated noOfLines={2} h='10'>
+            <Box h='80px' w='210' bg='contrast' rounded='xl' mr='3' py='3' px='2' borderColor='#344155' borderWidth='1'>
+              <Text fontSize='md' fontWeight='600' lineHeight='20' isTruncated noOfLines={2} h='10'>
                 {heritage.name}
               </Text>
               <Text
-                fontSize='sm'
+                fontSize='md'
                 fontWeight='600'
                 lineHeight='20'
                 isTruncated
@@ -127,7 +125,7 @@ const Carousel = (props: CarouselProp) => {
             borderStyle='dashed'
             borderWidth='2'
           >
-            <Text fontSize='lg' fontWeight='600'>
+            <Text fontSize='md' fontWeight='600'>
               +
             </Text>
             <Text fontSize='md' fontWeight='600'>

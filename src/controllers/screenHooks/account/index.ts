@@ -26,7 +26,7 @@ const useAccount = () => {
   const accounts = [
     {
       id: 1,
-      name: 'Ahorros Itau',
+      name: 'Cuenta de ahorros banco Itau',
       balance: 150000,
       currency: 'COP',
       type: 'Ordinario'

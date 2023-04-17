@@ -20,7 +20,9 @@ const theme = extendTheme({
         cyan: "#01FFF4",
         blue: "#000AFF",
         green: "#7CFF01",
-      }
+      },
+      bg: '#201D2C',
+      contrast: '#242836'
     },
     fontConfig: {
       100: {
