@@ -11,7 +11,7 @@ interface Form {
   email: string;
 }
 
-const useAccount = () => {
+const useHome = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { height } = Dimensions.get('window');
 
@@ -154,4 +154,4 @@ const useAccount = () => {
   };
 };
 
-export default useAccount;
+export default useHome;

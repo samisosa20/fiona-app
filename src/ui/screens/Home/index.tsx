@@ -11,8 +11,8 @@ import useHelpers from '../../../helpers';
 
 const Home = () => {
   const { useScreenHooks } = useControllers();
-  const { useAccount } = useScreenHooks();
-  const { height, accounts, events, budgets, heritages } = useAccount();
+  const { useHome } = useScreenHooks();
+  const { height, accounts, events, budgets, heritages } = useHome();
 
   const { Carousel } = useComponents();
 
