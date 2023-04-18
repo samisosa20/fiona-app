@@ -20,6 +20,7 @@ const useLoginActions = () => {
             try {
                 const response = await loginProvider(data)
                 if (response.status !== 200) throw response
+                dispatch({ type: LOGIN, payload: response.data })
                 onSuccess && onSuccess(response)
             } catch (e) {
                 onError && onError(e)

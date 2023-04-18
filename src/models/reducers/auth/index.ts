@@ -20,7 +20,9 @@ const useAuthReducers = () => {
             const { payload } = action
             return {
                 ...state,
-                auth_token: payload,
+                auth_token: payload.token,
+                name: payload.data.name,
+                email: payload.data.email,
             }
         },
         [LOG_OUT]() {

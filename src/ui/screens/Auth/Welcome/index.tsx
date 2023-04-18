@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Dimensions } from 'react-native';
 import { View, Center, Text, Pressable, Image } from 'native-base';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
@@ -5,10 +6,23 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import imgHome from '../../../../assets/img/img-login.png';
 
+// Selector
+import useSelectors from '../../../../models/selectors';
 
 const Welcome = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>()
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const { height } = Dimensions.get('window');
+
+  const { useAuthSelectors } = useSelectors();
+  const { loggedSelector } = useAuthSelectors();
+  const isLogin = loggedSelector();
+
+  
+  useEffect(()=> {
+    if(isLogin) {
+      navigation.navigate('Dashboard');
+    }
+  },[])
 
   return (
     <View bg='primary.800' h={height} justifyContent='space-between' py='10'>
