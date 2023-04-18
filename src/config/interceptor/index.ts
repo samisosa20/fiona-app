@@ -34,7 +34,8 @@ const useInterceptor = (store: storeRedux) => {
   };
 
   const handleResponseError = async (error: any) => {
-    //console.log('response error', error.response)
+    console.log('response error', error.response)
+    const { dispatch } = store;
 
     switch (error.response.status) {
       case 401:
@@ -46,11 +47,18 @@ const useInterceptor = (store: storeRedux) => {
       default:
         console.log('error 400', error.response.data.message);
     }
+    dispatch({type: 'SHOW', payload: {
+      status: 'error',
+      message: error.response.data.message,
+      show: true
+    }})
+    setTimeout(() => {
+      dispatch({type: 'HIDDEN', payload: {}})
+    }, 3000)
     return error;
   };
 
   useEffect(() => {
-    console.log(`${Config.API_URL}`)
     axios.defaults.baseURL = `${Config.API_URL}`;
     axios.defaults.params = {};
     axios.interceptors.request.use(handleRequestSuccess, handleRequestError);

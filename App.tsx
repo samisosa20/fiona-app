@@ -24,9 +24,9 @@ const config = {
 };
 
 const App = () => {
-  const { useScreens } = useViews();
+  const { useScreens, useComponents } = useViews();
   const { Welcome, Login, Forgot, Register, Account, AccountDetail } = useScreens();
-
+  const { Toast } = useComponents();
   const Stack = createNativeStackNavigator();
 
   // Config
@@ -39,24 +39,25 @@ const App = () => {
       <StatusBar barStyle='light-content' />
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-            <NativeBaseProvider theme={theme} config={config}>
-              <NavigationContainer>
-                <Stack.Navigator
-                  screenOptions={{
-                    headerShown: false,
-                  }}
-                  initialRouteName='Welcome'
-                >
-                  <Stack.Screen name='Welcome' component={Welcome} />
-                  <Stack.Screen name='Login' component={Login} />
-                  <Stack.Screen name='Forgot' component={Forgot} />
-                  <Stack.Screen name='Register' component={Register} />
-                  <Stack.Screen name='Dashboard' component={TabsComponent} />
-                  <Stack.Screen name='Account' component={Account} />
-                  <Stack.Screen name='AccountDetail' component={AccountDetail} />
-                </Stack.Navigator>
-              </NavigationContainer>
-            </NativeBaseProvider>
+          <NativeBaseProvider theme={theme} config={config}>
+            <Toast />
+            <NavigationContainer>
+              <Stack.Navigator
+                screenOptions={{
+                  headerShown: false,
+                }}
+                initialRouteName='Welcome'
+              >
+                <Stack.Screen name='Welcome' component={Welcome} />
+                <Stack.Screen name='Login' component={Login} />
+                <Stack.Screen name='Forgot' component={Forgot} />
+                <Stack.Screen name='Register' component={Register} />
+                <Stack.Screen name='Dashboard' component={TabsComponent} />
+                <Stack.Screen name='Account' component={Account} />
+                <Stack.Screen name='AccountDetail' component={AccountDetail} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </NativeBaseProvider>
         </PersistGate>
       </Provider>
     </SafeAreaProvider>

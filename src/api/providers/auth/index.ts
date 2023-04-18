@@ -12,8 +12,18 @@ const useLoginProviders = () => {
 
         return trackPromise(request)
     }
+    
+    const registerProvider = (data: any) => {
+        const request = axios({
+            method: 'POST',
+            url: `register`,
+            data,
+        })
 
-    return { loginProvider }
+        return trackPromise(request)
+    }
+
+    return { loginProvider, registerProvider }
 }
 
 export default useLoginProviders

@@ -8,7 +8,7 @@ const useLoginActions = () => {
 
     // Providers
     const { useAuthProviders } = useProviders()
-    const { loginProvider } = useAuthProviders()
+    const { loginProvider, registerProvider } = useAuthProviders()
 
     // Types
     const { useAuthTypes } = useStrings()
@@ -26,6 +26,19 @@ const useLoginActions = () => {
                 onError && onError(e)
             }
         }
+    
+    const actRegister =
+        (data: {email: string; password: string; name: string;}, onSuccess: Function = () => {}, onError: Function = () => {}) =>
+        async (dispatch: AppDispatch) => {
+            try {
+                const response = await registerProvider(data)
+                if (response.status !== 200) throw response
+                dispatch({ type: LOGIN, payload: response.data })
+                onSuccess && onSuccess(response)
+            } catch (e) {
+                onError && onError(e)
+            }
+        }
 
     const actLogout = () => async (dispatch: AppDispatch) => {
         dispatch({
@@ -36,6 +49,7 @@ const useLoginActions = () => {
     return {
         actLogin,
         actLogout,
+        actRegister,
     }
 }
 

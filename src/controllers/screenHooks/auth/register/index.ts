@@ -7,6 +7,8 @@ import { useNavigation, ParamListBase } from '@react-navigation/native';
 
 import useHelpers from '../../../../helpers';
 
+// Actions
+import useActions from '../../../../api/actions';
 interface Form {
   name: string;
   email: string;
@@ -23,6 +25,10 @@ const useRegister = () => {
   const { registerValidator } = useValidators();
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
+  // Actions
+  const { dispatch, useAuthActions } = useActions();
+  const { actRegister } = useAuthActions();
 
   // Form State
   const {
@@ -41,9 +47,16 @@ const useRegister = () => {
   });
 
   const onSubmit = (data: Form) => {
+    console.log(data);
     setIsLoading(true);
-    console.log('submiting with ', data);
-    navigation.navigate('Dashboard')
+    const onSucces = () => {
+      setIsLoading(false);
+      navigation.navigate('Dashboard');
+    };
+    const onError = () => {
+      setIsLoading(false);
+    };
+    dispatch(actRegister(data, onSucces, onError))
   };
 
   return {
