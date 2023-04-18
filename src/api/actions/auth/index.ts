@@ -32,9 +32,9 @@ const useLoginActions = () => {
         async (dispatch: AppDispatch) => {
             try {
                 const response = await registerProvider(data)
-                if (response.status !== 200) throw response
+                if (response.status !== 201) throw response
                 dispatch({ type: LOGIN, payload: response.data })
-                onSuccess && onSuccess(response)
+                onSuccess && onSuccess(response.data)
             } catch (e) {
                 onError && onError(e)
             }

@@ -1,17 +1,23 @@
-interface Movements {
+export interface Movements {
+  id: number;
+  description: string | null;
+  amount: number;
+  trm: number;
+  date_purchase: string;
+  account: {
     id: number;
-    category: {
-        name: string;
-    };
-    amount: number;
-    date_purchase: string;
-    event: {
-        name: string;
-    } | null;
-    description: string | null;
+    name: string;
+  };
+  category: {
+    id: number;
+    name: string;
+  };
+  event: {
+    id: number;
+    name: string;
+  } | null;
 }
 
 export interface ListMovementsProps {
-    movements: Movements[];
-  }
-  
+  movements?: Movements[];
+}

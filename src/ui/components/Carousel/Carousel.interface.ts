@@ -1,19 +1,26 @@
-interface ListAccount {
+export interface ListAccount {
   id: number;
   name: string;
   balance: number;
-  currency: string;
+  init_amount: number;
+  description: string | null;
+  incomes?: number;
+  expensives?: number;
+  currency: {
+    id: number;
+    code: string;
+  };
   type: string;
 }
 
-interface ListEvent {
+export interface ListEvent {
   id: number;
   name: string;
   balance: number;
   currency: string;
 }
 
-interface listBudget {
+export interface listBudget {
   id: number;
   name: string;
   income: number;
@@ -21,7 +28,7 @@ interface listBudget {
   currency: string;
 }
 
-interface ListHeritage {
+export interface ListHeritage {
   id: number;
   name: string;
   balance: number;

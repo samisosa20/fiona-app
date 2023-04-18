@@ -1,104 +1,73 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dimensions } from 'react-native';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, ParamListBase, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 
-import useHelpers from '../../../../helpers';
+// Selectors
+import useSelectors from '../../../../models/selectors';
 
-interface Form {
-  email: string;
-}
+// Services
+import useApi from '../../../../api';
+
+// Interfaces
+import { ListAccount } from '../../../../ui/components/Carousel/Carousel.interface';
+import { Movements } from '../../../../ui/components/ListMovements/ListMovements.interface';
+
 
 type RootStackParamList = {
   AccountDetail: {
-    id: number
+    id: number;
   };
-}
+};
 
 type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'AccountDetail'>;
 
 const useAccountDetail = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [account, setAccount] = useState<ListAccount>();
+  const [movements, setMovements] = useState<Movements[]>();
   const [balanceTime, setBalanceTime] = useState('month');
   const { height } = Dimensions.get('window');
   const listTime = [
-    {id: 'month', name: 'Mes'},
-    {id: 'year', name: 'Año'},
-    {id: 'total', name: 'Total'},
-  ]
-
-  // Validators
-  const { useValidators } = useHelpers();
-  const { forgotValidator } = useValidators();
+    { id: 'month', name: 'Mes' },
+    { id: 'year', name: 'Año' },
+    { id: 'total', name: 'Total' },
+  ];
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute<ProfileScreenRouteProp>();
 
-  // Fake DataSource
+  const { useAuthSelectors } = useSelectors();
+  const { loggedSelector } = useAuthSelectors();
+  const isAuth = loggedSelector();
 
-  const account = {
-      id: 1,
-      name: 'Cuenta de ahorros banco Itau',
-      description: 'Cuenta de banco',
-      incomes: 35486250.25,
-      expensives: -25486592.22,
-      badge: {
-        code: 'COP'
-      },
-      type: 'Ordinario',
-    }
+  const { useActions } = useApi();
+  const { useAccountActions } = useActions();
+  const { actGetDetailAccount, actGetMovementAccount } = useAccountActions();
 
-    const movements = [
-      {
-        id: 1,
-        date_purchase: '2020-01-01 15:56:20',
-        amount: 10000,
-        category: {name: 'Ingreso'},
-        description: 'Deposito de 10000 COP',
-        event: null,
-      },
-      {
-        id: 2,
-        date_purchase: '2020-01-01 15:30:56',
-        amount: -10000,
-        category: {name: 'Casa'},
-        description: 'Deposito de 10000 COP',
-        event: { name: 'Cartagena - 2023'}
-      },
-    ]
 
-  // Form State
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      email: '',
-    },
-    resolver: yupResolver(forgotValidator),
-    mode: 'all',
-  });
-
-  const onSubmit = (data: Form) => {
-    setIsLoading(true);
-    console.log('submiting with ', data);
-    navigation.navigate('Home');
+  const handleChangeTime = (time: string) => {
+    setBalanceTime(time);
   };
 
-  const handleChangeTime = (time: string) =>{
-    setBalanceTime(time);
-  }
+  useEffect(() => {
+    const onSuccess = (data: ListAccount) => {
+      setAccount(data);
+    };
+
+    const onSuccessMovement = (data: Movements[]) => {
+      setMovements(data);
+    };
+
+    if (isAuth) {
+      actGetDetailAccount(route.params.id, onSuccess);
+      actGetMovementAccount(route.params.id, onSuccessMovement);
+    } else {
+      navigation.navigate('Welcome');
+    }
+  }, []);
 
   return {
-    control,
-    handleSubmit,
-    errors,
-    onSubmit,
-    isLoading,
     height,
     navigation,
     account,
@@ -106,7 +75,7 @@ const useAccountDetail = () => {
     balanceTime,
     listTime,
     route,
-    movements
+    movements,
   };
 };
 

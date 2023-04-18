@@ -1,14 +1,14 @@
 import InputControl from './InputControl'
 import Carousel from './Carousel'
 import ListMovements from './ListMovements'
-import Toast from './Toast'
+import SelectControl from './SelectControl'
 
 const useComponents = () => {
     return {
         InputControl,
         Carousel,
         ListMovements,
-        Toast,
+        SelectControl,
     }
 }
 

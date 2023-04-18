@@ -6,6 +6,7 @@ import { NativeBaseProvider } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 // Configuration
 import useConfig from './src/config';
@@ -23,16 +24,16 @@ const config = {
   },
 };
 
+
 const App = () => {
-  const { useScreens, useComponents } = useViews();
-  const { Welcome, Login, Forgot, Register, Account, AccountDetail } = useScreens();
-  const { Toast } = useComponents();
+  const { useScreens } = useViews();
+  const { Welcome, Login, Forgot, Register, Account, AccountDetail, AccountCreate } = useScreens();
   const Stack = createNativeStackNavigator();
 
   // Config
   const { useStoreConfig, useInterceptor } = useConfig();
   const { store, persistor } = useStoreConfig();
-  useInterceptor(store);
+  useInterceptor(store)
 
   return (
     <SafeAreaProvider>
@@ -40,7 +41,6 @@ const App = () => {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <NativeBaseProvider theme={theme} config={config}>
-            <Toast />
             <NavigationContainer>
               <Stack.Navigator
                 screenOptions={{
@@ -55,8 +55,10 @@ const App = () => {
                 <Stack.Screen name='Dashboard' component={TabsComponent} />
                 <Stack.Screen name='Account' component={Account} />
                 <Stack.Screen name='AccountDetail' component={AccountDetail} />
+                <Stack.Screen name='AccountCreate' component={AccountCreate} />
               </Stack.Navigator>
             </NavigationContainer>
+            <Toast />
           </NativeBaseProvider>
         </PersistGate>
       </Provider>

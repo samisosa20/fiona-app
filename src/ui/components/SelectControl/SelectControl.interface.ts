@@ -1,10 +1,13 @@
+interface Options {
+  value: string;
+  label: string;
+}
 export interface InputProps {
   label: string;
   name: string;
-  placeholder: string;
-  type?: 'text' | 'password';
+  placeholder?: string;
+  options?: Options[];
   errors?: any;
   control: any;
-  keyboardType?: any;
   helperText?: string;
 }

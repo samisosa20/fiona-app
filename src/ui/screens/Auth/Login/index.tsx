@@ -17,7 +17,7 @@ const Login = () => {
   return (
     <View bg='primary.800' h={height} justifyContent='space-between' py='10'>
       <View>
-        <Pressable onPress={() => navigation.dispatch(CommonActions.goBack())}>
+        <Pressable onPress={() => navigation.dispatch(CommonActions.goBack())} pl='4' mt='2'>
           <ArrowBackIcon color='white' size='md' px='4' />
         </Pressable>
         <Center>

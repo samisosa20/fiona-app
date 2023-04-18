@@ -47,7 +47,7 @@ const Account = () => {
               Balance
             </Text>
             <Text fontSize='lg' fontWeight='600' textAlign='right'>
-              {currencyFormat(accounts.reduce((prev: number, curr) => prev + curr.balance, 0)) +
+              {currencyFormat(accounts.reduce((prev: number, curr) => prev + curr.balance + curr.init_amount, 0)) +
                 ' ' +
                 'COP'}
             </Text>
@@ -110,10 +110,10 @@ const Account = () => {
                     fontSize='md'
                     fontWeight='600'
                     isTruncated
-                    color={account.balance < 0 ? 'neon.red' : 'neon.green'}
+                    color={account.balance + account.init_amount < 0 ? 'neon.red' : 'neon.green'}
                     textAlign='right'
                   >
-                    {currencyFormat(account.balance) + ' ' + account.currency}
+                    {currencyFormat(account.balance + account.init_amount) + ' ' + account.currency.code}
                   </Text>
                   <Text fontSize='xs' fontWeight='300' textAlign='right'>
                     {account.type}

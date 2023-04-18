@@ -31,6 +31,7 @@
     "react-native-safe-area-context": "^3.4.1",
     "react-native-screens": "^3.20.0",
     "react-native-svg": "^12.1.1",
+    "react-native-toast-message": "^2.1.6",
     "react-promise-tracker": "^2.1.1",
     "redux": "^4.2.1",
     "redux-flipper": "^2.0.2",

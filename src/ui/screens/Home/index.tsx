@@ -12,7 +12,7 @@ import useHelpers from '../../../helpers';
 const Home = () => {
   const { useScreenHooks } = useControllers();
   const { useHome } = useScreenHooks();
-  const { height, accounts, events, budgets, heritages } = useHome();
+  const { height, accounts, events, budgets, heritages, user } = useHome();
 
   const { Carousel } = useComponents();
 
@@ -26,7 +26,7 @@ const Home = () => {
           ¡Hola!
         </Text>
         <Text fontSize='3xl' fontWeight='400' mt='4'>
-          Sammy
+          {user.name.split(' ')[0]}
         </Text>
       </HStack>
       <ScrollView showsVerticalScrollIndicator={false} mb='40px'>
@@ -53,7 +53,7 @@ const Home = () => {
               Balance
             </Text>
             <Text fontSize='lg' fontWeight='600' textAlign='right'>
-              {currencyFormat(accounts.reduce((prev, curr) => prev + curr.balance, 0)) + ' ' + 'COP'}
+              {currencyFormat(accounts.reduce((prev, curr) => prev + curr.balance + curr.init_amount, 0)) + ' ' + 'COP'}
             </Text>
           </Box>
         </Center>

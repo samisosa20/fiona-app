@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dimensions } from 'react-native';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -7,12 +7,22 @@ import { useNavigation, ParamListBase } from '@react-navigation/native';
 
 import useHelpers from '../../../helpers';
 
+// Selectors
+import useSelectors from '../../../models/selectors';
+
+// Services
+import useApi from '../../../api';
+
+// Interfaces
+import { ListAccount } from '../../../ui/components/Carousel/Carousel.interface';
+
 interface Form {
   email: string;
 }
 
 const useAccount = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [accounts, setAccounts] = useState<ListAccount[]>([]);
   const [balanceTime, setBalanceTime] = useState('month');
   const { height } = Dimensions.get('window');
   const listTime = [
@@ -27,38 +37,14 @@ const useAccount = () => {
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
-  // Fake DataSource
+  const { useAuthSelectors } = useSelectors();
+  const { loggedSelector } = useAuthSelectors();
+  const isAuth = loggedSelector();
 
-  const accounts = [
-    {
-      id: 1,
-      name: 'Cuenta de ahorros banco Itau',
-      balance: 150000,
-      currency: 'COP',
-      type: 'Ordinario'
-    },
-    {
-      id: 2,
-      name: 'FIC Itau',
-      balance: 150256348.45,
-      currency: 'COP',
-      type: 'Ahorros'
-    },
-    {
-      id: 3,
-      name: 'Efectivo',
-      balance: 15348.45,
-      currency: 'COP',
-      type: 'Ordinario'
-    },
-    {
-      id: 4,
-      name: 'TC Visa',
-      balance: -548276.55,
-      currency: 'COP',
-      type: 'Tarjeta Credito'
-    }
-  ]
+  const { useActions } = useApi();
+  const { useAccountActions } = useActions();
+  const { actGetListAccount } = useAccountActions();
+
 
   // Form State
   const {
@@ -82,6 +68,18 @@ const useAccount = () => {
   const handleChangeTime = (time: string) =>{
     setBalanceTime(time);
   }
+
+  useEffect(() => {
+    const onSuccess = (data: ListAccount[]) => {
+      setAccounts(data);
+    };
+
+    if (isAuth) {
+      actGetListAccount(onSuccess);
+    } else {
+      navigation.navigate('Welcome');
+    }
+  }, []);
 
   return {
     control,

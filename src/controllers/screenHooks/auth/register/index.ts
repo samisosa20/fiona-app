@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
+import Toast from "react-native-toast-message";
 
 import useHelpers from '../../../../helpers';
 
@@ -14,6 +15,15 @@ interface Form {
   email: string;
   password: string;
   passwordConfirmation: string;
+}
+
+interface ResponseData {
+  message: string;
+  data: {
+    name: string;
+    email: string;
+  }
+  token: string;
 }
 
 const useRegister = () => {
@@ -49,8 +59,12 @@ const useRegister = () => {
   const onSubmit = (data: Form) => {
     console.log(data);
     setIsLoading(true);
-    const onSucces = () => {
+    const onSucces = (data: ResponseData) => {
       setIsLoading(false);
+      Toast.show({
+        type: 'success',
+        text1: data.message,
+      })
       navigation.navigate('Dashboard');
     };
     const onError = () => {

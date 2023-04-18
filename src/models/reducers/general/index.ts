@@ -7,26 +7,25 @@ const useGeneralReducers = () => {
     const { createReducer } = useCreateReducer()
 
     const { useGeneralInitialStates } = useInitialStates()
-    const { initialStateAuth } = useGeneralInitialStates()
+    const { initialStateGeneral } = useGeneralInitialStates()
 
     const { useGeneralTypes } = useStrings()
     const {
-        SHOW,
-        HIDDEN,
+        SET_GENERAL,
+        CLEAR_GENERAL,
     } = useGeneralTypes()
 
-    const toast = createReducer(initialStateAuth, {
-        [SHOW](state: any, action: any) {
+    const toast = createReducer(initialStateGeneral, {
+        [SET_GENERAL](state: any, action: any) {
             const { payload } = action
             return {
                 ...state,
-                show: true,
-                status: payload.status,
-                message: payload.message,
+                currencies: payload.currencies,
+                groups: payload.groups,
             }
         },
-        [HIDDEN]() {
-            return initialStateAuth
+        [CLEAR_GENERAL]() {
+            return initialStateGeneral
         },
     })
 

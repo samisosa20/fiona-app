@@ -1,11 +1,11 @@
 const useGeneralTypes = () => {
     
-    const SHOW = 'SHOW'
-    const HIDDEN = 'HIDDEN'
+    const SET_GENERAL = 'SET_GENERAL'
+    const CLEAR_GENERAL = 'CLEAR_GENERAL'
 
     return {
-        SHOW,
-        HIDDEN,
+        SET_GENERAL,
+        CLEAR_GENERAL,
     }
 }
 export default useGeneralTypes

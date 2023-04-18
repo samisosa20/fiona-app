@@ -13,6 +13,13 @@ const Carousel = (props: CarouselProp) => {
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>()
 
+  const route = {
+    'Account': 'AccountCreate',
+    'Event': 'AccountCreate',
+    'Budget': 'AccountCreate',
+    'Heritage': 'AccountCreate',
+  }
+
   const { useQuickFunctions } = useHelper();
   const { currencyFormat } = useQuickFunctions();
   return (
@@ -36,10 +43,10 @@ const Carousel = (props: CarouselProp) => {
                 fontSize='md'
                 fontWeight='600'
                 isTruncated
-                color={account.balance < 0 ? 'neon.red' : 'neon.green'}
+                color={account.balance + account.init_amount < 0 ? 'neon.red' : 'neon.green'}
                 textAlign='right'
               >
-                {currencyFormat(account.balance) + ' ' + account.currency}
+                {currencyFormat(account.balance + account.init_amount) + ' ' + account.currency.code}
               </Text>
               <Text fontSize='xs' fontWeight='300' textAlign='right'>
                 {account.type}
@@ -118,7 +125,7 @@ const Carousel = (props: CarouselProp) => {
             </Box>
           </Pressable>
         ))}
-        <Pressable>
+        <Pressable onPress={() => navigation.navigate(route[type])}>
           <Center
             h={type === 'Account' ? '100px' : '80px'}
             w='40'

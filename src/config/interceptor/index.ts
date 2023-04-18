@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import * as RNLocalize from 'react-native-localize';
 import Config from 'react-native-config';
+import Toast from 'react-native-toast-message';
 
 import { AppDispatch } from '../redux';
 
@@ -16,7 +17,9 @@ const useInterceptor = (store: storeRedux) => {
 
   const handleRequestSuccess = async (request: any) => {
     const { getState } = store;
-    const { auth_token } = getState();
+    const { auth } = getState();
+    const { auth_token } = auth;
+    
     if (auth_token) request.headers.authorization = `Bearer ${auth_token}`;
     request.headers['Time-zone'] = localize;
     request.headers['Content-Type'] = 'application/json';
@@ -34,12 +37,11 @@ const useInterceptor = (store: storeRedux) => {
   };
 
   const handleResponseError = async (error: any) => {
-    console.log('response error', error.response)
     const { dispatch } = store;
-
     switch (error.response.status) {
       case 401:
-        console.log('error 401', error.response.data.message);
+        //console.log('error 401', error.response.data.message);
+        dispatch({type: 'LOGOUT'})
         break;
       case 500:
         console.log('error 500', error.response.data.message);
@@ -47,14 +49,11 @@ const useInterceptor = (store: storeRedux) => {
       default:
         console.log('error 400', error.response.data.message);
     }
-    dispatch({type: 'SHOW', payload: {
-      status: 'error',
-      message: error.response.data.message,
-      show: true
-    }})
-    setTimeout(() => {
-      dispatch({type: 'HIDDEN', payload: {}})
-    }, 3000)
+    Toast.show({
+      type: 'error',
+      text1: error.response.data.message,
+      text2: error.response.data.detail
+    });
     return error;
   };
 

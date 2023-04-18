@@ -4,7 +4,7 @@ import usePatterns from '../patterns'
 
 const useValidators = () => {
     // Helpers
-    const { emailPattern, lettersPattern } = usePatterns()
+    const { emailPattern, lettersPattern, numbersPattern } = usePatterns()
 
     const loginValidator = Yup.object({
         email: Yup.string()
@@ -34,11 +34,27 @@ const useValidators = () => {
         passwordConfirmation: Yup.string()
         .oneOf([Yup.ref('password')], 'Las contraseñas no coinciden')
     })
+    
+    const accountValidator = Yup.object({
+        name: Yup.string()
+        .required('Campo requerido.')
+        .matches(lettersPattern, 'Formato incorrecto.'),
+        description: Yup.string(),
+        type: Yup.string()
+        .required('Campo requerido.'),
+        badge_id: Yup.string()
+        .required('Campo requerido.'),
+        init_amount: Yup.number()
+        .typeError("Formato incorrecto")
+            .default(undefined)
+            .transform((curr, orig) => (orig === "" ? 0 : curr))
+    })
 
     return {
         loginValidator,
         forgotValidator,
-        registerValidator
+        registerValidator,
+        accountValidator
     }
 }
 

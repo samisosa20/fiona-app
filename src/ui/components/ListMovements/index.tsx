@@ -27,7 +27,7 @@ const ListMovements = (props: ListMovementsProps) => {
             <Text fontSize='md' fontWeight='500' lineHeight='sm'>
               {item.category?.name}
             </Text>
-            <Text fontSize='md' fontWeight='400' lineHeight='sm'>
+            <Text fontSize='md' fontWeight='400' lineHeight='sm' color={item?.amount < 0 ? 'neon.red' : 'neon.green'}>
               {currencyFormat(item?.amount ?? 0)}
             </Text>
           </HStack>

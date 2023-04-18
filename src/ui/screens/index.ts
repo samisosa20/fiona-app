@@ -5,6 +5,7 @@ import Register from './Auth/Register';
 import Home from './Home';
 import Account from './Account';
 import AccountDetail from './Account/Detail';
+import AccountCreate from './Account/Create';
 
 const useScreens = () => {
   return {
@@ -15,6 +16,7 @@ const useScreens = () => {
     Home,
     Account,
     AccountDetail,
+    AccountCreate,
   };
 };
 

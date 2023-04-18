@@ -1,11 +1,10 @@
 const useGeneralInitialStates = () => {
-    const initialStateAuth = {
-        status: null,
-        show: false,
-        message: null,
+    const initialStateGeneral = {
+        currencies: [],
+        groups: [],
     }
 
-    return { initialStateAuth }
+    return { initialStateGeneral }
 }
 
 export default useGeneralInitialStates

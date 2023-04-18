@@ -4,6 +4,7 @@ import useRegister from './auth/register'
 import useHome from './home'
 import useAccount from './account'
 import useAccountDetail from './account/detail'
+import useAccountCreate from './account/create'
 
 const useScreenHooks = () => {
     return {
@@ -13,6 +14,7 @@ const useScreenHooks = () => {
         useHome,
         useAccount,
         useAccountDetail,
+        useAccountCreate,
     }
 }
 
