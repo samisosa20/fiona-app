@@ -15,7 +15,7 @@ const useGeneralReducers = () => {
         CLEAR_GENERAL,
     } = useGeneralTypes()
 
-    const toast = createReducer(initialStateGeneral, {
+    const general = createReducer(initialStateGeneral, {
         [SET_GENERAL](state: any, action: any) {
             const { payload } = action
             return {
@@ -29,7 +29,7 @@ const useGeneralReducers = () => {
         },
     })
 
-    return { toast }
+    return { general }
 }
 
 export default useGeneralReducers

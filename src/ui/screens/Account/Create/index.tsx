@@ -5,9 +5,6 @@ import {
   Button,
   Center,
   Pressable,
-  ArrowDownIcon,
-  ArrowUpIcon,
-  Image,
 } from 'native-base';
 import { CommonActions } from '@react-navigation/native';
 
@@ -20,8 +17,19 @@ import useComponents from '../../../components';
 const AccountCreate = () => {
   const { useScreenHooks } = useControllers();
   const { useAccountCreate } = useScreenHooks();
-  const { height, navigation, title, control, errors, handleSubmit, onSubmit, isLoading, listType, } =
-    useAccountCreate();
+  const {
+    height,
+    navigation,
+    title,
+    control,
+    errors,
+    handleSubmit,
+    onSubmit,
+    isLoading,
+    listType,
+    listCurrency,
+    titleButton,
+  } = useAccountCreate();
 
   const { InputControl, SelectControl } = useComponents();
 
@@ -63,7 +71,7 @@ const AccountCreate = () => {
             control={control}
             errors={errors}
             name='badge_id'
-            options={[]}
+            options={listCurrency}
           />
           <SelectControl
             label='Tipo de cuenta'
@@ -83,7 +91,7 @@ const AccountCreate = () => {
           variant='ghost'
           w='100%'
         >
-          Crear
+          {titleButton}
         </Button>
       </View>
     </View>

@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, ParamListBase, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 import useHelpers from '../../../../helpers';
 
@@ -14,13 +16,10 @@ import useSelectors from '../../../../models/selectors';
 // Services
 import useApi from '../../../../api';
 
-// Interfaces
-import { ListAccount } from '../../../../ui/components/Carousel/Carousel.interface';
-
 interface Form {
   name: string;
   description: string;
-  init_amount: number;
+  init_amount: string;
   badge_id: number;
   type: string;
 }
@@ -35,9 +34,10 @@ type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'AccountDetail'>;
 
 const useAccountCreate = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [listCurrency, setListCurrency] = useState([]);
   const [title, setTitle] = useState('Creacion de cuenta');
+  const [titleButton, setTitleButton] = useState('Crear');
   const { height } = Dimensions.get('window');
-
 
   // Validators
   const { useValidators } = useHelpers();
@@ -46,13 +46,15 @@ const useAccountCreate = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute<ProfileScreenRouteProp>();
 
-  const { useAuthSelectors } = useSelectors();
+  const { useAuthSelectors, useGeneralSelectors } = useSelectors();
   const { loggedSelector } = useAuthSelectors();
+  const { currencySelector } = useGeneralSelectors();
   const isAuth = loggedSelector();
+  const currencies = currencySelector();
 
   const { useActions } = useApi();
   const { useAccountActions } = useActions();
-  const { actGetDetailAccount, actGetMovementAccount } = useAccountActions();
+  const { actCreateAccount, actGetDetailAccount, actEditAccount } = useAccountActions();
 
   const listType = [
     {
@@ -75,18 +77,19 @@ const useAccountCreate = () => {
       label: 'Credito',
       value: 'Credito',
     },
-  ]
+  ];
 
   // Form State
   const {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     defaultValues: {
       name: '',
       description: '',
-      init_amount: 0,
+      init_amount: '0',
       badge_id: 0,
       type: '',
     },
@@ -96,26 +99,45 @@ const useAccountCreate = () => {
 
   const onSubmit = (data: Form) => {
     setIsLoading(true);
-    console.log('submiting with ', data);
-    setIsLoading(false);
-    //navigation.navigate('Home');
+    const onSuccess = (message: string) => {
+      Toast.show({
+        type: 'success',
+        text1: message
+      })
+      navigation.dispatch(CommonActions.goBack())
+      setIsLoading(false);
+    }
+    if (route?.params?.id) {
+      actEditAccount(route?.params?.id, data, onSuccess)
+    } else {
+      actCreateAccount(data, onSuccess)
+    }
   };
 
-
   useEffect(() => {
-    /* const onSuccess = (data: ListAccount) => {
-      setAccount(data);
-    }; */
+    const onSuccess = (data: Form) => {
+      reset({...data, init_amount: data.init_amount.toString()});
+    };
 
     if (isAuth) {
       if (route?.params?.id) {
         //actGetDetailAccount(route.params.id, onSuccess);
-        setTitle('Edicion de cuenta')
+        setTitle('Edicion de cuenta');
+        setTitleButton('Editar');
+        actGetDetailAccount(route?.params?.id, onSuccess);
       }
     } else {
       navigation.navigate('Welcome');
     }
   }, []);
+
+  useEffect(() => {
+    setListCurrency(
+      currencies?.map((v: { code: string; name: string; id: number }) => {
+        return { label: `${v.code} - ${v.name}`, value: v.id };
+      }),
+    );
+  }, [currencies]);
 
   return {
     control,
@@ -127,6 +149,8 @@ const useAccountCreate = () => {
     navigation,
     title,
     listType,
+    listCurrency,
+    titleButton,
   };
 };
 

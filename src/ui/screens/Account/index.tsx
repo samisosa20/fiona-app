@@ -123,7 +123,7 @@ const Account = () => {
             ))}
         </View>
         <Center>
-          <Pressable>
+          <Pressable onPress={() => navigation.navigate('AccountCreate')}>
             <Center
               h='100px'
               w='40'

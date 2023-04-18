@@ -5,16 +5,25 @@ const useGeneralSelectors = () => {
     const { useCreateSelector } = useHelpers()
     const { createSelector } = useCreateSelector()
 
-    const toastSelector = () =>
+    const currencySelector = () =>
         useSelector(
             createSelector(
-                (state: any) => state.toast,
-                toast => toast
+                (state: any) => state.general,
+                general => general.currencies
+            )
+        )
+    
+    const gorupSelector = () =>
+        useSelector(
+            createSelector(
+                (state: any) => state.groups,
+                groups => groups
             )
         )
 
     return {
-        toastSelector,
+        currencySelector,
+        gorupSelector,
     }
 }
 

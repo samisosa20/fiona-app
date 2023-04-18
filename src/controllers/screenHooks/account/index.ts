@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
+import { useIsFocused } from "@react-navigation/native";
 
 import useHelpers from '../../../helpers';
 
@@ -21,6 +22,7 @@ interface Form {
 }
 
 const useAccount = () => {
+  const isFocused = useIsFocused();
   const [isLoading, setIsLoading] = useState(false);
   const [accounts, setAccounts] = useState<ListAccount[]>([]);
   const [balanceTime, setBalanceTime] = useState('month');
@@ -74,12 +76,14 @@ const useAccount = () => {
       setAccounts(data);
     };
 
-    if (isAuth) {
-      actGetListAccount(onSuccess);
-    } else {
+    if (!isAuth) {
       navigation.navigate('Welcome');
     }
-  }, []);
+    
+    if (isAuth && isFocused) {
+      actGetListAccount(onSuccess);
+    }
+  }, [isFocused]);
 
   return {
     control,

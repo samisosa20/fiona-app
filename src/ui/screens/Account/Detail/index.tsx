@@ -29,7 +29,7 @@ const AccountDetail = () => {
         <Pressable onPress={() => navigation.dispatch(CommonActions.goBack())}>
           <ArrowBackIcon color='white' size='md' px='4' />
         </Pressable>
-          <Pressable onPress={() => navigation.dispatch(CommonActions.goBack())} >
+          <Pressable  onPress={() => navigation.navigate('AccountCreate', {id: account?.id})} >
             <Image source={iconEdit} alt='Editar' w='6' h='6' resizeMode="contain"/>
           </Pressable>
       </View>

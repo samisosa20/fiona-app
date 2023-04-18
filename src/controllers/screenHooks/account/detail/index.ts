@@ -3,6 +3,7 @@ import { Dimensions } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, ParamListBase, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
+import { useIsFocused } from "@react-navigation/native";
 
 // Selectors
 import useSelectors from '../../../../models/selectors';
@@ -24,6 +25,7 @@ type RootStackParamList = {
 type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'AccountDetail'>;
 
 const useAccountDetail = () => {
+  const isFocused = useIsFocused();
   const [account, setAccount] = useState<ListAccount>();
   const [movements, setMovements] = useState<Movements[]>();
   const [balanceTime, setBalanceTime] = useState('month');
@@ -59,13 +61,15 @@ const useAccountDetail = () => {
       setMovements(data);
     };
 
-    if (isAuth) {
-      actGetDetailAccount(route.params.id, onSuccess);
-      actGetMovementAccount(route.params.id, onSuccessMovement);
-    } else {
+    if (!isAuth) {
       navigation.navigate('Welcome');
     }
-  }, []);
+    
+    if (isAuth && isFocused) {
+      actGetDetailAccount(route.params.id, onSuccess);
+      actGetMovementAccount(route.params.id, onSuccessMovement);
+    }
+  }, [isFocused]);
 
   return {
     height,

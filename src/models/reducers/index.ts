@@ -3,12 +3,12 @@ import useAuthReducers from './auth'
 import useGeneralReducers from './general'
 
 const { auth } = useAuthReducers()
-const { toast } = useGeneralReducers()
+const { general } = useGeneralReducers()
 
 const useReducers = () => {
     return combineReducers({
         auth,
-        toast,
+        general,
     })
 }
 
