@@ -6,6 +6,9 @@ import useHome from './home'
 import useAccount from './account'
 import useAccountDetail from './account/detail'
 import useAccountCreate from './account/create'
+import useEvent from './event'
+import useEventDetail from './event/detail'
+import useEventCreate from './event/create'
 
 const useScreenHooks = () => {
     return {
@@ -17,6 +20,9 @@ const useScreenHooks = () => {
         useAccount,
         useAccountDetail,
         useAccountCreate,
+        useEvent,
+        useEventDetail,
+        useEventCreate,
     }
 }
 

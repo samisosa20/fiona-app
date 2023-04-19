@@ -15,9 +15,9 @@ const Carousel = (props: CarouselProp) => {
 
   const route = {
     'Account': 'AccountCreate',
-    'Event': 'AccountCreate',
-    'Budget': 'AccountCreate',
-    'Heritage': 'AccountCreate',
+    'Event': 'EventCreate',
+    'Budget': 'BudgetCreate',
+    'Heritage': 'HeritageCreate',
   }
 
   const { useQuickFunctions } = useHelper();
@@ -55,7 +55,7 @@ const Carousel = (props: CarouselProp) => {
           </Pressable>
         ))}
         {listEvent && listEvent.map(event =>(
-            <Pressable key={label + event.id}>
+            <Pressable key={label + event.id} onPress={() => navigation.navigate('EventDetail', {id: event.id})}>
             <Box h='80px' w='210' bg='contrast' rounded='xl' mr='3' py='3' px='2' borderColor='#344155' borderWidth='1'>
               <Text fontSize='md' fontWeight='600' lineHeight='20' isTruncated noOfLines={2} h='10'>
                 {event.name}
@@ -69,7 +69,7 @@ const Carousel = (props: CarouselProp) => {
                 color={event.balance < 0 ? 'neon.red' : 'neon.green'}
                 textAlign='right'
               >
-                {currencyFormat(event.balance) + ' ' + event.currency}
+                {currencyFormat(event.balance)}
               </Text>
             </Box>
           </Pressable>

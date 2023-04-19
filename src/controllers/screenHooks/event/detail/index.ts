@@ -4,6 +4,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, ParamListBase, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import { useIsFocused } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
+import { CommonActions } from '@react-navigation/native';
 
 // Selectors
 import useSelectors from '../../../../models/selectors';
@@ -12,8 +14,7 @@ import useSelectors from '../../../../models/selectors';
 import useApi from '../../../../api';
 
 // Interfaces
-import { ListAccount } from '../../../../ui/components/Carousel/Carousel.interface';
-import { Movements } from '../../../../ui/components/ListMovements/ListMovements.interface';
+import { ListEvent } from '../../../../ui/components/Carousel/Carousel.interface';
 
 type RootStackParamList = {
   AccountDetail: {
@@ -23,17 +24,11 @@ type RootStackParamList = {
 
 type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'AccountDetail'>;
 
-const useAccountDetail = () => {
+const useEventDetail = () => {
   const isFocused = useIsFocused();
-  const [account, setAccount] = useState<ListAccount>();
-  const [movements, setMovements] = useState<Movements[]>();
-  const [balanceTime, setBalanceTime] = useState('month');
+  const [event, setEvent] = useState<ListEvent>();
+  const [showModal, setShowModal] = useState(false);
   const { height } = Dimensions.get('window');
-  const listTime = [
-    { id: 'month', name: 'Mes' },
-    { id: 'year', name: 'Año' },
-    { id: 'total', name: 'Total' },
-  ];
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute<ProfileScreenRouteProp>();
@@ -43,20 +38,25 @@ const useAccountDetail = () => {
   const isAuth = loggedSelector();
 
   const { useActions } = useApi();
-  const { useAccountActions } = useActions();
-  const { actGetDetailAccount, actGetMovementAccount } = useAccountActions();
+  const { useEventActions } = useActions();
+  const { actGetDetailEvent, actDeleteEvent } = useEventActions();
 
-  const handleChangeTime = (time: string) => {
-    setBalanceTime(time);
-  };
+
+  const onSubmitDelet = () => {
+    setShowModal(false)
+    const onSuccess = (message: string) => {
+      Toast.show({
+        type: 'success',
+        text1: message,
+      });
+      navigation.dispatch(CommonActions.goBack());
+    }
+    actDeleteEvent(route.params.id, onSuccess);
+  }
 
   useEffect(() => {
-    const onSuccess = (data: ListAccount) => {
-      setAccount(data);
-    };
-
-    const onSuccessMovement = (data: Movements[]) => {
-      setMovements(data);
+    const onSuccess = (data: ListEvent) => {
+      setEvent(data);
     };
 
     if (!isAuth) {
@@ -64,17 +64,18 @@ const useAccountDetail = () => {
     }
 
     if (isAuth && isFocused) {
-      actGetDetailAccount(route.params.id, onSuccess);
-      actGetMovementAccount(route.params.id, onSuccessMovement);
+      actGetDetailEvent(route.params.id, onSuccess);
     }
   }, [isFocused]);
 
   return {
     height,
     navigation,
-    account,
-    movements,
+    event,
+    showModal,
+    setShowModal,
+    onSubmitDelet,
   };
 };
 
-export default useAccountDetail;
+export default useEventDetail;

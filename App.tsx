@@ -24,16 +24,26 @@ const config = {
   },
 };
 
-
 const App = () => {
   const { useScreens } = useViews();
-  const { Welcome, Login, Forgot, Register, Account, AccountDetail, AccountCreate } = useScreens();
+  const {
+    Welcome,
+    Login,
+    Forgot,
+    Register,
+    Account,
+    AccountDetail,
+    AccountCreate,
+    Event,
+    EventDetail,
+    EventCreate,
+  } = useScreens();
   const Stack = createNativeStackNavigator();
 
   // Config
   const { useStoreConfig, useInterceptor } = useConfig();
   const { store, persistor } = useStoreConfig();
-  useInterceptor(store)
+  useInterceptor(store);
 
   return (
     <SafeAreaProvider>
@@ -56,6 +66,9 @@ const App = () => {
                 <Stack.Screen name='Account' component={Account} />
                 <Stack.Screen name='AccountDetail' component={AccountDetail} />
                 <Stack.Screen name='AccountCreate' component={AccountCreate} />
+                <Stack.Screen name='Event' component={Event} />
+                <Stack.Screen name='EventDetail' component={EventDetail} />
+                <Stack.Screen name='EventCreate' component={EventCreate} />
               </Stack.Navigator>
             </NavigationContainer>
             <Toast />

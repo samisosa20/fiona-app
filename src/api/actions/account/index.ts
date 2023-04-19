@@ -12,6 +12,7 @@ const useAccountActions = () => {
     detailAccountProvider,
     movementByAccountProvider,
     activateAccountProvider,
+    balanceProvider,
   } = useAccountProviders();
 
   const actGetListAccount = async (
@@ -104,6 +105,19 @@ const useAccountActions = () => {
       onError && onError(e);
     }
   };
+  
+  const actGetBalanceAccount = async (params: any,
+    onSuccess: Function = () => {},
+    onError: Function = () => {},
+  ) => {
+    try {
+      const response = await balanceProvider(params);
+      if (response.status !== 200) throw response;
+      onSuccess && onSuccess(response.data);
+    } catch (e) {
+      onError && onError(e);
+    }
+  };
 
   return {
     actGetListAccount,
@@ -113,6 +127,7 @@ const useAccountActions = () => {
     actEditAccount,
     actHiddenAccount,
     actRecoverAccount,
+    actGetBalanceAccount,
   };
 };
 

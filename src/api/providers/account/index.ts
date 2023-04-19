@@ -67,6 +67,16 @@ const useAccountProviders = () => {
 
     return trackPromise(request);
   };
+  
+  const balanceProvider = (params: any) => {
+    const request = axios({
+      method: 'GET',
+      url: `balance`,
+      params
+    });
+
+    return trackPromise(request);
+  };
 
   return {
     listAccountProvider,
@@ -76,6 +86,7 @@ const useAccountProviders = () => {
     detailAccountProvider,
     movementByAccountProvider,
     activateAccountProvider,
+    balanceProvider,
   };
 };
 

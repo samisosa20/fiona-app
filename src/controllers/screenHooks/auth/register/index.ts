@@ -57,7 +57,6 @@ const useRegister = () => {
   });
 
   const onSubmit = (data: Form) => {
-    console.log(data);
     setIsLoading(true);
     const onSucces = (data: ResponseData) => {
       setIsLoading(false);

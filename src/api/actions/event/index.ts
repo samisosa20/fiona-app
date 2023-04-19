@@ -85,7 +85,7 @@ const useEventActions = () => {
     try {
       const response = await listActiveEventProvider();
       if (response.status !== 200) throw response;
-      onSuccess && onSuccess(response.data.message);
+      onSuccess && onSuccess(response.data);
     } catch (e) {
       onError && onError(e);
     }

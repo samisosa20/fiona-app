@@ -50,11 +50,18 @@ const useValidators = () => {
             .transform((curr, orig) => (orig === "" ? 0 : curr))
     })
 
+    const eventValidator = Yup.object({
+        name: Yup.string()
+        .required('Campo requerido.'),
+        end_event: Yup.string().required('Campo requerido.'),
+    })
+
     return {
         loginValidator,
         forgotValidator,
         registerValidator,
-        accountValidator
+        accountValidator,
+        eventValidator,
     }
 }
 

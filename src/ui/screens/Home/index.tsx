@@ -12,7 +12,7 @@ import useHelpers from '../../../helpers';
 const Home = () => {
   const { useScreenHooks } = useControllers();
   const { useHome } = useScreenHooks();
-  const { height, accounts, events, budgets, heritages, user } = useHome();
+  const { height, accounts, events, budgets, heritages, user, balances } = useHome();
 
   const { Carousel } = useComponents();
 
@@ -52,9 +52,15 @@ const Home = () => {
             <Text fontSize='md' fontWeight='600'>
               Balance
             </Text>
-            <Text fontSize='lg' fontWeight='600' textAlign='right'>
-              {currencyFormat(accounts.reduce((prev, curr) => prev + curr.balance + curr.init_amount, 0)) + ' ' + 'COP'}
-            </Text>
+            <View>
+              {balances.map((balance) => (
+                <Text fontSize='lg' fontWeight='600' textAlign='right' key={balance.currency}>
+                  {currencyFormat(balance.balance) +
+                    ' ' +
+                    balance.currency}
+                </Text>
+              ))}
+            </View>
           </Box>
         </Center>
         <Carousel listAccount={accounts} label='Cuentas' type='Account' />

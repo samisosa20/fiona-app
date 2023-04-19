@@ -19,6 +19,8 @@ export interface ListEvent {
   name: string;
   balance: number;
   currency: string;
+  end_event: string;
+  movements?: any;
 }
 
 export interface listBudget {

@@ -16,15 +16,22 @@ import useSelectors from '../../../models/selectors';
 import useApi from '../../../api';
 
 // Interfaces
-import { ListAccount } from '../../../ui/components/Carousel/Carousel.interface';
+import { ListAccount, ListEvent } from '../../../ui/components/Carousel/Carousel.interface';
 interface Form {
   email: string;
+}
+
+interface Balance {
+  balance: number;
+  currency: string;
 }
 
 const useHome = () => {
   const isFocused = useIsFocused();
   const [isLoading, setIsLoading] = useState(false);
   const [accounts, setAccounts] = useState<ListAccount[]>([]);
+  const [events, setEvents] = useState<ListEvent[]>([]);
+  const [balances, setBalances] = useState<Balance[]>([]);
   const { height } = Dimensions.get('window');
 
   // Validators
@@ -39,12 +46,13 @@ const useHome = () => {
   const isAuth = loggedSelector();
 
   const { useActions } = useApi();
-  const { useAccountActions } = useActions();
-  const { actGetListAccount } = useAccountActions();
+  const { useAccountActions, useEventActions } = useActions();
+  const { actGetListAccount, actGetBalanceAccount } = useAccountActions();
+  const { actGetListActiveEvent } = useEventActions();
 
   // Fake DataSource
 
-  const events = [
+  /* const events = [
     {
       id: 1,
       name: 'San Andres - 2023',
@@ -63,7 +71,7 @@ const useHome = () => {
       balance: -12548639.45,
       currency: 'COP',
     },
-  ];
+  ]; */
 
   const budgets = [
     {
@@ -133,12 +141,20 @@ const useHome = () => {
     const onSuccess = (data: ListAccount[]) => {
       setAccounts(data.filter(v => !v.deleted_at));
     };
+    const onSuccessEvent = (data: ListEvent[]) => {
+      setEvents(data);
+    };
+    const onSuccessBalance = (data: Balance[]) => {
+      setBalances(data);
+    };
     if (!isAuth) {
       navigation.navigate('Welcome');
     }
     
     if (isAuth && isFocused) {
       actGetListAccount(onSuccess);
+      actGetListActiveEvent(onSuccessEvent);
+      actGetBalanceAccount(null, onSuccessBalance);
     }
   }, [isFocused]);
 
@@ -155,6 +171,7 @@ const useHome = () => {
     budgets,
     heritages,
     user,
+    balances,
   };
 };
 

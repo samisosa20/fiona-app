@@ -1,4 +1,4 @@
-import { FlatList, Text, Box, Pressable, HStack, Image } from 'native-base';
+import { FlatList, Text, Box, Divider, HStack, Image } from 'native-base';
 
 // Helper
 import useHelpers from '../../../helpers';
@@ -7,7 +7,7 @@ import useHelpers from '../../../helpers';
 import { ListMovementsProps } from './ListMovements.interface';
 
 // Assets
-import iconCalendar from '../../../assets/icons/icon-calendar.png'
+import iconCalendar from '../../../assets/icons/icon-calendar.png';
 
 const ListMovements = (props: ListMovementsProps) => {
   const { movements } = props;
@@ -27,7 +27,12 @@ const ListMovements = (props: ListMovementsProps) => {
             <Text fontSize='md' fontWeight='500' lineHeight='sm'>
               {item.category?.name}
             </Text>
-            <Text fontSize='md' fontWeight='400' lineHeight='sm' color={item?.amount < 0 ? 'neon.red' : 'neon.green'}>
+            <Text
+              fontSize='md'
+              fontWeight='400'
+              lineHeight='sm'
+              color={item?.amount < 0 ? 'neon.red' : 'neon.green'}
+            >
               {currencyFormat(item?.amount ?? 0)}
             </Text>
           </HStack>
@@ -35,11 +40,27 @@ const ListMovements = (props: ListMovementsProps) => {
             <Text fontSize='sm' fontWeight='300' lineHeight='sm'>
               {item.date_purchase}
             </Text>
-            {item.event && <Text fontSize='sm' fontWeight='300' lineHeight='sm' alignItems='center'>
-              <Image source={iconCalendar} alt='Evento' w='4' h='4' tintColor='white' resizeMode="contain" mr='4'/>
-              {item.event?.name}
-            </Text>}
+            {item.event && (
+              <Text fontSize='sm' fontWeight='300' lineHeight='sm' alignItems='center'>
+                <Image
+                  source={iconCalendar}
+                  alt='Evento'
+                  w='4'
+                  h='4'
+                  tintColor='white'
+                  resizeMode='contain'
+                  mr='4'
+                />
+                {item.event?.name}
+              </Text>
+            )}
           </HStack>
+          {item.description && <Divider my='2' />}
+          {item.description && (
+            <Text fontSize='sm' fontWeight='300' lineHeight='sm' alignItems='center'>
+              {item.description}
+            </Text>
+          )}
         </Box>
       )}
     />
