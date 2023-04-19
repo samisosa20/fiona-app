@@ -6,19 +6,19 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import useHelper from '../../../helpers';
 
 // Interface
-import { CarouselProp } from './Carousel.interface'
+import { CarouselProp } from './Carousel.interface';
 
 const Carousel = (props: CarouselProp) => {
   const { listAccount, label, type, listEvent, listBudget, listHeritage } = props;
 
-  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>()
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const route = {
-    'Account': 'AccountCreate',
-    'Event': 'EventCreate',
-    'Budget': 'BudgetCreate',
-    'Heritage': 'HeritageCreate',
-  }
+    Account: 'AccountCreate',
+    Event: 'EventCreate',
+    Budget: 'BudgetCreate',
+    Heritage: 'HeritageCreate',
+  };
 
   const { useQuickFunctions } = useHelper();
   const { currencyFormat } = useQuickFunctions();
@@ -33,98 +33,185 @@ const Carousel = (props: CarouselProp) => {
         </Pressable>
       </View>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        {listAccount && listAccount.map((account) => (
-          <Pressable key={label + account.id} onPress={() => navigation.navigate('AccountDetail', {id: account.id})}>
-            <Box h='100px' w='210' bg='contrast' rounded='xl' mr='3' py='3' px='2' borderColor='#344155' borderWidth='1'>
-              <Text fontSize='md' fontWeight='600' lineHeight='xs' isTruncated noOfLines={2} h='10'>
-                {account.name}
-              </Text>
-              <Text
-                fontSize='md'
-                fontWeight='600'
-                isTruncated
-                color={account.balance + account.init_amount < 0 ? 'neon.red' : 'neon.green'}
-                textAlign='right'
+        {listAccount &&
+          listAccount.map((account) => (
+            <Pressable
+              key={label + account.id}
+              onPress={() => navigation.navigate('AccountDetail', { id: account.id })}
+            >
+              <Box
+                h='100px'
+                w='210'
+                bg='contrast'
+                rounded='xl'
+                mr='3'
+                py='3'
+                px='2'
+                borderColor='#344155'
+                borderWidth='1'
               >
-                {currencyFormat(account.balance + account.init_amount) + ' ' + account.currency.code}
-              </Text>
-              <Text fontSize='xs' fontWeight='300' textAlign='right'>
-                {account.type}
-              </Text>
-            </Box>
-          </Pressable>
-        ))}
-        {listEvent && listEvent.map(event =>(
-            <Pressable key={label + event.id} onPress={() => navigation.navigate('EventDetail', {id: event.id})}>
-            <Box h='80px' w='210' bg='contrast' rounded='xl' mr='3' py='3' px='2' borderColor='#344155' borderWidth='1'>
-              <Text fontSize='md' fontWeight='600' lineHeight='20' isTruncated noOfLines={2} h='10'>
-                {event.name}
-              </Text>
-              <Text
-                fontSize='md'
-                fontWeight='600'
-                lineHeight='20'
-                isTruncated
-                noOfLines={2}
-                color={event.balance < 0 ? 'neon.red' : 'neon.green'}
-                textAlign='right'
+                <Text
+                  fontSize='md'
+                  fontWeight='600'
+                  lineHeight='xs'
+                  isTruncated
+                  noOfLines={2}
+                  h='10'
+                >
+                  {account.name}
+                </Text>
+                <Text
+                  fontSize='md'
+                  fontWeight='600'
+                  isTruncated
+                  color={account.balance + account.init_amount < 0 ? 'neon.red' : 'neon.green'}
+                  textAlign='right'
+                >
+                  {currencyFormat(account.balance + account.init_amount) +
+                    ' ' +
+                    account.currency.code}
+                </Text>
+                <Text fontSize='xs' fontWeight='300' textAlign='right'>
+                  {account.type}
+                </Text>
+              </Box>
+            </Pressable>
+          ))}
+        {listEvent &&
+          listEvent.map((event) => (
+            <Pressable
+              key={label + event.id}
+              onPress={() => navigation.navigate('EventDetail', { id: event.id })}
+            >
+              <Box
+                h='80px'
+                w='210'
+                bg='contrast'
+                rounded='xl'
+                mr='3'
+                py='3'
+                px='2'
+                borderColor='#344155'
+                borderWidth='1'
               >
-                {currencyFormat(event.balance)}
-              </Text>
-            </Box>
-          </Pressable>
-        ))}
-        {listBudget && listBudget.map(budget =>(
+                <Text
+                  fontSize='md'
+                  fontWeight='600'
+                  lineHeight='20'
+                  isTruncated
+                  noOfLines={2}
+                  h='10'
+                >
+                  {event.name}
+                </Text>
+                <Text
+                  fontSize='md'
+                  fontWeight='600'
+                  lineHeight='20'
+                  isTruncated
+                  noOfLines={2}
+                  color={event.balance < 0 ? 'neon.red' : 'neon.green'}
+                  textAlign='right'
+                >
+                  {currencyFormat(event.balance)}
+                </Text>
+              </Box>
+            </Pressable>
+          ))}
+        {listBudget &&
+          listBudget.map((budget) => (
             <Pressable key={label + budget.id}>
-            <Box h='80px' w='210' bg='contrast' rounded='xl' mr='3' py='3' px='2' borderColor='#344155' borderWidth='1'>
-              <Text fontSize='md' fontWeight='600' lineHeight='20' isTruncated noOfLines={2}>
-                {budget.name}
-              </Text>
-              <Text
-                fontSize='md'
-                fontWeight='600'
-                lineHeight='20'
-                isTruncated
-                noOfLines={2}
-                color={budget.income < 0 ? 'neon.red' : 'neon.green'}
-                textAlign='right'
+              <Box
+                h='80px'
+                w='210'
+                bg='contrast'
+                rounded='xl'
+                mr='3'
+                py='3'
+                px='2'
+                borderColor='#344155'
+                borderWidth='1'
               >
-                {currencyFormat(budget.income) + ' ' + budget.currency}
-              </Text>
-              <Text
-                fontSize='md'
-                fontWeight='600'
-                lineHeight='20'
-                isTruncated
-                noOfLines={2}
-                color={budget.expensive < 0 ? 'neon.red' : 'neon.green'}
-                textAlign='right'
+                <Text fontSize='md' fontWeight='600' lineHeight='20' isTruncated noOfLines={2}>
+                  {budget.name}
+                </Text>
+                <Text
+                  fontSize='md'
+                  fontWeight='600'
+                  lineHeight='20'
+                  isTruncated
+                  noOfLines={2}
+                  color={budget.income < 0 ? 'neon.red' : 'neon.green'}
+                  textAlign='right'
+                >
+                  {currencyFormat(budget.income) + ' ' + budget.currency}
+                </Text>
+                <Text
+                  fontSize='md'
+                  fontWeight='600'
+                  lineHeight='20'
+                  isTruncated
+                  noOfLines={2}
+                  color={budget.expensive < 0 ? 'neon.red' : 'neon.green'}
+                  textAlign='right'
+                >
+                  {currencyFormat(budget.expensive) + ' ' + budget.currency}
+                </Text>
+              </Box>
+            </Pressable>
+          ))}
+        {listHeritage &&
+          listHeritage.map((heritage) => (
+            <Pressable
+              key={label + heritage.year}
+              onPress={() => navigation.navigate('HeritageDetail', { year: heritage.year })}
+            >
+              <Box
+                h='80px'
+                w='210'
+                bg='contrast'
+                rounded='xl'
+                mr='3'
+                py='3'
+                px='2'
+                borderColor='#344155'
+                borderWidth='1'
               >
-                {currencyFormat(budget.expensive) + ' ' + budget.currency}
-              </Text>
-            </Box>
-          </Pressable>
-        ))}
-        {listHeritage && listHeritage.map(heritage =>(
-            <Pressable key={label + heritage.id}>
-            <Box h='80px' w='210' bg='contrast' rounded='xl' mr='3' py='3' px='2' borderColor='#344155' borderWidth='1'>
-              <Text fontSize='md' fontWeight='600' lineHeight='20' isTruncated noOfLines={2} h='10'>
-                {heritage.name}
-              </Text>
-              <Text
-                fontSize='md'
-                fontWeight='600'
-                lineHeight='20'
-                isTruncated
-                noOfLines={2}
-                color={heritage.balance < 0 ? 'neon.red' : 'neon.green'}
-                textAlign='right'
-              >
-                {currencyFormat(heritage.balance) + ' ' + heritage.currency}
-              </Text>
-            </Box>
-          </Pressable>
-        ))}
+                <Text
+                  fontSize='md'
+                  fontWeight='600'
+                  lineHeight='20'
+                  isTruncated
+                  noOfLines={2}
+                >
+                  {heritage.year}
+                </Text>
+                {heritage.balance &&
+                  heritage.balance.slice(0,2).map((balance) => (
+                    <Text
+                      fontSize='md'
+                      fontWeight='600'
+                      lineHeight='20'
+                      isTruncated
+                      noOfLines={2}
+                      color={
+                        balance.comercial_amount + balance.movements < 0
+                          ? 'neon.red'
+                          : 'neon.green'
+                      }
+                      textAlign='right'
+                      key={heritage.year + balance.currency}
+                    >
+                      {currencyFormat(
+                        balance.comercial_amount + balance.movements,
+                      ) +
+                        ' ' +
+                        balance.currency}
+                    </Text>
+                  ))}
+              </Box>
+            </Pressable>
+          ))}
         <Pressable onPress={() => navigation.navigate(route[type])}>
           <Center
             h={type === 'Account' ? '100px' : '80px'}

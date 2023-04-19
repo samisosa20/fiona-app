@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { StatusBar } from 'react-native';
-import { NativeBaseProvider } from 'native-base';
+import { NativeBaseProvider, } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -37,6 +37,9 @@ const App = () => {
     Event,
     EventDetail,
     EventCreate,
+    Heritage,
+    HeritageDetail,
+    HeritageCreate,
   } = useScreens();
   const Stack = createNativeStackNavigator();
 
@@ -69,9 +72,31 @@ const App = () => {
                 <Stack.Screen name='Event' component={Event} />
                 <Stack.Screen name='EventDetail' component={EventDetail} />
                 <Stack.Screen name='EventCreate' component={EventCreate} />
+                <Stack.Screen name='Heritage' component={Heritage} />
+                <Stack.Screen name='HeritageDetail' component={HeritageDetail} />
+                <Stack.Screen name='HeritageCreate' component={HeritageCreate} />
               </Stack.Navigator>
             </NavigationContainer>
             <Toast />
+            {/* <Modal
+              isOpen={true}
+              _backdrop={{
+                _dark: {
+                  bg: 'coolGray.800',
+                },
+                bg: 'warmGray.50',
+              }}
+            >
+              <Modal.Content maxWidth='350' maxH='212'>
+                <Modal.Header>Upsss!</Modal.Header>
+                <Modal.Body>
+                  Tu sesion ha expirado, deberas volver a inicar sesion.
+                  <Button onPress={() => {}} bg='info.400' mt='4'>
+                    Salir
+                  </Button>
+                </Modal.Body>
+              </Modal.Content>
+            </Modal> */}
           </NativeBaseProvider>
         </PersistGate>
       </Provider>

@@ -9,6 +9,9 @@ import AccountCreate from './Account/Create';
 import Event from './Event';
 import EventDetail from './Event/Detail';
 import EventCreate from './Event/Create';
+import Heritage from './Heritage';
+import HeritageDetail from './Heritage/Detail';
+import HeritageCreate from './Heritage/Create';
 
 const useScreens = () => {
   return {
@@ -23,6 +26,9 @@ const useScreens = () => {
     Event,
     EventDetail,
     EventCreate,
+    Heritage,
+    HeritageDetail,
+    HeritageCreate,
   };
 };
 

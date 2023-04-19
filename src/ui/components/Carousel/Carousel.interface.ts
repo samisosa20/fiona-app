@@ -31,11 +31,16 @@ export interface listBudget {
   currency: string;
 }
 
-export interface ListHeritage {
-  id: number;
-  name: string;
-  balance: number;
+export interface HeritageBalance {
   currency: string;
+  comercial_amount: number;
+  legal_amount: number;
+  movements: number;
+}
+
+export interface ListHeritage {
+  year: string;
+  balance: HeritageBalance[];
 }
 
 export interface CarouselProp {

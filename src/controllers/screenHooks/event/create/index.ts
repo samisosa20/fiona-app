@@ -123,8 +123,7 @@ const useEventCreate = () => {
 
     if (isAuth) {
       if (route?.params?.id) {
-        //actGetDetailEvent(route.params.id, onSuccess);
-        setTitle('Edicion de cuenta');
+        setTitle('Edicion de evento');
         setTitleButton('Editar');
         actGetDetailEvent(route?.params?.id, onSuccess);
       }

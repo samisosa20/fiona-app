@@ -3,10 +3,13 @@ import axios from 'axios';
 import { trackPromise } from 'react-promise-tracker';
 
 const useHeritageProviders = () => {
-  const listHeritageProvider = () => {
+  const listHeritageProvider = (year: number) => {
     const request = axios({
       method: 'GET',
       url: `heritages`,
+      params: {
+        year,
+      },
     });
 
     return trackPromise(request);
@@ -49,6 +52,15 @@ const useHeritageProviders = () => {
 
     return trackPromise(request);
   };
+  
+  const consolidateHeritageProvider = () => {
+    const request = axios({
+      method: 'GET',
+      url: `consolidate/heritages`,
+    });
+
+    return trackPromise(request);
+  };
 
   return {
     listHeritageProvider,
@@ -56,6 +68,7 @@ const useHeritageProviders = () => {
     updateHeritageProvider,
     hiddenHeritageProvider,
     detailHeritageProvider,
+    consolidateHeritageProvider,
   };
 };
 

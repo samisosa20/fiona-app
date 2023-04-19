@@ -16,7 +16,7 @@ import useSelectors from '../../../models/selectors';
 import useApi from '../../../api';
 
 // Interfaces
-import { ListAccount, ListEvent } from '../../../ui/components/Carousel/Carousel.interface';
+import { ListAccount, ListEvent, ListHeritage } from '../../../ui/components/Carousel/Carousel.interface';
 interface Form {
   email: string;
 }
@@ -31,6 +31,7 @@ const useHome = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [accounts, setAccounts] = useState<ListAccount[]>([]);
   const [events, setEvents] = useState<ListEvent[]>([]);
+  const [heritages, setHeritage] = useState<ListHeritage[]>([]);
   const [balances, setBalances] = useState<Balance[]>([]);
   const { height } = Dimensions.get('window');
 
@@ -46,32 +47,12 @@ const useHome = () => {
   const isAuth = loggedSelector();
 
   const { useActions } = useApi();
-  const { useAccountActions, useEventActions } = useActions();
+  const { useAccountActions, useEventActions, useHeritageActions } = useActions();
   const { actGetListAccount, actGetBalanceAccount } = useAccountActions();
   const { actGetListActiveEvent } = useEventActions();
+  const { actGetConsolidateHeritage } = useHeritageActions();
 
   // Fake DataSource
-
-  /* const events = [
-    {
-      id: 1,
-      name: 'San Andres - 2023',
-      balance: -150000,
-      currency: 'COP',
-    },
-    {
-      id: 2,
-      name: 'Cumple 50',
-      balance: -584000.0,
-      currency: 'COP',
-    },
-    {
-      id: 3,
-      name: 'Madrid - 2020',
-      balance: -12548639.45,
-      currency: 'COP',
-    },
-  ]; */
 
   const budgets = [
     {
@@ -93,27 +74,6 @@ const useHome = () => {
       name: '2021',
       income: 500000.0,
       expensive: -150000.0,
-      currency: 'COP',
-    },
-  ];
-
-  const heritages = [
-    {
-      id: 1,
-      name: '2023',
-      balance: 350000000.0,
-      currency: 'COP',
-    },
-    {
-      id: 2,
-      name: '2022',
-      balance: 175000000.0,
-      currency: 'COP',
-    },
-    {
-      id: 3,
-      name: '2021',
-      balance: 245500000.0,
       currency: 'COP',
     },
   ];
@@ -144,6 +104,9 @@ const useHome = () => {
     const onSuccessEvent = (data: ListEvent[]) => {
       setEvents(data);
     };
+    const onSuccessHeritage = (data: ListHeritage[]) => {
+      setHeritage(data);
+    };
     const onSuccessBalance = (data: Balance[]) => {
       setBalances(data);
     };
@@ -154,6 +117,7 @@ const useHome = () => {
     if (isAuth && isFocused) {
       actGetListAccount(onSuccess);
       actGetListActiveEvent(onSuccessEvent);
+      actGetConsolidateHeritage(onSuccessHeritage);
       actGetBalanceAccount(null, onSuccessBalance);
     }
   }, [isFocused]);

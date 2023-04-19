@@ -10,14 +10,15 @@ const useHeritageActions = () => {
     updateHeritageProvider,
     hiddenHeritageProvider,
     detailHeritageProvider,
+    consolidateHeritageProvider,
   } = useHeritageProviders();
 
-  const actGetListHeritage = async (
+  const actGetListHeritage = async (year:number, 
     onSuccess: Function = () => {},
     onError: Function = () => {},
   ) => {
     try {
-      const response = await listHeritageProvider();
+      const response = await listHeritageProvider(year);
       if (response.status !== 200) throw response;
       onSuccess && onSuccess(response.data);
     } catch (e) {
@@ -76,6 +77,18 @@ const useHeritageActions = () => {
       onError && onError(e);
     }
   };
+  const actGetConsolidateHeritage = async (
+    onSuccess: Function = () => {},
+    onError: Function = () => {},
+  ) => {
+    try {
+      const response = await consolidateHeritageProvider();
+      if (response.status !== 200) throw response;
+      onSuccess && onSuccess(response.data);
+    } catch (e) {
+      onError && onError(e);
+    }
+  };
 
   return {
     actGetListHeritage,
@@ -83,6 +96,7 @@ const useHeritageActions = () => {
     actCreateHeritage,
     actEditHeritage,
     actDeleteHeritage,
+    actGetConsolidateHeritage,
   };
 };
 

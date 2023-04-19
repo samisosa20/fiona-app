@@ -18,32 +18,35 @@ import useApi from '../../../../api';
 
 interface Form {
   name: string;
-  description: string;
-  init_amount: string | number;
-  badge_id: number | null;
-  type: string | null;
-  deleted_at?: string | null;
+  comercial_amount: string;
+  legal_amount: string;
+  badge_id: string | null;
+  year: string | null;
 }
 
 type RootStackParamList = {
-  AccountDetail: {
+  EventDetail: {
     id: number;
   };
 };
 
-type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'AccountDetail'>;
+type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'EventDetail'>;
 
-const useAccountCreate = () => {
+const useHeritageCreate = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [intStatus, setInitStatus] = useState(false);
   const [listCurrency, setListCurrency] = useState([]);
-  const [title, setTitle] = useState('Creacion de cuenta');
+  const [title, setTitle] = useState('Creacion de patrimonio');
   const [titleButton, setTitleButton] = useState('Crear');
   const { height } = Dimensions.get('window');
+  const currentYear = new Date().getFullYear();
+
+  const listYear = Array.from({ length: 5 }, (_, i) => {
+    return { label: (currentYear - 2 + i).toString(), value: (currentYear - 2 + i).toString() };
+  });
 
   // Validators
   const { useValidators } = useHelpers();
-  const { accountValidator } = useValidators();
+  const { heritageValidator } = useValidators();
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute<ProfileScreenRouteProp>();
@@ -55,37 +58,8 @@ const useAccountCreate = () => {
   const currencies = currencySelector();
 
   const { useActions } = useApi();
-  const { useAccountActions } = useActions();
-  const {
-    actCreateAccount,
-    actGetDetailAccount,
-    actEditAccount,
-    actHiddenAccount,
-    actRecoverAccount,
-  } = useAccountActions();
-
-  const listType = [
-    {
-      label: 'Corriente',
-      value: 'Corriente',
-    },
-    {
-      label: 'Ahorros',
-      value: 'Ahorros',
-    },
-    {
-      label: 'Inversion',
-      value: 'Inversion',
-    },
-    {
-      label: 'Tarjeta de credito',
-      value: 'Tarjeta de credito',
-    },
-    {
-      label: 'Credito',
-      value: 'Credito',
-    },
-  ];
+  const { useHeritageActions } = useActions();
+  const { actCreateHeritage, actGetDetailHeritage, actEditHeritage } = useHeritageActions();
 
   // Form State
   const {
@@ -93,22 +67,20 @@ const useAccountCreate = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
   } = useForm({
     defaultValues: {
       name: '',
-      description: '',
-      init_amount: '0',
+      comercial_amount: '0',
+      legal_amount: '0',
       badge_id: null,
-      type: null,
-      status: true,
+      year: null,
     },
-    resolver: yupResolver(accountValidator),
+    resolver: yupResolver(heritageValidator),
     mode: 'all',
   });
 
   const onSubmit = (data: Form) => {
-    
+    console.log(data);
     const onSuccess = (message: string) => {
       Toast.show({
         type: 'success',
@@ -118,35 +90,27 @@ const useAccountCreate = () => {
       setIsLoading(false);
     };
     if (route?.params?.id) {
-      if (intStatus) {
-        actEditAccount(route?.params?.id, data, onSuccess);
-        if (!watch('status')) {
-          actHiddenAccount(route.params.id);
-        }
-      } else {
-        if (watch('status')) {
-          actRecoverAccount(route.params.id, onSuccess);
-        } else {
-          setIsLoading(false);
-        }
-      }
+      actEditHeritage(route?.params?.id, data, onSuccess);
     } else {
-      actCreateAccount(data, onSuccess);
+      actCreateHeritage(data, onSuccess);
     }
   };
 
   useEffect(() => {
-    const onSuccess = (data: Form) => {
-      setInitStatus(!data.deleted_at)
-      reset({ ...data, init_amount: data.init_amount.toString(), status: !data.deleted_at });
+    const onSuccess = (data: any) => {
+      reset({
+        ...data,
+        comercial_amount: data.comercial_amount.toString(),
+        legal_amount: data.legal_amount.toString(),
+        year: data.year.toString(),
+      });
     };
 
     if (isAuth) {
       if (route?.params?.id) {
-        //actGetDetailAccount(route.params.id, onSuccess);
-        setTitle('Edicion de cuenta');
+        setTitle('Edicion de patrimonio');
         setTitleButton('Editar');
-        actGetDetailAccount(route?.params?.id, onSuccess);
+        actGetDetailHeritage(route?.params?.id, onSuccess);
       }
     } else {
       navigation.navigate('Welcome');
@@ -162,19 +126,18 @@ const useAccountCreate = () => {
   }, [currencies]);
 
   return {
-    control,
-    handleSubmit,
-    errors,
-    onSubmit,
-    isLoading,
     height,
     navigation,
     title,
-    listType,
-    listCurrency,
+    control,
+    errors,
+    handleSubmit,
+    onSubmit,
+    isLoading,
     titleButton,
-    route,
+    listCurrency,
+    listYear,
   };
 };
 
-export default useAccountCreate;
+export default useHeritageCreate;
