@@ -40,6 +40,7 @@ const useAccountProviders = () => {
 
     return trackPromise(request);
   };
+  
   const activateAccountProvider = (id: number) => {
     const request = axios({
       method: 'POST',
