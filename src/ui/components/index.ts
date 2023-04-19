@@ -2,6 +2,7 @@ import InputControl from './InputControl'
 import Carousel from './Carousel'
 import ListMovements from './ListMovements'
 import SelectControl from './SelectControl'
+import SwitchControl from './SwitchControl'
 
 const useComponents = () => {
     return {
@@ -9,6 +10,7 @@ const useComponents = () => {
         Carousel,
         ListMovements,
         SelectControl,
+        SwitchControl,
     }
 }
 

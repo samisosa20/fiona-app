@@ -1,5 +1,6 @@
 import { View, ScrollView, Text, ArrowBackIcon, Box, Center, Pressable } from 'native-base';
 import { CommonActions } from '@react-navigation/native';
+import { Image } from 'react-native'
 
 // Controllers
 import useControllers from '../../../controllers';
@@ -7,20 +8,39 @@ import useControllers from '../../../controllers';
 // Helper
 import useHelpers from '../../../helpers';
 
+// Assets
+import iconHidden from '../../../assets/icons/icon-hiden.png';
+import iconShow from '../../../assets/icons/icon-show.png';
+
+
 const Account = () => {
   const { useScreenHooks } = useControllers();
   const { useAccount } = useScreenHooks();
-  const { height, accounts, navigation, handleChangeTime, balanceTime, listTime } = useAccount();
+  const {
+    height,
+    accounts,
+    navigation,
+    handleChangeTime,
+    balanceTime,
+    listTime,
+    showAllAccounts,
+    handleChangeView,
+  } = useAccount();
 
   const { useQuickFunctions } = useHelpers();
   const { currencyFormat } = useQuickFunctions();
 
   return (
     <View bg='bg' h={height} py='10' px='4'>
-      <Pressable onPress={() => navigation.dispatch(CommonActions.goBack())}>
-        <ArrowBackIcon color='white' size='md' px='4' />
-      </Pressable>
-      <Text fontSize='3xl' fontWeight='600' mt='4'>
+      <View flexDirection='row' justifyContent='space-between' alignItems='center' px='4' mt='3'>
+        <Pressable onPress={() => navigation.dispatch(CommonActions.goBack())}>
+          <ArrowBackIcon color='white' size='md' px='4' />
+        </Pressable>
+        <Pressable onPress={() => handleChangeView()}>
+          <Image source={showAllAccounts ? iconShow : iconHidden} alt={showAllAccounts ? 'Ocultar' : 'Mostrar' } resizeMode='contain' style={{height: 24}} />
+        </Pressable>
+      </View>
+      <Text fontSize='3xl' fontWeight='600' mt='4' textAlign='center'>
         Listado de cuentas
       </Text>
       <ScrollView showsVerticalScrollIndicator={false} mb='40px'>
@@ -47,7 +67,9 @@ const Account = () => {
               Balance
             </Text>
             <Text fontSize='lg' fontWeight='600' textAlign='right'>
-              {currencyFormat(accounts.reduce((prev: number, curr) => prev + curr.balance + curr.init_amount, 0)) +
+              {currencyFormat(
+                accounts.reduce((prev: number, curr) => prev + curr.balance + curr.init_amount, 0),
+              ) +
                 ' ' +
                 'COP'}
             </Text>
@@ -84,7 +106,10 @@ const Account = () => {
         >
           {accounts &&
             accounts.map((account) => (
-              <Pressable key={'account' + account.id} onPress={() => navigation.navigate('AccountDetail', {id: account.id})}>
+              <Pressable
+                key={'account' + account.id}
+                onPress={() => navigation.navigate('AccountDetail', { id: account.id })}
+              >
                 <Box
                   h='100px'
                   w='190'
@@ -113,7 +138,9 @@ const Account = () => {
                     color={account.balance + account.init_amount < 0 ? 'neon.red' : 'neon.green'}
                     textAlign='right'
                   >
-                    {currencyFormat(account.balance + account.init_amount) + ' ' + account.currency.code}
+                    {currencyFormat(account.balance + account.init_amount) +
+                      ' ' +
+                      account.currency.code}
                   </Text>
                   <Text fontSize='xs' fontWeight='300' textAlign='right'>
                     {account.type}

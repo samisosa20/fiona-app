@@ -24,7 +24,9 @@ interface Form {
 const useAccount = () => {
   const isFocused = useIsFocused();
   const [isLoading, setIsLoading] = useState(false);
+  const [showAllAccounts, setShowAllAccounts] = useState(false);
   const [accounts, setAccounts] = useState<ListAccount[]>([]);
+  const [realAccounts, setRealAccounts] = useState<ListAccount[]>([]);
   const [balanceTime, setBalanceTime] = useState('month');
   const { height } = Dimensions.get('window');
   const listTime = [
@@ -71,9 +73,19 @@ const useAccount = () => {
     setBalanceTime(time);
   }
 
+  const handleChangeView = () => {
+    if (!showAllAccounts) {
+      setAccounts(realAccounts)
+    } else {
+      setAccounts(realAccounts.filter(v => !v.deleted_at));
+    }
+    setShowAllAccounts(!showAllAccounts);
+  }
+
   useEffect(() => {
     const onSuccess = (data: ListAccount[]) => {
-      setAccounts(data);
+      setRealAccounts(data)
+      setAccounts(data.filter(v => !v.deleted_at));
     };
 
     if (!isAuth) {
@@ -97,6 +109,8 @@ const useAccount = () => {
     handleChangeTime,
     balanceTime,
     listTime,
+    showAllAccounts,
+    handleChangeView,
   };
 };
 

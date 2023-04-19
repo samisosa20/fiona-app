@@ -32,11 +32,18 @@ const useAccountProviders = () => {
     return trackPromise(request);
   };
 
-  const hiddenAccountProvider = (id: number, data: any) => {
+  const hiddenAccountProvider = (id: number) => {
     const request = axios({
       method: 'DELETE',
       url: `accounts/${id}`,
-      data,
+    });
+
+    return trackPromise(request);
+  };
+  const activateAccountProvider = (id: number) => {
+    const request = axios({
+      method: 'POST',
+      url: `accounts/${id}/restore`,
     });
 
     return trackPromise(request);
@@ -67,6 +74,7 @@ const useAccountProviders = () => {
     hiddenAccountProvider,
     detailAccountProvider,
     movementByAccountProvider,
+    activateAccountProvider,
   };
 };
 

@@ -131,7 +131,7 @@ const useHome = () => {
 
   useEffect(() => {
     const onSuccess = (data: ListAccount[]) => {
-      setAccounts(data);
+      setAccounts(data.filter(v => !v.deleted_at));
     };
     if (!isAuth) {
       navigation.navigate('Welcome');

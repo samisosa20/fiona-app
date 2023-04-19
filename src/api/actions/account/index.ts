@@ -11,6 +11,7 @@ const useAccountActions = () => {
     hiddenAccountProvider,
     detailAccountProvider,
     movementByAccountProvider,
+    activateAccountProvider,
   } = useAccountProviders();
 
   const actGetListAccount = async (
@@ -78,12 +79,40 @@ const useAccountActions = () => {
     }
   };
 
+  const actHiddenAccount = async (id: number,
+    onSuccess: Function = () => {},
+    onError: Function = () => {},
+  ) => {
+    try {
+      const response = await hiddenAccountProvider(id);
+      if (response.status !== 200) throw response;
+      onSuccess && onSuccess(response.data.message);
+    } catch (e) {
+      onError && onError(e);
+    }
+  };
+
+  const actRecoverAccount = async (id: number,
+    onSuccess: Function = () => {},
+    onError: Function = () => {},
+  ) => {
+    try {
+      const response = await activateAccountProvider(id);
+      if (response.status !== 200) throw response;
+      onSuccess && onSuccess(response.data.message);
+    } catch (e) {
+      onError && onError(e);
+    }
+  };
+
   return {
     actGetListAccount,
     actGetDetailAccount,
     actGetMovementAccount,
     actCreateAccount,
     actEditAccount,
+    actHiddenAccount,
+    actRecoverAccount,
   };
 };
 

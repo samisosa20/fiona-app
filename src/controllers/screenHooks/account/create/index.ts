@@ -22,6 +22,7 @@ interface Form {
   init_amount: string;
   badge_id: number;
   type: string;
+  deleted_at?: string | null;
 }
 
 type RootStackParamList = {
@@ -34,6 +35,7 @@ type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'AccountDetail'>;
 
 const useAccountCreate = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [intStatus, setInitStatus] = useState(false);
   const [listCurrency, setListCurrency] = useState([]);
   const [title, setTitle] = useState('Creacion de cuenta');
   const [titleButton, setTitleButton] = useState('Crear');
@@ -54,7 +56,13 @@ const useAccountCreate = () => {
 
   const { useActions } = useApi();
   const { useAccountActions } = useActions();
-  const { actCreateAccount, actGetDetailAccount, actEditAccount } = useAccountActions();
+  const {
+    actCreateAccount,
+    actGetDetailAccount,
+    actEditAccount,
+    actHiddenAccount,
+    actRecoverAccount,
+  } = useAccountActions();
 
   const listType = [
     {
@@ -85,6 +93,7 @@ const useAccountCreate = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm({
     defaultValues: {
       name: '',
@@ -92,6 +101,7 @@ const useAccountCreate = () => {
       init_amount: '0',
       badge_id: 0,
       type: '',
+      status: true,
     },
     resolver: yupResolver(accountValidator),
     mode: 'all',
@@ -102,21 +112,29 @@ const useAccountCreate = () => {
     const onSuccess = (message: string) => {
       Toast.show({
         type: 'success',
-        text1: message
-      })
-      navigation.dispatch(CommonActions.goBack())
+        text1: message,
+      });
+      navigation.dispatch(CommonActions.goBack());
       setIsLoading(false);
-    }
+    };
     if (route?.params?.id) {
-      actEditAccount(route?.params?.id, data, onSuccess)
+      if (intStatus) {
+        actEditAccount(route?.params?.id, data, onSuccess);
+      }
+      if (!watch('status')) {
+        actHiddenAccount(route.params.id);
+      } else {
+        actRecoverAccount(route.params.id);
+      }
     } else {
-      actCreateAccount(data, onSuccess)
+      actCreateAccount(data, onSuccess);
     }
   };
 
   useEffect(() => {
     const onSuccess = (data: Form) => {
-      reset({...data, init_amount: data.init_amount.toString()});
+      setInitStatus(!data.deleted_at)
+      reset({ ...data, init_amount: data.init_amount.toString(), status: !data.deleted_at });
     };
 
     if (isAuth) {
@@ -151,6 +169,7 @@ const useAccountCreate = () => {
     listType,
     listCurrency,
     titleButton,
+    route,
   };
 };
 

@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  ArrowBackIcon,
-  Button,
-  Center,
-  Pressable,
-} from 'native-base';
+import { View, Text, ArrowBackIcon, Button, Center, Pressable, Divider } from 'native-base';
 import { CommonActions } from '@react-navigation/native';
 
 // Controllers
@@ -29,9 +22,10 @@ const AccountCreate = () => {
     listType,
     listCurrency,
     titleButton,
+    route,
   } = useAccountCreate();
 
-  const { InputControl, SelectControl } = useComponents();
+  const { InputControl, SelectControl, SwitchControl } = useComponents();
 
   return (
     <View bg='bg' h={height} py='10' px='4' justifyContent='space-between'>
@@ -81,6 +75,14 @@ const AccountCreate = () => {
             options={listType}
             helperText='Esto ayudara a segmentar tu plata'
           />
+          {route?.params?.id && <Divider mb='5'/>}
+          {route?.params?.id && <SwitchControl
+            type='active'
+            control={control}
+            errors={errors}
+            name='status'
+            helperText="Al inactivar la cuenta quedara oculta y no la podras usar, hasta que se active de nuevo."
+          />}
         </Center>
       </View>
       <View w='100%' borderRadius='10' bg='white'>

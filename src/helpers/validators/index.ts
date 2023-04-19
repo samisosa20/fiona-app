@@ -39,7 +39,7 @@ const useValidators = () => {
         name: Yup.string()
         .required('Campo requerido.')
         .matches(lettersPattern, 'Formato incorrecto.'),
-        description: Yup.string(),
+        description: Yup.string().nullable(),
         type: Yup.string()
         .required('Campo requerido.'),
         badge_id: Yup.string()

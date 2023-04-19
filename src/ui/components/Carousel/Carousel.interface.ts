@@ -11,6 +11,7 @@ export interface ListAccount {
     code: string;
   };
   type: string;
+  deleted_at?: string | null;
 }
 
 export interface ListEvent {
