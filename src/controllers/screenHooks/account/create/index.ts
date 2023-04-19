@@ -108,7 +108,7 @@ const useAccountCreate = () => {
   });
 
   const onSubmit = (data: Form) => {
-    setIsLoading(true);
+    
     const onSuccess = (message: string) => {
       Toast.show({
         type: 'success',
@@ -120,11 +120,15 @@ const useAccountCreate = () => {
     if (route?.params?.id) {
       if (intStatus) {
         actEditAccount(route?.params?.id, data, onSuccess);
-      }
-      if (!watch('status')) {
-        actHiddenAccount(route.params.id);
+        if (!watch('status')) {
+          actHiddenAccount(route.params.id);
+        }
       } else {
-        actRecoverAccount(route.params.id);
+        if (watch('status')) {
+          actRecoverAccount(route.params.id, onSuccess);
+        } else {
+          setIsLoading(false);
+        }
       }
     } else {
       actCreateAccount(data, onSuccess);
