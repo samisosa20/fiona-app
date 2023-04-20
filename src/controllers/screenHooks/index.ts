@@ -16,6 +16,7 @@ import useSetting from './setting'
 import useCategory from './category'
 import useCategoryDetail from './category/detail'
 import useCategoryCreate from './category/create'
+import useProfile from './profile'
 
 const useScreenHooks = () => {
     return {
@@ -37,6 +38,7 @@ const useScreenHooks = () => {
         useCategory,
         useCategoryDetail,
         useCategoryCreate,
+        useProfile,
     }
 }
 

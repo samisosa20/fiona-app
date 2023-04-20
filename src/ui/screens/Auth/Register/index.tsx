@@ -53,7 +53,7 @@ const Register = () => {
             errors={errors}
           />
           <InputControl
-            label='Contraseña'
+            label='Confirma tu contraseña'
             placeholder='Confirma tu contraseña aqui'
             type='password'
             name='passwordConfirmation'

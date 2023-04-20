@@ -13,6 +13,7 @@ const useAuthReducers = () => {
     const {
         LOGIN,
         LOG_OUT,
+        EDIT_PROFILE,
     } = useAuthTypes()
 
     const auth = createReducer(initialStateAuth, {
@@ -25,8 +26,15 @@ const useAuthReducers = () => {
                 email: payload.data.email,
             }
         },
+        [EDIT_PROFILE](state: any, action: any) {
+            const { payload } = action
+            return {
+                ...state,
+                name: payload.data.name,
+                email: payload.data.email,
+            }
+        },
         [LOG_OUT]() {
-            console.log('LOG_OUT', initialStateAuth)
             return {
                 auth_token: null,
                 name: null,

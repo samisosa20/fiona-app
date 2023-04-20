@@ -21,6 +21,12 @@ const useValidators = () => {
     password: Yup.string().required('Campo requerido.').min(8, 'La contraseña es muy corta.'),
     passwordConfirmation: Yup.string().oneOf([Yup.ref('password')], 'Las contraseñas no coinciden'),
   });
+  const profileValidator = Yup.object({
+    name: Yup.string().required('Campo requerido.').matches(lettersPattern, 'Formato incorrecto.'),
+    email: Yup.string().required('Campo requerido.').matches(emailPattern, 'Formato incorrecto.'),
+    password: Yup.string().nullable(),
+    passwordConfirmation: Yup.string().oneOf([Yup.ref('password')], 'Las contraseñas no coinciden'),
+  });
 
   const accountValidator = Yup.object({
     name: Yup.string().required('Campo requerido.').matches(lettersPattern, 'Formato incorrecto.'),
@@ -71,6 +77,7 @@ const useValidators = () => {
     eventValidator,
     heritageValidator,
     categoryValidator,
+    profileValidator,
   };
 };
 
