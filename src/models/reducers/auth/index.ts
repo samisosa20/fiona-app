@@ -26,8 +26,12 @@ const useAuthReducers = () => {
             }
         },
         [LOG_OUT]() {
-            console.log('LOG_OUT')
-            return initialStateAuth
+            console.log('LOG_OUT', initialStateAuth)
+            return {
+                auth_token: null,
+                name: null,
+                email: null,
+            }
         },
     })
 

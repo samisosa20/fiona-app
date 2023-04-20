@@ -51,6 +51,17 @@ const useValidators = () => {
     badge_id: Yup.string().required('Campo requerido.'),
     year: Yup.string().required('Campo requerido.'),
   });
+  
+  const categoryValidator = Yup.object({
+    name: Yup.string().required('Campo requerido.'),
+    group_id: Yup.string().required('Campo requerido.'),
+    description: Yup.string().nullable(),
+    category_id: Yup.object({
+      id: Yup.string().required('Campo requerido.'),
+      title: Yup.string().required('Campo requerido.'),
+      category_father: Yup.string().nullable(),
+    }).nullable(),
+  });
 
   return {
     loginValidator,
@@ -59,6 +70,7 @@ const useValidators = () => {
     accountValidator,
     eventValidator,
     heritageValidator,
+    categoryValidator,
   };
 };
 

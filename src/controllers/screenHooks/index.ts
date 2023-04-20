@@ -12,6 +12,10 @@ import useEventCreate from './event/create'
 import useHeritage from './heritage'
 import useHeritageDetail from './heritage/detail'
 import useHeritageCreate from './heritage/create'
+import useSetting from './setting'
+import useCategory from './category'
+import useCategoryDetail from './category/detail'
+import useCategoryCreate from './category/create'
 
 const useScreenHooks = () => {
     return {
@@ -29,6 +33,10 @@ const useScreenHooks = () => {
         useHeritage,
         useHeritageDetail,
         useHeritageCreate,
+        useSetting,
+        useCategory,
+        useCategoryDetail,
+        useCategoryCreate,
     }
 }
 

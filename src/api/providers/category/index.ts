@@ -3,10 +3,11 @@ import axios from 'axios';
 import { trackPromise } from 'react-promise-tracker';
 
 const useCategoryProviders = () => {
-  const listCategoryProvider = () => {
+  const listCategoryProvider = (params: any) => {
     const request = axios({
       method: 'GET',
       url: `categories`,
+      params
     });
 
     return trackPromise(request);
@@ -49,6 +50,15 @@ const useCategoryProviders = () => {
 
     return trackPromise(request);
   };
+  
+  const listFieldCategoryProvider = () => {
+    const request = axios({
+      method: 'GET',
+      url: `list/categories`,
+    });
+
+    return trackPromise(request);
+  };
 
   const activateCategoryProvider = (id: number) => {
     const request = axios({
@@ -66,6 +76,7 @@ const useCategoryProviders = () => {
     hiddenCategoryProvider,
     detailCategoryProvider,
     activateCategoryProvider,
+    listFieldCategoryProvider,
   };
 };
 

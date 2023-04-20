@@ -13,17 +13,17 @@ const useGeneralSelectors = () => {
             )
         )
     
-    const gorupSelector = () =>
+    const groupSelector = () =>
         useSelector(
             createSelector(
-                (state: any) => state.groups,
-                groups => groups
+                (state: any) => state.general,
+                general => general.groups
             )
         )
 
     return {
         currencySelector,
-        gorupSelector,
+        groupSelector,
     }
 }
 

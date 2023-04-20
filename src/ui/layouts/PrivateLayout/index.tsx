@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { View, Pressable, ArrowBackIcon, Modal, Button } from 'native-base';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -11,6 +12,7 @@ interface PLayout {
   centerLayout?: boolean;
   withOutPaddingH?: boolean;
   showBack?: boolean;
+  pb?: number | string;
   children: JSX.Element
   | JSX.Element[]
   | string
@@ -22,19 +24,27 @@ interface PLayout {
 }
 
 const PrivateLayout = (props: PLayout) => {
-  const { children, centerLayout, otherAction, withOutPaddingH, showBack, ...rest } = props;
+  const [showModal, setShowModal] = useState(false)
+  const { children, centerLayout, otherAction, withOutPaddingH, showBack, pb, ...rest } = props;
   const { height } = Dimensions.get('window');
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const { useAuthSelectors } = useSelectors();
-  const { loggedSelector } = useAuthSelectors();
+  const { loggedSelector, authSelector } = useAuthSelectors();
   const isAuth = loggedSelector();
+  const auth = authSelector();
+
+  useEffect(() => {
+    {console.log(auth)}
+    setShowModal(!isAuth)
+  }, [isAuth])
 
   return (
     <View
       bg='bg'
       h={height}
       pt='10'
+      pb={pb ? pb : 0}
       pl={withOutPaddingH ? 0 : 4}
       pr={centerLayout ? 4 : 0}
       {...rest}
@@ -54,9 +64,8 @@ const PrivateLayout = (props: PLayout) => {
         {otherAction}
       </View>
       {children}
-      {console.log(isAuth)}
       <Modal
-        isOpen={!isAuth}
+        isOpen={showModal}
         _backdrop={{
           _dark: {
             bg: 'coolGray.800',

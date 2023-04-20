@@ -11,14 +11,28 @@ const useCategoryActions = () => {
     hiddenCategoryProvider,
     detailCategoryProvider,
     activateCategoryProvider,
+    listFieldCategoryProvider,
   } = useCategoryProviders();
 
-  const actGetListCategory = async (
+  const actGetListCategory = async (params?: {category_father: number},
     onSuccess: Function = () => {},
     onError: Function = () => {},
   ) => {
     try {
-      const response = await listCategoryProvider();
+      const response = await listCategoryProvider(params);
+      if (response.status !== 200) throw response;
+      onSuccess && onSuccess(response.data);
+    } catch (e) {
+      onError && onError(e);
+    }
+  };
+  
+  const actGetListFieldCategory = async (
+    onSuccess: Function = () => {},
+    onError: Function = () => {},
+  ) => {
+    try {
+      const response = await listFieldCategoryProvider();
       if (response.status !== 200) throw response;
       onSuccess && onSuccess(response.data);
     } catch (e) {
@@ -98,6 +112,7 @@ const useCategoryActions = () => {
     actEditCategory,
     actDeleteCategory,
     actRecoverCategory,
+    actGetListFieldCategory,
   };
 };
 

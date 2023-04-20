@@ -6,6 +6,8 @@ import Toast from 'react-native-toast-message';
 
 import { AppDispatch } from '../redux';
 
+import useStrings from '../../strings';
+
 interface storeRedux {
   getState: any;
   dispatch: AppDispatch;
@@ -19,7 +21,7 @@ const useInterceptor = (store: storeRedux) => {
     const { getState } = store;
     const { auth } = getState();
     const { auth_token } = auth;
-    
+
     if (auth_token) request.headers.authorization = `Bearer ${auth_token}`;
     request.headers['Time-zone'] = localize;
     request.headers['Content-Type'] = 'application/json';
@@ -38,10 +40,12 @@ const useInterceptor = (store: storeRedux) => {
 
   const handleResponseError = async (error: any) => {
     const { dispatch } = store;
+    const { useAuthTypes } = useStrings();
+    const { LOG_OUT } = useAuthTypes();
     switch (error.response.status) {
       case 401:
         console.log('error 401', error.response.data.message);
-        dispatch({type: 'LOGOUT'})
+        dispatch({ type: LOG_OUT });
         break;
       case 500:
         console.log('error 500', error.response.data.message);
@@ -52,7 +56,7 @@ const useInterceptor = (store: storeRedux) => {
     Toast.show({
       type: 'error',
       text1: error.response.data.message,
-      text2: error.response.data.detail
+      text2: error.response.data.detail,
     });
     return error;
   };

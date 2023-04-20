@@ -15,6 +15,9 @@ import HeritageCreate from './Heritage/Create';
 import Report from './Report';
 import Setting from './Setting';
 import Profile from './Profile';
+import Category from './Category';
+import CategoryDetail from './Category/Detail';
+import CategoryCreate from './Category/Create';
 
 const useScreens = () => {
   return {
@@ -35,6 +38,9 @@ const useScreens = () => {
     Report,
     Setting,
     Profile,
+    Category,
+    CategoryDetail,
+    CategoryCreate,
   };
 };
 
