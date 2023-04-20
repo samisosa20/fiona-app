@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Dimensions } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { useIsFocused } from "@react-navigation/native";
@@ -19,7 +18,6 @@ const useAccount = () => {
   const [accounts, setAccounts] = useState<ListAccount[]>([]);
   const [realAccounts, setRealAccounts] = useState<ListAccount[]>([]);
   const [balanceTime, setBalanceTime] = useState('month');
-  const { height } = Dimensions.get('window');
   const listTime = [
     {id: 'month', name: 'Mes'},
     {id: 'year', name: 'Año'},
@@ -66,7 +64,6 @@ const useAccount = () => {
   }, [isFocused]);
 
   return {
-    height,
     accounts,
     navigation,
     handleChangeTime,

@@ -78,25 +78,6 @@ const App = () => {
               </Stack.Navigator>
             </NavigationContainer>
             <Toast />
-            {/* <Modal
-              isOpen={true}
-              _backdrop={{
-                _dark: {
-                  bg: 'coolGray.800',
-                },
-                bg: 'warmGray.50',
-              }}
-            >
-              <Modal.Content maxWidth='350' maxH='212'>
-                <Modal.Header>Upsss!</Modal.Header>
-                <Modal.Body>
-                  Tu sesion ha expirado, deberas volver a inicar sesion.
-                  <Button onPress={() => {}} bg='info.400' mt='4'>
-                    Salir
-                  </Button>
-                </Modal.Body>
-              </Modal.Content>
-            </Modal> */}
           </NativeBaseProvider>
         </PersistGate>
       </Provider>

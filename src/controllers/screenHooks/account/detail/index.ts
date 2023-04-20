@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Dimensions } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, ParamListBase, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
@@ -27,13 +26,6 @@ const useAccountDetail = () => {
   const isFocused = useIsFocused();
   const [account, setAccount] = useState<ListAccount>();
   const [movements, setMovements] = useState<Movements[]>();
-  const [balanceTime, setBalanceTime] = useState('month');
-  const { height } = Dimensions.get('window');
-  const listTime = [
-    { id: 'month', name: 'Mes' },
-    { id: 'year', name: 'Año' },
-    { id: 'total', name: 'Total' },
-  ];
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute<ProfileScreenRouteProp>();
@@ -45,10 +37,6 @@ const useAccountDetail = () => {
   const { useActions } = useApi();
   const { useAccountActions } = useActions();
   const { actGetDetailAccount, actGetMovementAccount } = useAccountActions();
-
-  const handleChangeTime = (time: string) => {
-    setBalanceTime(time);
-  };
 
   useEffect(() => {
     const onSuccess = (data: ListAccount) => {
@@ -70,7 +58,6 @@ const useAccountDetail = () => {
   }, [isFocused]);
 
   return {
-    height,
     navigation,
     account,
     movements,

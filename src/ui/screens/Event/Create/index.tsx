@@ -1,5 +1,4 @@
-import { View, Text, ArrowBackIcon, Button, Center, Pressable } from 'native-base';
-import { CommonActions } from '@react-navigation/native';
+import { View, Text, Button, Center } from 'native-base';
 
 
 // Controllers
@@ -7,13 +6,12 @@ import useControllers from '../../../../controllers';
 
 // Component
 import useComponents from '../../../components';
+import useLayouts from '../../../layouts';
 
 const EventCreate = () => {
   const { useScreenHooks } = useControllers();
   const { useEventCreate } = useScreenHooks();
   const {
-    height,
-    navigation,
     title,
     control,
     errors,
@@ -25,12 +23,11 @@ const EventCreate = () => {
 
   const { InputControl, DateTimeControl } = useComponents();
 
+  const { PrivateLayout } = useLayouts();
+
   return (
-    <View bg='bg' h={height} py='10' px='4' justifyContent='space-between'>
+    <PrivateLayout  showBack pb='10' centerLayout>
       <View>
-        <Pressable onPress={() => navigation.dispatch(CommonActions.goBack())} mt='4'>
-          <ArrowBackIcon color='white' size='md' px='4' />
-        </Pressable>
         <Text fontSize='3xl' fontWeight='600' mt='4' textAlign='center'>
           {title}
         </Text>
@@ -48,7 +45,7 @@ const EventCreate = () => {
             label='Fecha fin del evento' />
         </Center>
       </View>
-      <View w='100%' borderRadius='10' bg='white'>
+      <View w='100%' borderRadius='10' bg='white' mt='auto'>
         <Button
           isLoading={isLoading}
           isLoadingText='enviando'
@@ -59,7 +56,7 @@ const EventCreate = () => {
           {titleButton}
         </Button>
       </View>
-    </View>
+    </PrivateLayout>
   );
 };
 

@@ -1,11 +1,11 @@
-import { View, Text, ArrowBackIcon, Box, Center, Pressable, ArrowDownIcon, ArrowUpIcon, Image } from 'native-base';
-import { CommonActions } from '@react-navigation/native';
+import { View, Text, Box, Center, Pressable, ArrowDownIcon, ArrowUpIcon, Image } from 'native-base';
 
 // Controllers
 import useControllers from '../../../../controllers';
 
 // Components
 import useComponents from '../../../components';
+import useLayouts from '../../../layouts';
 
 // Helper
 import useHelpers from '../../../../helpers';
@@ -16,23 +16,25 @@ import iconEdit from '../../../../assets/icons/icon-edit.png';
 const AccountDetail = () => {
   const { useScreenHooks } = useControllers();
   const { useAccountDetail } = useScreenHooks();
-  const { height, navigation, account, movements } = useAccountDetail();
+  const { navigation, account, movements } = useAccountDetail();
 
   const { useQuickFunctions } = useHelpers();
   const { currencyFormat } = useQuickFunctions();
 
   const { ListMovements } = useComponents();
 
+  const { PrivateLayout } = useLayouts();
+
   return (
-    <View bg='bg' h={height} pt='10'>
-      <View flexDirection='row' justifyContent='space-between' alignItems='center' px='4' mt='3'>
-        <Pressable onPress={() => navigation.dispatch(CommonActions.goBack())}>
-          <ArrowBackIcon color='white' size='md' px='4' />
+    <PrivateLayout
+      withOutPaddingH
+      showBack
+      otherAction={
+        <Pressable onPress={() => navigation.navigate('AccountCreate', { id: account?.id })}>
+          <Image source={iconEdit} alt='Editar' w='6' h='6' resizeMode='contain' />
         </Pressable>
-          <Pressable  onPress={() => navigation.navigate('AccountCreate', {id: account?.id})} >
-            <Image source={iconEdit} alt='Editar' w='6' h='6' resizeMode="contain"/>
-          </Pressable>
-      </View>
+      }
+    >
       <Center>
         <Text fontSize='xs' fontWeight='300' mt='4' w='80%' textAlign='right' lineHeight='sm'>
           {account?.type}
@@ -77,7 +79,7 @@ const AccountDetail = () => {
         </View>
       </Center>
       <ListMovements movements={movements} />
-    </View>
+    </PrivateLayout>
   );
 };
 

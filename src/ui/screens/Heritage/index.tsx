@@ -1,5 +1,4 @@
-import { View, ScrollView, Text, ArrowBackIcon, Box, Pressable, AddIcon } from 'native-base';
-import { CommonActions } from '@react-navigation/native';
+import { View, ScrollView, Text, Box, Pressable, AddIcon } from 'native-base';
 import { LineChart } from 'react-native-chart-kit';
 
 // Controllers
@@ -8,20 +7,24 @@ import useControllers from '../../../controllers';
 // Helper
 import useHelpers from '../../../helpers';
 
+// Components
+import useLayouts from '../../layouts';
+
 const Heritage = () => {
   const { useScreenHooks } = useControllers();
   const { useHeritage } = useScreenHooks();
-  const { height, listHeirtages, navigation, width, dataChart } = useHeritage();
+  const { listHeirtages, navigation, width, dataChart } = useHeritage();
 
   const { useQuickFunctions } = useHelpers();
   const { currencyFormat } = useQuickFunctions();
 
+  const { PrivateLayout } = useLayouts();
+
   return (
-    <View bg='bg' h={height} py='10' px='4'>
-      <View flexDirection='row' justifyContent='space-between' alignItems='center' px='4' mt='3'>
-        <Pressable onPress={() => navigation.dispatch(CommonActions.goBack())}>
-          <ArrowBackIcon color='white' size='md' px='4' />
-        </Pressable>
+    <PrivateLayout
+      centerLayout
+      showBack
+      otherAction={
         <Pressable
           bg='tertiary.500'
           rounded='full'
@@ -30,21 +33,27 @@ const Heritage = () => {
         >
           <AddIcon color='white' sixe='lg' />
         </Pressable>
-      </View>
+      }
+    >
       <Text fontSize='3xl' fontWeight='600' mt='4' textAlign='center' mb='8'>
         Listado de patrimonio
       </Text>
       <View>
         <LineChart
           data={{
-            labels: listHeirtages.map(v => { return v.year}),
-            datasets: dataChart
+            labels: listHeirtages.map((v) => {
+              return v.year;
+            }),
+            datasets: dataChart,
           }}
           width={width - 45}
           height={220}
           yAxisLabel='$'
           yAxisInterval={1} // optional, defaults to 1
-          formatYLabel={(v) => (parseFloat(v) / (parseFloat(v) >= 1000000 ? 1000000 : 1000)).toFixed(2) + (parseFloat(v) >= 1000000 ? 'M' : 'K')}
+          formatYLabel={(v) =>
+            (parseFloat(v) / (parseFloat(v) >= 1000000 ? 1000000 : 1000)).toFixed(2) +
+            (parseFloat(v) >= 1000000 ? 'M' : 'K')
+          }
           chartConfig={{
             backgroundColor: '#e26a00',
             backgroundGradientFrom: '#fb8c00',
@@ -64,7 +73,6 @@ const Heritage = () => {
           style={{
             marginVertical: 8,
             borderRadius: 16,
-            
           }}
         />
       </View>
@@ -115,7 +123,7 @@ const Heritage = () => {
             ))}
         </View>
       </ScrollView>
-    </View>
+    </PrivateLayout>
   );
 };
 

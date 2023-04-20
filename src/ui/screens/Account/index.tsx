@@ -1,6 +1,5 @@
-import { View, ScrollView, Text, ArrowBackIcon, Box, Center, Pressable } from 'native-base';
-import { CommonActions } from '@react-navigation/native';
-import { Image } from 'react-native'
+import { View, ScrollView, Text, Box, Center, Pressable } from 'native-base';
+import { Image } from 'react-native';
 
 // Controllers
 import useControllers from '../../../controllers';
@@ -12,12 +11,13 @@ import useHelpers from '../../../helpers';
 import iconHidden from '../../../assets/icons/icon-hiden.png';
 import iconShow from '../../../assets/icons/icon-show.png';
 
+// Components
+import useLayouts from '../../layouts';
 
 const Account = () => {
   const { useScreenHooks } = useControllers();
   const { useAccount } = useScreenHooks();
   const {
-    height,
     accounts,
     navigation,
     handleChangeTime,
@@ -27,19 +27,26 @@ const Account = () => {
     handleChangeView,
   } = useAccount();
 
+  const { PrivateLayout } = useLayouts();
+
   const { useQuickFunctions } = useHelpers();
   const { currencyFormat } = useQuickFunctions();
 
   return (
-    <View bg='bg' h={height} py='10' px='4'>
-      <View flexDirection='row' justifyContent='space-between' alignItems='center' px='4' mt='3'>
-        <Pressable onPress={() => navigation.dispatch(CommonActions.goBack())}>
-          <ArrowBackIcon color='white' size='md' px='4' />
-        </Pressable>
+    <PrivateLayout
+      centerLayout
+      showBack
+      otherAction={
         <Pressable onPress={() => handleChangeView()}>
-          <Image source={showAllAccounts ? iconShow : iconHidden} alt={showAllAccounts ? 'Ocultar' : 'Mostrar' } resizeMode='contain' style={{height: 24}} />
+          <Image
+            source={showAllAccounts ? iconShow : iconHidden}
+            alt={showAllAccounts ? 'Ocultar' : 'Mostrar'}
+            resizeMode='contain'
+            style={{ height: 24 }}
+          />
         </Pressable>
-      </View>
+      }
+    >
       <Text fontSize='3xl' fontWeight='600' mt='4' textAlign='center'>
         Listado de cuentas
       </Text>
@@ -170,7 +177,7 @@ const Account = () => {
           </Pressable>
         </Center>
       </ScrollView>
-    </View>
+    </PrivateLayout>
   );
 };
 

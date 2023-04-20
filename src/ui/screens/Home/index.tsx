@@ -5,6 +5,7 @@ import useControllers from '../../../controllers';
 
 // Components
 import useComponents from '../../components';
+import useLayouts from "../../layouts";
 
 // Helper
 import useHelpers from '../../../helpers';
@@ -12,15 +13,17 @@ import useHelpers from '../../../helpers';
 const Home = () => {
   const { useScreenHooks } = useControllers();
   const { useHome } = useScreenHooks();
-  const { height, accounts, events, budgets, heritages, user, balances } = useHome();
+  const { accounts, events, budgets, heritages, user, balances } = useHome();
 
   const { Carousel } = useComponents();
 
   const { useQuickFunctions } = useHelpers();
   const { currencyFormat } = useQuickFunctions();
 
+  const { PrivateLayout } = useLayouts();
+
   return (
-    <View bg='bg' h={height} py='10' pl='4'>
+    <PrivateLayout>
       <HStack space={2} justifyContent='flex-start'>
         <Text fontSize='3xl' fontWeight='600' mt='4'>
           ¡Hola!
@@ -65,10 +68,10 @@ const Home = () => {
         </Center>
         <Carousel listAccount={accounts} label='Cuentas' type='Account' />
         <Carousel listEvent={events} label='Eventos' type='Event' />
-        <Carousel listBudget={budgets} label='Presupuesto' type='Budget' />
         <Carousel listHeritage={heritages} label='Patrimonio' type='Heritage' />
+        <Carousel listBudget={budgets} label='Presupuesto' type='Budget' />
       </ScrollView>
-    </View>
+    </PrivateLayout>
   );
 };
 

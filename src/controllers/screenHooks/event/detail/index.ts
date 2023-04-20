@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Dimensions } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, ParamListBase, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
@@ -28,7 +27,6 @@ const useEventDetail = () => {
   const isFocused = useIsFocused();
   const [event, setEvent] = useState<ListEvent>();
   const [showModal, setShowModal] = useState(false);
-  const { height } = Dimensions.get('window');
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute<ProfileScreenRouteProp>();
@@ -41,18 +39,17 @@ const useEventDetail = () => {
   const { useEventActions } = useActions();
   const { actGetDetailEvent, actDeleteEvent } = useEventActions();
 
-
   const onSubmitDelet = () => {
-    setShowModal(false)
+    setShowModal(false);
     const onSuccess = (message: string) => {
       Toast.show({
         type: 'success',
         text1: message,
       });
       navigation.dispatch(CommonActions.goBack());
-    }
+    };
     actDeleteEvent(route.params.id, onSuccess);
-  }
+  };
 
   useEffect(() => {
     const onSuccess = (data: ListEvent) => {
@@ -69,7 +66,6 @@ const useEventDetail = () => {
   }, [isFocused]);
 
   return {
-    height,
     navigation,
     event,
     showModal,

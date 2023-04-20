@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Dimensions } from 'react-native';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -39,7 +38,6 @@ const useAccountCreate = () => {
   const [listCurrency, setListCurrency] = useState([]);
   const [title, setTitle] = useState('Creacion de cuenta');
   const [titleButton, setTitleButton] = useState('Crear');
-  const { height } = Dimensions.get('window');
 
   // Validators
   const { useValidators } = useHelpers();
@@ -162,14 +160,12 @@ const useAccountCreate = () => {
   }, [currencies]);
 
   return {
+    title,
     control,
-    handleSubmit,
     errors,
+    handleSubmit,
     onSubmit,
     isLoading,
-    height,
-    navigation,
-    title,
     listType,
     listCurrency,
     titleButton,

@@ -40,7 +40,7 @@ const useInterceptor = (store: storeRedux) => {
     const { dispatch } = store;
     switch (error.response.status) {
       case 401:
-        //console.log('error 401', error.response.data.message);
+        console.log('error 401', error.response.data.message);
         dispatch({type: 'LOGOUT'})
         break;
       case 500:

@@ -4,24 +4,24 @@ import { CommonActions } from '@react-navigation/native';
 // Controllers
 import useControllers from '../../../../controllers';
 
-// Components
+// Helpers
 import useHelpers from '../../../../helpers';
+
+// Components
+import useLayouts from '../../../layouts';
 
 const HeritageDetail = () => {
   const { useScreenHooks } = useControllers();
   const { useHeritageDetail } = useScreenHooks();
-  const { height, navigation, heritage, route } = useHeritageDetail();
+  const { navigation, heritage, route } = useHeritageDetail();
 
   const { useQuickFunctions } = useHelpers();
   const { currencyFormat } = useQuickFunctions();
 
+  const { PrivateLayout } = useLayouts();
+
   return (
-    <View bg='bg' h={height} pt='10'>
-      <View flexDirection='row' justifyContent='space-between' alignItems='center' px='4' mt='3'>
-        <Pressable onPress={() => navigation.dispatch(CommonActions.goBack())}>
-          <ArrowBackIcon color='white' size='md' px='4' />
-        </Pressable>
-      </View>
+    <PrivateLayout showBack withOutPaddingH>
       <Center mb='8'>
         <Text fontSize='3xl' fontWeight='600' w='80%' textAlign='center' lineHeight='sm'>
           Patrimonio del {route.params.year}
@@ -73,7 +73,7 @@ const HeritageDetail = () => {
           </Pressable>
         )}
       />
-    </View>
+    </PrivateLayout>
   );
 };
 

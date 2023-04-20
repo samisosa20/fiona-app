@@ -1,13 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Dimensions } from 'react-native';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
-import { useIsFocused } from "@react-navigation/native";
-
-// Helpers
-import useHelpers from '../../../helpers';
+import { useIsFocused } from '@react-navigation/native';
 
 // Selectors
 import useSelectors from '../../../models/selectors';
@@ -16,10 +10,11 @@ import useSelectors from '../../../models/selectors';
 import useApi from '../../../api';
 
 // Interfaces
-import { ListAccount, ListEvent, ListHeritage } from '../../../ui/components/Carousel/Carousel.interface';
-interface Form {
-  email: string;
-}
+import {
+  ListAccount,
+  ListEvent,
+  ListHeritage,
+} from '../../../ui/components/Carousel/Carousel.interface';
 
 interface Balance {
   balance: number;
@@ -28,16 +23,11 @@ interface Balance {
 
 const useHome = () => {
   const isFocused = useIsFocused();
-  const [isLoading, setIsLoading] = useState(false);
   const [accounts, setAccounts] = useState<ListAccount[]>([]);
   const [events, setEvents] = useState<ListEvent[]>([]);
   const [heritages, setHeritage] = useState<ListHeritage[]>([]);
   const [balances, setBalances] = useState<Balance[]>([]);
-  const { height } = Dimensions.get('window');
 
-  // Validators
-  const { useValidators } = useHelpers();
-  const { forgotValidator } = useValidators();
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
@@ -78,28 +68,9 @@ const useHome = () => {
     },
   ];
 
-  // Form State
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      email: '',
-    },
-    resolver: yupResolver(forgotValidator),
-    mode: 'all',
-  });
-
-  const onSubmit = (data: Form) => {
-    setIsLoading(true);
-    console.log('submiting with ', data);
-    navigation.navigate('Home');
-  };
-
   useEffect(() => {
     const onSuccess = (data: ListAccount[]) => {
-      setAccounts(data.filter(v => !v.deleted_at));
+      setAccounts(data.filter((v) => !v.deleted_at));
     };
     const onSuccessEvent = (data: ListEvent[]) => {
       setEvents(data);
@@ -113,7 +84,7 @@ const useHome = () => {
     if (!isAuth) {
       navigation.navigate('Welcome');
     }
-    
+
     if (isAuth && isFocused) {
       actGetListAccount(onSuccess);
       actGetListActiveEvent(onSuccessEvent);
@@ -123,13 +94,6 @@ const useHome = () => {
   }, [isFocused]);
 
   return {
-    control,
-    handleSubmit,
-    errors,
-    onSubmit,
-    isLoading,
-    height,
-    navigation,
     accounts,
     events,
     budgets,

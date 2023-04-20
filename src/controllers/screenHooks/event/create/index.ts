@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Dimensions } from 'react-native';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -31,10 +30,8 @@ type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'EventDetail'>;
 
 const useEventCreate = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [listCurrency, setListCurrency] = useState([]);
   const [title, setTitle] = useState('Creacion de evento');
   const [titleButton, setTitleButton] = useState('Crear');
-  const { height } = Dimensions.get('window');
 
   // Validators
   const { useValidators } = useHelpers();
@@ -43,11 +40,9 @@ const useEventCreate = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute<ProfileScreenRouteProp>();
 
-  const { useAuthSelectors, useGeneralSelectors } = useSelectors();
+  const { useAuthSelectors } = useSelectors();
   const { loggedSelector } = useAuthSelectors();
-  const { currencySelector } = useGeneralSelectors();
   const isAuth = loggedSelector();
-  const currencies = currencySelector();
 
   const { useActions } = useApi();
   const { useEventActions } = useActions();
@@ -57,28 +52,6 @@ const useEventCreate = () => {
     actEditEvent,
   } = useEventActions();
 
-  const listType = [
-    {
-      label: 'Corriente',
-      value: 'Corriente',
-    },
-    {
-      label: 'Ahorros',
-      value: 'Ahorros',
-    },
-    {
-      label: 'Inversion',
-      value: 'Inversion',
-    },
-    {
-      label: 'Tarjeta de credito',
-      value: 'Tarjeta de credito',
-    },
-    {
-      label: 'Credito',
-      value: 'Credito',
-    },
-  ];
 
   // Form State
   const {
@@ -132,27 +105,14 @@ const useEventCreate = () => {
     }
   }, []);
 
-  useEffect(() => {
-    setListCurrency(
-      currencies?.map((v: { code: string; name: string; id: number }) => {
-        return { label: `${v.code} - ${v.name}`, value: v.id };
-      }),
-    );
-  }, [currencies]);
-
   return {
+    title,
     control,
-    handleSubmit,
     errors,
+    handleSubmit,
     onSubmit,
     isLoading,
-    height,
-    navigation,
-    title,
-    listType,
-    listCurrency,
     titleButton,
-    route,
   };
 };
 

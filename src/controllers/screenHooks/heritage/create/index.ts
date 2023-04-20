@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Dimensions } from 'react-native';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -37,7 +36,6 @@ const useHeritageCreate = () => {
   const [listCurrency, setListCurrency] = useState([]);
   const [title, setTitle] = useState('Creacion de patrimonio');
   const [titleButton, setTitleButton] = useState('Crear');
-  const { height } = Dimensions.get('window');
   const currentYear = new Date().getFullYear();
 
   const listYear = Array.from({ length: 5 }, (_, i) => {
@@ -126,8 +124,6 @@ const useHeritageCreate = () => {
   }, [currencies]);
 
   return {
-    height,
-    navigation,
     title,
     control,
     errors,

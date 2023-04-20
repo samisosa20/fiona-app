@@ -4,8 +4,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, ParamListBase, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import { useIsFocused } from '@react-navigation/native';
-import Toast from 'react-native-toast-message';
-import { CommonActions } from '@react-navigation/native';
 
 // Selectors
 import useSelectors from '../../../../models/selectors';
@@ -35,7 +33,6 @@ type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'HeritageDetail'>;
 const useHeritageDetail = () => {
   const isFocused = useIsFocused();
   const [heritage, setHeritage] = useState<Heritage[]>();
-  const { height } = Dimensions.get('window');
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute<ProfileScreenRouteProp>();
@@ -47,7 +44,6 @@ const useHeritageDetail = () => {
   const { useActions } = useApi();
   const { useHeritageActions } = useActions();
   const { actGetListHeritage } = useHeritageActions();
-
 
   useEffect(() => {
     const onSuccess = (data: Heritage[]) => {
@@ -64,7 +60,6 @@ const useHeritageDetail = () => {
   }, [isFocused]);
 
   return {
-    height,
     navigation,
     heritage,
     route,

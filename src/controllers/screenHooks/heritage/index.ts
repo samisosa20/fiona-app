@@ -26,7 +26,7 @@ const useHeritage = () => {
       data: [0],
     },
   ]);
-  const { height, width } = Dimensions.get('window');
+  const { width } = Dimensions.get('window');
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
@@ -41,7 +41,7 @@ const useHeritage = () => {
   useEffect(() => {
     const onSuccess = (data: ListHeritage[]) => {
       setHeritages(data);
-      
+
       // transform data to can read the line chart
       const newData = data
         .flatMap(({ year, balance }) =>
@@ -64,10 +64,6 @@ const useHeritage = () => {
         }, [])
         .map(({ currencyData, data }) => ({ data }));
 
-      const findCOP = data.find((elemento) => {
-        return elemento.balance.find((objeto) => objeto.currency === 'USD');
-      });
-
       setDatachart(
         newData.map((v) => {
           return { data: v.data.map((v: any) => v.comercial_amount) };
@@ -85,7 +81,6 @@ const useHeritage = () => {
   }, [isFocused]);
 
   return {
-    height,
     listHeirtages,
     navigation,
     width,
