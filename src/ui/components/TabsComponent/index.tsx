@@ -5,15 +5,15 @@ import { View, Image } from 'native-base';
 import useScreens from '../../screens';
 
 // Icon
-import iconHome from '../../../assets/icons/icon-home.png'
-import iconUser from '../../../assets/icons/icon-user.png'
-import iconSetting from '../../../assets/icons/icon-setting.png'
-import iconReport from '../../../assets/icons/icon-report.png'
+import iconHome from '../../../assets/icons/icon-home.png';
+import iconUser from '../../../assets/icons/icon-user.png';
+import iconSetting from '../../../assets/icons/icon-setting.png';
+import iconReport from '../../../assets/icons/icon-report.png';
 
 const TabsComponent = () => {
   const Tab = createBottomTabNavigator();
 
-  const { Home } = useScreens();
+  const { Home, Report, Setting, Profile } = useScreens();
 
   return (
     <Tab.Navigator
@@ -23,7 +23,7 @@ const TabsComponent = () => {
         tabBarStyle: {
           paddingTop: 8,
           backgroundColor: '#201D2C',
-        }
+        },
       }}
     >
       <Tab.Screen
@@ -31,39 +31,71 @@ const TabsComponent = () => {
         component={Home}
         options={{
           tabBarIcon: ({ focused }) => (
-          <View alignItems='center' justifyContent='center' py='2' px='3' rounded='full'>
-            <Image source={iconHome} alt="home" w='20px' h='20px' resizeMode="contain" tintColor={ focused ? '#5d5d9c': '#7B7C89'}/>
-          </View>),
+            <View alignItems='center' justifyContent='center' py='2' px='3' rounded='full'>
+              <Image
+                source={iconHome}
+                alt='home'
+                w='20px'
+                h='20px'
+                resizeMode='contain'
+                tintColor={focused ? '#5d5d9c' : '#7B7C89'}
+              />
+            </View>
+          ),
         }}
       />
       <Tab.Screen
         name='Report'
-        component={Home}
+        component={Report}
         options={{
           tabBarIcon: ({ focused }) => (
-          <View alignItems='center' justifyContent='center'>
-            <Image source={iconReport} alt="home" w='20px' h='20px' resizeMode="contain" tintColor={ focused ? '#5d5d9c': '#7B7C89'}/>
-          </View>),
+            <View alignItems='center' justifyContent='center'>
+              <Image
+                source={iconReport}
+                alt='reporte'
+                w='20px'
+                h='20px'
+                resizeMode='contain'
+                tintColor={focused ? '#5d5d9c' : '#7B7C89'}
+              />
+            </View>
+          ),
         }}
       />
       <Tab.Screen
         name='Setting'
-        component={Home}
+        component={Setting}
         options={{
           tabBarIcon: ({ focused }) => (
-          <View alignItems='center' justifyContent='center'>
-            <Image source={iconSetting} alt="home" w='20px' h='20px' resizeMode="contain" tintColor={ focused ? '#5d5d9c': '#7B7C89'}/>
-          </View>),
+            <View alignItems='center' justifyContent='center'>
+              <Image
+                source={iconSetting}
+                alt='setting'
+                w='20px'
+                h='20px'
+                resizeMode='contain'
+                tintColor={focused ? '#5d5d9c' : '#7B7C89'}
+              />
+            </View>
+          ),
         }}
       />
       <Tab.Screen
-        name='Settingss'
-        component={Home}
+        name='Profile'
+        component={Profile}
         options={{
           tabBarIcon: ({ focused }) => (
-          <View alignItems='center' justifyContent='center'>
-            <Image source={iconUser} alt="home" w='20px' h='20px' resizeMode="contain" tintColor={ focused ? '#5d5d9c': '#7B7C89'}/>
-          </View>),
+            <View alignItems='center' justifyContent='center'>
+              <Image
+                source={iconUser}
+                alt='perfil'
+                w='20px'
+                h='20px'
+                resizeMode='contain'
+                tintColor={focused ? '#5d5d9c' : '#7B7C89'}
+              />
+            </View>
+          ),
         }}
       />
     </Tab.Navigator>

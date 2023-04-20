@@ -12,6 +12,9 @@ import EventCreate from './Event/Create';
 import Heritage from './Heritage';
 import HeritageDetail from './Heritage/Detail';
 import HeritageCreate from './Heritage/Create';
+import Report from './Report';
+import Setting from './Setting';
+import Profile from './Profile';
 
 const useScreens = () => {
   return {
@@ -29,6 +32,9 @@ const useScreens = () => {
     Heritage,
     HeritageDetail,
     HeritageCreate,
+    Report,
+    Setting,
+    Profile,
   };
 };
 
