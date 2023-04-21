@@ -1,5 +1,5 @@
 import { Controller } from 'react-hook-form';
-import { Select, FormControl, WarningOutlineIcon, CheckIcon } from 'native-base';
+import { Select, FormControl, WarningOutlineIcon, CheckIcon, Container } from 'native-base';
 
 // Interface
 import { InputProps } from './SelectControl.interface';
@@ -23,6 +23,7 @@ const SelectControl = (props: InputProps) => {
               bg: 'teal.600',
               endIcon: <CheckIcon size='5' />,
             }}
+            _actionSheet={{ useRNModal: true}}
             mt={1}
             onValueChange={(itemValue) => onChange(itemValue)}
           >

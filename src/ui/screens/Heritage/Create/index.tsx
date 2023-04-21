@@ -1,4 +1,4 @@
-import { View, Text, Button, Center } from 'native-base';
+import { View, Text, Button, Center, ScrollView } from 'native-base';
 
 
 // Controllers
@@ -29,7 +29,7 @@ const HeritageCreate = () => {
 
   return (
     <PrivateLayout showBack centerLayout pb='10'>
-      <View>
+      <ScrollView>
         <Text fontSize='3xl' fontWeight='600' mt='4' textAlign='center'>
           {title}
         </Text>
@@ -74,7 +74,7 @@ const HeritageCreate = () => {
             options={listYear}
           />
         </Center>
-      </View>
+      </ScrollView>
       <View w='100%' borderRadius='10' bg='white' mt='auto'>
         <Button
           isLoading={isLoading}

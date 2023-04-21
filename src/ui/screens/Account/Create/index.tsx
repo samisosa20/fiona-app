@@ -1,4 +1,4 @@
-import { View, Text, Button, Center, Divider } from 'native-base';
+import { View, Text, Button, Center, Divider, ScrollView } from 'native-base';
 
 // Controllers
 import useControllers from '../../../../controllers';
@@ -29,7 +29,7 @@ const AccountCreate = () => {
 
   return (
     <PrivateLayout showBack pb='10' centerLayout>
-      <View>
+      <ScrollView>
         <Text fontSize='3xl' fontWeight='600' mt='4' textAlign='center'>
           {title}
         </Text>
@@ -81,7 +81,7 @@ const AccountCreate = () => {
             helperText="Al inactivar la cuenta quedara oculta y no la podras usar, hasta que se active de nuevo."
           />}
         </Center>
-      </View>
+      </ScrollView>
       <View w='100%' borderRadius='10' bg='white' mt='auto'>
         <Button
           isLoading={isLoading}

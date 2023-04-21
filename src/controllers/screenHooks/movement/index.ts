@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation, ParamListBase } from '@react-navigation/native';
+import { useNavigation, ParamListBase, useRoute } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -33,6 +34,20 @@ interface Form {
   event_id: null | string;
   account_end_id: null | string;
   amount_end: string;
+  transfer_in: any;
+  transfer_out: any;
+  event: {
+    id: number;
+    name: string;
+  } | null;
+  category: {
+    id: number;
+    name: string;
+  } | null;
+  account: {
+    id: number;
+    name: string;
+  } | null;
 }
 
 interface ResponseData {
@@ -42,6 +57,14 @@ interface ResponseData {
     email: string;
   };
 }
+
+type RootStackParamList = {
+  Movement: {
+    id: number;
+  };
+};
+
+type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'Movement'>;
 
 const useMovement = () => {
   const isFocused = useIsFocused();
@@ -58,6 +81,7 @@ const useMovement = () => {
   const { movementValidator } = useValidators();
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const route = useRoute<ProfileScreenRouteProp>();
 
   // Actions
   const { useAccountActions, useEventActions, useCategoryActions, useMovementActions } =
@@ -65,7 +89,7 @@ const useMovement = () => {
   const { actGetListAccount } = useAccountActions();
   const { actGetListActiveEvent } = useEventActions();
   const { actGetListFieldCategory } = useCategoryActions();
-  const { actGetDetailMovement, actCreateMovement } = useMovementActions();
+  const { actGetDetailMovement, actCreateMovement, actEditMovement } = useMovementActions();
 
   const { useAuthSelectors } = useSelectors();
   const { authSelector, loggedSelector } = useAuthSelectors();
@@ -96,14 +120,14 @@ const useMovement = () => {
     mode: 'all',
   });
 
-  const watchAccountInitField = watch("account_id");
-  const watchAccountEndField = watch("account_end_id");
+  const watchAccountInitField = watch('account_id');
+  const watchAccountEndField = watch('account_end_id');
 
   const descriptionText = [
     'Inicia indicando que tipo de movimiento haras, cuanto te ingreso o gastaste y cuando lo hiciste',
     'Ahora indica de a que cuenta te ingreo o salio el dinero y el motivo',
-    'Por ultimo agrega una descripcion, comentario u observacion o si pertenece algun evento'
-  ]
+    'Por ultimo agrega una descripcion, comentario u observacion o si pertenece algun evento',
+  ];
 
   const onSubmit = (data: Form) => {
     setIsLoading(true);
@@ -113,9 +137,25 @@ const useMovement = () => {
         type: 'success',
         text1: data.message,
       });
-      reset();
+      reset({
+        type: 'move',
+        amount: '',
+        account_id: '0',
+        category_id: null,
+        description: null,
+        date_purchase: new Date(),
+        event_id: '',
+        account_end_id: '',
+        amount_end: '',
+      });
       autoCompleteFieldRef.current?.setItem({});
-      setSteps(1)
+      setSteps(1);
+      if(route?.params?.id){
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Movement' }]
+        })
+      }
     };
     const onError = () => {
       setIsLoading(false);
@@ -130,7 +170,10 @@ const useMovement = () => {
         setIsLoading(false);
         return;
       }
-      if (isReadOnly && (data.amount_end === null || data.amount_end === undefined || data.amount_end === '')) {
+      if (
+        isReadOnly &&
+        (data.amount_end === null || data.amount_end === undefined || data.amount_end === '')
+      ) {
         setError('amount_end', { type: 'required', message: 'campo requerido' });
         setIsLoading(false);
         return;
@@ -151,7 +194,7 @@ const useMovement = () => {
       description: data.description,
       event_id: data.type === 'move' ? data.event_id : null,
       account_end_id: data.type === 'move' ? null : data.account_end_id,
-      amount_end: data.type === 'move' ? null : (isReadOnly ? data.amount_end : data.amount),
+      amount_end: data.type === 'move' ? null : isReadOnly ? data.amount_end : data.amount,
       date_purchase: `${date.getFullYear()}-${(date.getMonth() + 1)
         .toString()
         .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date
@@ -162,7 +205,11 @@ const useMovement = () => {
         .toString()
         .padStart(2, '0')}`,
     };
-    actCreateMovement(form, onSucces, onError);
+    if(route?.params?.id){
+      actEditMovement(route.params.id, form, onSucces, onError)
+    } else {
+      actCreateMovement(form, onSucces, onError);
+    }
   };
 
   useEffect(() => {
@@ -185,6 +232,37 @@ const useMovement = () => {
     const onSuccessCategory = (data: Options[]) => {
       setCategories(data);
     };
+    const onSuccessMovement = (data: Form) => {
+      let daraTransfer, account, amount, account_end_id, amount_end;
+      if (data.transfer_in || data.transfer_out) {
+        if (data.transfer_out) {
+          account = data.transfer_out.account?.id;
+          amount = data.transfer_out.amount;
+          account_end_id = data.account?.id;
+          amount_end = data.amount;
+        } else {
+          account = data.account?.id;
+          amount = data.amount;
+          account_end_id = data.transfer_in.account?.id;
+          amount_end = data.transfer_in.amount;
+        }
+        daraTransfer = true;
+      }
+      reset({
+        type: daraTransfer ? 'transfer' : 'move',
+        amount: daraTransfer ? amount.toString() : data.amount.toString(),
+        account_id: daraTransfer ? account.toString() : data.account?.id.toString(),
+        description: data.description,
+        date_purchase: new Date(data.date_purchase),
+        event_id: data.event ? data.event.id.toString() : null,
+        account_end_id: daraTransfer ? account_end_id.toString() : null,
+        amount_end: daraTransfer ? amount_end.toString() : null,
+        category_id: null,
+      });
+      autoCompleteFieldRef.current?.setItem(
+        daraTransfer ? null : { id: data.category?.id, title: data.category?.name },
+      );
+    };
     if (!isAuth) {
       navigation.navigate('Welcome');
     }
@@ -192,16 +270,22 @@ const useMovement = () => {
       actGetListAccount(onSuccessAccount);
       actGetListActiveEvent(onSuccessEvent);
       actGetListFieldCategory(onSuccessCategory);
+      if (route?.params?.id) {
+        actGetDetailMovement(route?.params?.id, onSuccessMovement);
+      }
     }
   }, [isFocused]);
 
   useEffect(() => {
-    const account_init = accounts.filter( v => v.value === watchAccountInitField)
-    const account_end = accounts.filter( v => v.value === watchAccountEndField)
-    if(account_init[0]?.label?.split(' - ')[1] !== account_end[0]?.label?.split(' - ')[1] && watchAccountEndField !== ''){
-      setIsReadOnly(true)
+    const account_init = accounts.filter((v) => v.value === watchAccountInitField);
+    const account_end = accounts.filter((v) => v.value === watchAccountEndField);
+    if (
+      account_init[0]?.label?.split(' - ')[1] !== account_end[0]?.label?.split(' - ')[1] &&
+      watchAccountEndField !== ''
+    ) {
+      setIsReadOnly(true);
     } else {
-      setIsReadOnly(false)
+      setIsReadOnly(false);
     }
   }, [watchAccountInitField, watchAccountEndField]);
 

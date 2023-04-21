@@ -85,6 +85,22 @@ const useValidators = () => {
     event_id: Yup.string().nullable(),
     account_end_id: Yup.string().nullable(),
   });
+  
+  const paymentValidator = Yup.object({
+    account_id: Yup.string().required('Campo requerido.'),
+      category_id: Yup.object({
+        id: Yup.string().required('Campo requerido.'),
+        title: Yup.string().required('Campo requerido.'),
+        category_father: Yup.string().nullable(),
+      }).required('Campo requerido.'),
+      amount: Yup.number()
+      .typeError('Formato incorrecto')
+      .required('Campo requerido.'),
+      start_date: Yup.string().required('Campo requerido.'),
+      end_date: Yup.string(),
+      specific_day: Yup.string().required('Campo requerido.'),
+      description: Yup.string().nullable()
+  });
 
   return {
     loginValidator,
@@ -96,6 +112,7 @@ const useValidators = () => {
     categoryValidator,
     profileValidator,
     movementValidator,
+    paymentValidator
   };
 };
 

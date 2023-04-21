@@ -18,6 +18,8 @@ import useCategoryDetail from './category/detail'
 import useCategoryCreate from './category/create'
 import useProfile from './profile'
 import useMovement from './movement'
+import usePayment from './payment'
+import usePaymentCreate from './payment/create'
 
 const useScreenHooks = () => {
     return {
@@ -41,6 +43,8 @@ const useScreenHooks = () => {
         useCategoryCreate,
         useProfile,
         useMovement,
+        usePayment,
+        usePaymentCreate,
     }
 }
 

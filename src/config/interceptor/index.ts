@@ -42,10 +42,11 @@ const useInterceptor = (store: storeRedux) => {
     const { dispatch, getState } = store;
     const { useAuthTypes } = useStrings();
     const { LOG_OUT } = useAuthTypes();
+    const {auth} = getState()
     switch (error.response.status) {
       case 401:
         await dispatch({ type: LOG_OUT });
-        console.log('error 401', error.response.data.message);
+        console.log('error 401', error.response.data.message, auth);
         break;
       case 500:
         console.log('error 500', error.response.data.message);

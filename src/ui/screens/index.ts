@@ -19,6 +19,8 @@ import Category from './Category';
 import CategoryDetail from './Category/Detail';
 import CategoryCreate from './Category/Create';
 import Movement from './Movement';
+import Payment from './Payment';
+import PaymentCreate from './Payment/Create';
 
 const useScreens = () => {
   return {
@@ -42,7 +44,9 @@ const useScreens = () => {
     Category,
     CategoryDetail,
     CategoryCreate,
-    Movement
+    Movement,
+    Payment,
+    PaymentCreate,
   };
 };
 

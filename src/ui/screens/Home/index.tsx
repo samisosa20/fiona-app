@@ -32,7 +32,7 @@ const Home = () => {
           {user.name.split(' ')[0]}
         </Text>
       </HStack>
-      <ScrollView showsVerticalScrollIndicator={false} mb='40px'>
+      <ScrollView showsVerticalScrollIndicator={false} mb='60px'>
         <Center mt='8'>
           <Box
             h='122px'

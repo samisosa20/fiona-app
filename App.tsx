@@ -43,6 +43,8 @@ const App = () => {
     Category,
     CategoryDetail,
     CategoryCreate,
+    Payment,
+    PaymentCreate
   } = useScreens();
   const Stack = createNativeStackNavigator();
 
@@ -81,6 +83,8 @@ const App = () => {
                 <Stack.Screen name='Category' component={Category} />
                 <Stack.Screen name='CategoryDetail' component={CategoryDetail} />
                 <Stack.Screen name='CategoryCreate' component={CategoryCreate} />
+                <Stack.Screen name='Payment' component={Payment} />
+                <Stack.Screen name='PaymentCreate' component={PaymentCreate} />
               </Stack.Navigator>
             </NavigationContainer>
             <Toast />

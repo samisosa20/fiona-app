@@ -152,8 +152,6 @@ const Movement = () => {
         {steps > 1 && (
           <View w='50%' borderRadius='10' mt='6'>
             <Button
-              isLoading={isLoading}
-              isLoadingText='enviando'
               onPress={() => setSteps(steps - 1)}
               variant='unstyled'
               w='100%'

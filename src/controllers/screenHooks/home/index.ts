@@ -45,7 +45,7 @@ const useHome = () => {
   // Fake DataSource
 
   const budgets = [
-    {
+    /* {
       id: 1,
       name: '2023',
       income: 500000.0,
@@ -65,7 +65,7 @@ const useHome = () => {
       income: 500000.0,
       expensive: -150000.0,
       currency: 'COP',
-    },
+    }, */
   ];
 
   useEffect(() => {
