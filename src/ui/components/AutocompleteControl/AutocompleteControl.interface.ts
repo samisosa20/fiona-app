@@ -11,4 +11,5 @@ export interface InputProps {
   control: any;
   helperText?: string;
   autoCompleteFieldRef: any;
+  zIndex?: number;
 }

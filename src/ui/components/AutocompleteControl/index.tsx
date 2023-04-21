@@ -4,12 +4,13 @@ import { FormControl, WarningOutlineIcon, Text, View, ChevronDownIcon, CloseIcon
 
 // Interface
 import { InputProps } from './AutocompleteControl.interface';
+import { Platform } from "react-native";
 
 const AutocompleteControl = (props: InputProps) => {
-  const { label, errors, name, control, options, helperText, autoCompleteFieldRef } = props;
+  const { label, errors, name, control, options, helperText, autoCompleteFieldRef, zIndex } = props;
 
   return (
-    <FormControl isInvalid={name in errors} marginBottom='4'>
+    <FormControl isInvalid={name in errors} marginBottom='4' style={[Platform.select({ ios: { zIndex: zIndex ?? 2 } })]}>
       <FormControl.Label color='white'>{label}</FormControl.Label>
       <Controller
         control={control}

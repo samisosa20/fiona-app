@@ -4,4 +4,5 @@ export interface InputProps {
   errors?: any;
   control: any;
   helperText?: string;
+  mode?: 'date' | 'time' | 'datetime';
 }

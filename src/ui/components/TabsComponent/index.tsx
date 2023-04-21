@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Image } from 'native-base';
+import { View, Image, AddIcon, IconButton } from 'native-base';
 
 // Screens
 import useScreens from '../../screens';
@@ -13,7 +13,7 @@ import iconReport from '../../../assets/icons/icon-report.png';
 const TabsComponent = () => {
   const Tab = createBottomTabNavigator();
 
-  const { Home, Report, Setting, Profile } = useScreens();
+  const { Home, Report, Setting, Profile, Movement } = useScreens();
 
   return (
     <Tab.Navigator
@@ -58,6 +58,19 @@ const TabsComponent = () => {
                 resizeMode='contain'
                 tintColor={focused ? '#5d5d9c' : '#7B7C89'}
               />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name='Movement'
+        component={Movement}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View alignItems='center' justifyContent='center' mb='10'>
+              <View borderRadius='full' bg='cyan.400' p='4'>
+                <AddIcon size='lg' name='dots-horizontal' color='warmGray.50' />
+              </View>
             </View>
           ),
         }}

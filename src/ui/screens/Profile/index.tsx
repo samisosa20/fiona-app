@@ -21,7 +21,7 @@ const Profile = () => {
   return (
     <PrivateLayout
       centerLayout
-      pb='100px'
+      pb='110px'
       otherAction={
         <Pressable onPress={() => handleLogout()} ml='auto'>
           <Image source={iconLogOut} alt='Editar' w='6' h='6' resizeMode='contain' />

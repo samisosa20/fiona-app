@@ -24,6 +24,7 @@ const useAuthReducers = () => {
                 auth_token: payload.token,
                 name: payload.data.name,
                 email: payload.data.email,
+                transfer_id: payload.data.transfer_id,
             }
         },
         [EDIT_PROFILE](state: any, action: any) {
@@ -34,11 +35,14 @@ const useAuthReducers = () => {
                 email: payload.data.email,
             }
         },
-        [LOG_OUT]() {
+        [LOG_OUT](state: any, action: any) {
+            console.log("LOG_OUT ")
             return {
+                ...state,
                 auth_token: null,
                 name: null,
                 email: null,
+                transfer_id: null,
             }
         },
     })

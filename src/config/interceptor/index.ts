@@ -39,13 +39,13 @@ const useInterceptor = (store: storeRedux) => {
   };
 
   const handleResponseError = async (error: any) => {
-    const { dispatch } = store;
+    const { dispatch, getState } = store;
     const { useAuthTypes } = useStrings();
     const { LOG_OUT } = useAuthTypes();
     switch (error.response.status) {
       case 401:
+        await dispatch({ type: LOG_OUT });
         console.log('error 401', error.response.data.message);
-        dispatch({ type: LOG_OUT });
         break;
       case 500:
         console.log('error 500', error.response.data.message);

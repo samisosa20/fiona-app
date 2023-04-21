@@ -18,6 +18,7 @@ import Profile from './Profile';
 import Category from './Category';
 import CategoryDetail from './Category/Detail';
 import CategoryCreate from './Category/Create';
+import Movement from './Movement';
 
 const useScreens = () => {
   return {
@@ -41,6 +42,7 @@ const useScreens = () => {
     Category,
     CategoryDetail,
     CategoryCreate,
+    Movement
   };
 };
 

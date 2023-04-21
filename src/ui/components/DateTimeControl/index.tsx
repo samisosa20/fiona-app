@@ -6,7 +6,7 @@ import { FormControl, WarningOutlineIcon, HStack } from 'native-base';
 import { InputProps } from './DateTimeControl.interface';
 
 const DateTimeControl = (props: InputProps) => {
-  const { errors, name, control, helperText, label } = props;
+  const { errors, name, control, helperText, label, mode } = props;
 
   return (
     <FormControl isInvalid={name in errors} marginBottom='4'>
@@ -16,7 +16,7 @@ const DateTimeControl = (props: InputProps) => {
         name={name}
         render={({ field: { onChange, onBlur, value } }) => (
           <HStack alignItems='center' space={4}>
-            <DateTimePicker onChange={(event, date) => onChange(date)} value={value} mode='date'/>
+            <DateTimePicker onChange={(event, date) => onChange(date)} value={value} mode={mode ? mode : 'date'}  textColor="white"/>
           </HStack>
         )}
       />

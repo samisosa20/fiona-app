@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
-import { Input, FormControl, WarningOutlineIcon, Pressable, Icon } from 'native-base';
+import { Input, FormControl, WarningOutlineIcon, Pressable } from 'native-base';
 
 // Interface
 import { InputProps } from './InputControl.interface';
 
 const InputControl = (props: InputProps) => {
-  const { label, placeholder, type, errors, name, control, keyboardType, helperText } = props;
+  const { label, placeholder, type, errors, name, control, keyboardType, helperText, isReadOnly } = props;
   const [show, setShow] = useState(false);
 
   return (
@@ -25,6 +25,7 @@ const InputControl = (props: InputProps) => {
             borderRadius='8'
             value={value}
             keyboardType={keyboardType}
+            isReadOnly={isReadOnly}
             InputRightElement={<Pressable onPress={() => setShow(!show)}></Pressable>}
           />
         )}

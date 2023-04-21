@@ -57,7 +57,7 @@ const useValidators = () => {
     badge_id: Yup.string().required('Campo requerido.'),
     year: Yup.string().required('Campo requerido.'),
   });
-  
+
   const categoryValidator = Yup.object({
     name: Yup.string().required('Campo requerido.'),
     group_id: Yup.string().required('Campo requerido.'),
@@ -69,6 +69,23 @@ const useValidators = () => {
     }).nullable(),
   });
 
+  const movementValidator = Yup.object({
+    type: Yup.string().required('Campo requerido.'),
+    amount: Yup.number()
+    .typeError('Formato incorrecto')
+    .required('Campo requerido.'),
+    account_id: Yup.string().required('Campo requerido.'),
+    category_id: Yup.object({
+      id: Yup.string().required('Campo requerido.'),
+      title: Yup.string().required('Campo requerido.'),
+      category_father: Yup.string().nullable(),
+    }).nullable(),
+    description: Yup.string().nullable(),
+    date_purchase: Yup.string().required('Campo requerido.'),
+    event_id: Yup.string().nullable(),
+    account_end_id: Yup.string().nullable(),
+  });
+
   return {
     loginValidator,
     forgotValidator,
@@ -78,6 +95,7 @@ const useValidators = () => {
     heritageValidator,
     categoryValidator,
     profileValidator,
+    movementValidator,
   };
 };
 

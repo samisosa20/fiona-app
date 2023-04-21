@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import { View, Pressable, ArrowBackIcon, Modal, Button } from 'native-base';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -13,18 +13,12 @@ interface PLayout {
   withOutPaddingH?: boolean;
   showBack?: boolean;
   pb?: number | string;
-  children: JSX.Element
-  | JSX.Element[]
-  | string
-  | string[];
-  otherAction?: JSX.Element
-  | JSX.Element[]
-  | string
-  | string[];
+  children: JSX.Element | JSX.Element[] | string | string[];
+  otherAction?: JSX.Element | JSX.Element[] | string | string[];
 }
 
 const PrivateLayout = (props: PLayout) => {
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
   const { children, centerLayout, otherAction, withOutPaddingH, showBack, pb, ...rest } = props;
   const { height } = Dimensions.get('window');
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -35,9 +29,11 @@ const PrivateLayout = (props: PLayout) => {
   const auth = authSelector();
 
   useEffect(() => {
-    {console.log(auth)}
-    setShowModal(!isAuth)
-  }, [isAuth])
+    {
+      console.log("oli bb ",auth);
+    }
+    setShowModal(!isAuth);
+  }, [isAuth, auth]);
 
   return (
     <View
@@ -77,7 +73,7 @@ const PrivateLayout = (props: PLayout) => {
           <Modal.Header>Upsss!</Modal.Header>
           <Modal.Body>
             Tu sesion ha expirado, deberas volver a inicar sesion.
-            <Button onPress={() => navigation.navigate("Welcome")} bg='info.400' mt='4'>
+            <Button onPress={() => navigation.navigate('Welcome')} bg='info.400' mt='4'>
               Salir
             </Button>
           </Modal.Body>

@@ -17,6 +17,7 @@ import useCategory from './category'
 import useCategoryDetail from './category/detail'
 import useCategoryCreate from './category/create'
 import useProfile from './profile'
+import useMovement from './movement'
 
 const useScreenHooks = () => {
     return {
@@ -39,6 +40,7 @@ const useScreenHooks = () => {
         useCategoryDetail,
         useCategoryCreate,
         useProfile,
+        useMovement,
     }
 }
 

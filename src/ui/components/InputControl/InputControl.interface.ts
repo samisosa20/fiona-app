@@ -7,4 +7,5 @@ export interface InputProps {
   control: any;
   keyboardType?: any;
   helperText?: string;
+  isReadOnly?: boolean;
 }
