@@ -23,7 +23,7 @@ const Home = () => {
   const { PrivateLayout } = useLayouts();
 
   return (
-    <PrivateLayout>
+    <PrivateLayout pb='60px'>
       <HStack space={2} justifyContent='flex-start'>
         <Text fontSize='3xl' fontWeight='600' mt='4'>
           ¡Hola!
