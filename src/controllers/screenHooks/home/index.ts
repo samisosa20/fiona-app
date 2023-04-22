@@ -70,13 +70,15 @@ const useHome = () => {
 
   useEffect(() => {
     const onSuccess = (data: ListAccount[]) => {
-      setAccounts(data.filter((v) => !v.deleted_at));
+      setAccounts(data.filter((v) => !v.deleted_at).slice(0, 5));
     };
     const onSuccessEvent = (data: ListEvent[]) => {
-      setEvents(data);
+      setEvents(data.slice(0, 5));
     };
     const onSuccessHeritage = (data: ListHeritage[]) => {
-      setHeritage(data);
+      setHeritage(data.sort((a, b) => {
+        return b.year - a.year;
+      }).slice(0, 3));
     };
     const onSuccessBalance = (data: Balance[]) => {
       setBalances(data);

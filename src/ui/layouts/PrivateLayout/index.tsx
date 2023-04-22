@@ -29,9 +29,6 @@ const PrivateLayout = (props: PLayout) => {
   const auth = authSelector();
 
   useEffect(() => {
-    {
-      console.log("oli bb ",auth);
-    }
     setShowModal(!isAuth);
   }, [isAuth, auth]);
 

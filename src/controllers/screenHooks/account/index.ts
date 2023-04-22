@@ -12,11 +12,18 @@ import useApi from '../../../api';
 // Interfaces
 import { ListAccount } from '../../../ui/components/Carousel/Carousel.interface';
 
+interface Balance {
+  type: string;
+  currency: string;
+  balance: number;
+}
+
 const useAccount = () => {
   const isFocused = useIsFocused();
   const [showAllAccounts, setShowAllAccounts] = useState(false);
   const [accounts, setAccounts] = useState<ListAccount[]>([]);
   const [realAccounts, setRealAccounts] = useState<ListAccount[]>([]);
+  const [balances, setBalances] = useState<Balance[]>([])
   const [balanceTime, setBalanceTime] = useState('month');
   const listTime = [
     {id: 'month', name: 'Mes'},
@@ -32,7 +39,7 @@ const useAccount = () => {
 
   const { useActions } = useApi();
   const { useAccountActions } = useActions();
-  const { actGetListAccount } = useAccountActions();
+  const { actGetListAccount, actGetBalanceMonthYearAccount } = useAccountActions();
 
 
   const handleChangeTime = (time: string) =>{
@@ -54,12 +61,17 @@ const useAccount = () => {
       setAccounts(data.filter(v => !v.deleted_at));
     };
 
+    const onSuccessBalance = (data: Balance[]) => {
+      setBalances(data)
+    }
+
     if (!isAuth) {
       navigation.navigate('Welcome');
     }
     
     if (isAuth && isFocused) {
       actGetListAccount(onSuccess);
+      actGetBalanceMonthYearAccount({}, onSuccessBalance);
     }
   }, [isFocused]);
 
@@ -71,6 +83,7 @@ const useAccount = () => {
     listTime,
     showAllAccounts,
     handleChangeView,
+    balances,
   };
 };
 

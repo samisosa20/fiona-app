@@ -29,7 +29,7 @@ const Home = () => {
           ¡Hola!
         </Text>
         <Text fontSize='3xl' fontWeight='400' mt='4'>
-          {user.name.split(' ')[0]}
+          {user.name && user.name.split(' ')[0]}
         </Text>
       </HStack>
       <ScrollView showsVerticalScrollIndicator={false} mb='60px'>

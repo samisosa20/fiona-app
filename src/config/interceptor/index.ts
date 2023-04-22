@@ -39,26 +39,30 @@ const useInterceptor = (store: storeRedux) => {
   };
 
   const handleResponseError = async (error: any) => {
-    const { dispatch, getState } = store;
+    const { dispatch } = store;
     const { useAuthTypes } = useStrings();
     const { LOG_OUT } = useAuthTypes();
-    const {auth} = getState()
     switch (error.response.status) {
       case 401:
         await dispatch({ type: LOG_OUT });
-        console.log('error 401', error.response.data.message, auth);
+        console.log('error 401', error.response.data.message);
         break;
       case 500:
+        Toast.show({
+          type: 'error',
+          text1: error.response.data.message,
+          text2: error.response.data.detail,
+        });
         console.log('error 500', error.response.data.message);
         break;
       default:
+        Toast.show({
+          type: 'error',
+          text1: error.response.data.message,
+          text2: error.response.data.detail,
+        });
         console.log('error 400', error.response.data.message);
     }
-    Toast.show({
-      type: 'error',
-      text1: error.response.data.message,
-      text2: error.response.data.detail,
-    });
     return error;
   };
 

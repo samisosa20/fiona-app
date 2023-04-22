@@ -25,6 +25,7 @@ const Account = () => {
     listTime,
     showAllAccounts,
     handleChangeView,
+    balances,
   } = useAccount();
 
   const { PrivateLayout } = useLayouts();
@@ -73,13 +74,15 @@ const Account = () => {
             <Text fontSize='md' fontWeight='600'>
               Balance
             </Text>
-            <Text fontSize='lg' fontWeight='600' textAlign='right'>
-              {currencyFormat(
-                accounts.reduce((prev: number, curr) => prev + curr.balance + curr.init_amount, 0),
-              ) +
-                ' ' +
-                'COP'}
-            </Text>
+            <View>
+              {balances.filter(v => v.type === balanceTime).map((balance) => (
+                <Text fontSize='lg' fontWeight='600' textAlign='right' key={balance.currency}>
+                  {currencyFormat(balance.balance) +
+                    ' ' +
+                    balance.currency}
+                </Text>
+              ))}
+            </View>
           </Box>
           <View
             flexDirection='row'
@@ -106,10 +109,6 @@ const Account = () => {
           </View>
         </Center>
         <View
-          flexWrap='wrap'
-          flexDirection='row'
-          alignItems='center'
-          justifyContent='space-between'
         >
           {accounts &&
             accounts.map((account) => (
@@ -119,7 +118,7 @@ const Account = () => {
               >
                 <Box
                   h='100px'
-                  w='190'
+                  w='100%'
                   bg='contrast'
                   rounded='xl'
                   mt='4'

@@ -77,6 +77,16 @@ const useAccountProviders = () => {
 
     return trackPromise(request);
   };
+  
+  const balanceMonthYearProvider = (params: any) => {
+    const request = axios({
+      method: 'GET',
+      url: `balance/month-year`,
+      params
+    });
+
+    return trackPromise(request);
+  };
 
   return {
     listAccountProvider,
@@ -87,6 +97,7 @@ const useAccountProviders = () => {
     movementByAccountProvider,
     activateAccountProvider,
     balanceProvider,
+    balanceMonthYearProvider,
   };
 };
 

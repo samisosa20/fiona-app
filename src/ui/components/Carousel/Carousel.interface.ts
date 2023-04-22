@@ -39,7 +39,7 @@ export interface HeritageBalance {
 }
 
 export interface ListHeritage {
-  year: string;
+  year: any;
   balance: HeritageBalance[];
 }
 
