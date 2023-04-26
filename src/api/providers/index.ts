@@ -7,6 +7,7 @@ import useBudgetProviders from './budget'
 import useHeritageProviders from './heritage'
 import usePaymentProviders from './payment'
 import useCategoryProviders from './category'
+import useReportProviders from './report'
 
 const useProviders = () => {
     return {
@@ -19,6 +20,7 @@ const useProviders = () => {
         useHeritageProviders,
         usePaymentProviders,
         useCategoryProviders,
+        useReportProviders,
     }
 }
 

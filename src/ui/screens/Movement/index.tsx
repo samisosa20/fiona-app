@@ -1,4 +1,4 @@
-import { Text, ScrollView, Center, View, Button, HStack } from 'native-base';
+import { Text, Modal, Center, View, Button, HStack, Pressable, Image } from 'native-base';
 
 // Components
 import useComponents from '../../components';
@@ -6,6 +6,9 @@ import useLayouts from '../../layouts';
 
 // Controllers
 import useControllers from '../../../controllers';
+
+// Assests
+import iconDelete from '../../../assets/icons/icon-delete.png';
 
 const Movement = () => {
   const { PrivateLayout } = useLayouts();
@@ -27,12 +30,31 @@ const Movement = () => {
     steps,
     setSteps,
     descriptionText,
+    route,
+    showModal,
+    setShowModal,
+    handleDelete,
   } = useMovement();
 
   const { InputControl, SelectControl, AutocompleteControl, DateTimeControl } = useComponents();
 
   return (
-    <PrivateLayout centerLayout pb='110px'>
+    <PrivateLayout
+      centerLayout
+      pb='110px'
+      showBack={!!route?.params?.id}
+      otherAction={
+        !!route?.params?.id ? (
+          <View flexDirection='row' alignItems='center'>
+            <Pressable onPress={() => setShowModal(true)}>
+              <Image source={iconDelete} alt='Editar' w='6' h='6' resizeMode='contain' />
+            </Pressable>
+          </View>
+        ) : (
+          <View></View>
+        )
+      }
+    >
       <View mb='110px'>
         <Text fontSize='3xl' fontWeight='600' mt='4' textAlign='center'>
           Movimientos
@@ -151,12 +173,7 @@ const Movement = () => {
       <HStack space={4} w='100%' maxW='350px' mx='auto' mt='auto'>
         {steps > 1 && (
           <View w='50%' borderRadius='10' mt='6'>
-            <Button
-              onPress={() => setSteps(steps - 1)}
-              variant='unstyled'
-              w='100%'
-              color='white'
-            >
+            <Button onPress={() => setSteps(steps - 1)} variant='unstyled' w='100%' color='white'>
               Devolver
             </Button>
           </View>
@@ -173,6 +190,42 @@ const Movement = () => {
           </Button>
         </View>
       </HStack>
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        _backdrop={{
+          _dark: {
+            bg: 'coolGray.800',
+          },
+          bg: 'warmGray.50',
+        }}
+      >
+        <Modal.Content maxWidth='350' maxH='212'>
+          <Modal.Header>Confirmacion</Modal.Header>
+          <Modal.Body>
+            Estas seguro de eliminar este movimiento?
+            <Button.Group space={2} mt='6' justifyContent='flex-end'>
+              <Button
+                variant='ghost'
+                colorScheme='blueGray'
+                onPress={() => {
+                  setShowModal(false);
+                }}
+              >
+                Cancelar
+              </Button>
+              <Button
+                onPress={() => {
+                  handleDelete();
+                }}
+                colorScheme='danger'
+              >
+                Eliminar
+              </Button>
+            </Button.Group>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
     </PrivateLayout>
   );
 };

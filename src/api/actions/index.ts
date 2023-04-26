@@ -8,6 +8,7 @@ import useCategoryActions from './category'
 import useEventActions from './event'
 import useHeritageActions from './heritage'
 import usePaymentActions from './payment'
+import useReportActions from './report'
 
 const useActions = () => {
     const dispatch = useDispatch()
@@ -23,6 +24,7 @@ const useActions = () => {
         useEventActions,
         useHeritageActions,
         usePaymentActions,
+        useReportActions,
     }
 }
 

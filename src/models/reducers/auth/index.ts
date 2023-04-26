@@ -25,6 +25,7 @@ const useAuthReducers = () => {
                 name: payload.data.name,
                 email: payload.data.email,
                 transfer_id: payload.data.transfer_id,
+                currency: payload.data.currency,
             }
         },
         [EDIT_PROFILE](state: any, action: any) {
@@ -43,6 +44,7 @@ const useAuthReducers = () => {
                 name: null,
                 email: null,
                 transfer_id: null,
+                currency: null,
             }
         },
     })

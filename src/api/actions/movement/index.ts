@@ -8,7 +8,7 @@ const useMovementActions = () => {
     listMovementProvider,
     createMovementProvider,
     updateMovementProvider,
-    hiddenMovementProvider,
+    deleteMovementProvider,
     detailMovementProvider,
   } = useMovementProviders();
 
@@ -33,6 +33,19 @@ const useMovementActions = () => {
       const response = await detailMovementProvider(id);
       if (response.status !== 200) throw response;
       onSuccess && onSuccess(response.data);
+    } catch (e) {
+      onError && onError(e);
+    }
+  };
+  
+  const actDeleteMovement = async (id: number,
+    onSuccess: Function = () => {},
+    onError: Function = () => {},
+  ) => {
+    try {
+      const response = await deleteMovementProvider(id);
+      if (response.status !== 200) throw response;
+      onSuccess && onSuccess(response.data.message);
     } catch (e) {
       onError && onError(e);
     }
@@ -69,6 +82,7 @@ const useMovementActions = () => {
     actGetDetailMovement,
     actCreateMovement,
     actEditMovement,
+    actDeleteMovement,
   };
 };
 

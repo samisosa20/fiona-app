@@ -51,7 +51,7 @@ const PrivateLayout = (props: PLayout) => {
       >
         {showBack && (
           <Pressable onPress={() => navigation.dispatch(CommonActions.goBack())}>
-            <ArrowBackIcon color='white' size='md' />
+            <ArrowBackIcon color='white' size='lg' />
           </Pressable>
         )}
         {otherAction}

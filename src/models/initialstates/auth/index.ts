@@ -4,6 +4,7 @@ const useAuthInitialStates = () => {
         name: null,
         email: null,
         transfer_id: null,
+        currency: null,
     }
 
     return { initialStateAuth }

@@ -20,6 +20,7 @@ import useProfile from './profile'
 import useMovement from './movement'
 import usePayment from './payment'
 import usePaymentCreate from './payment/create'
+import useReport from './report'
 
 const useScreenHooks = () => {
     return {
@@ -45,6 +46,7 @@ const useScreenHooks = () => {
         useMovement,
         usePayment,
         usePaymentCreate,
+        useReport,
     }
 }
 

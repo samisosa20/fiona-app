@@ -32,11 +32,10 @@ const useMovementProviders = () => {
     return trackPromise(request);
   };
 
-  const hiddenMovementProvider = (id: number, data: any) => {
+  const deleteMovementProvider = (id: number) => {
     const request = axios({
       method: 'DELETE',
       url: `movements/${id}`,
-      data,
     });
 
     return trackPromise(request);
@@ -55,7 +54,7 @@ const useMovementProviders = () => {
     listMovementProvider,
     createMovementProvider,
     updateMovementProvider,
-    hiddenMovementProvider,
+    deleteMovementProvider,
     detailMovementProvider,
   };
 };

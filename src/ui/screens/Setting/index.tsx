@@ -15,7 +15,7 @@ const Setting = () => {
 
   return (
     <PrivateLayout withOutPaddingH>
-      <Text fontSize='3xl' fontWeight='600' mt='4' textAlign='center'>
+      <Text fontSize='3xl' fontWeight='600' textAlign='center'>
         Configuraciones
       </Text>
 

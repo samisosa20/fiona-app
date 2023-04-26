@@ -71,9 +71,7 @@ const useValidators = () => {
 
   const movementValidator = Yup.object({
     type: Yup.string().required('Campo requerido.'),
-    amount: Yup.number()
-    .typeError('Formato incorrecto')
-    .required('Campo requerido.'),
+    amount: Yup.number().typeError('Formato incorrecto').required('Campo requerido.'),
     account_id: Yup.string().required('Campo requerido.'),
     category_id: Yup.object({
       id: Yup.string().required('Campo requerido.'),
@@ -85,21 +83,25 @@ const useValidators = () => {
     event_id: Yup.string().nullable(),
     account_end_id: Yup.string().nullable(),
   });
-  
+
   const paymentValidator = Yup.object({
     account_id: Yup.string().required('Campo requerido.'),
-      category_id: Yup.object({
-        id: Yup.string().required('Campo requerido.'),
-        title: Yup.string().required('Campo requerido.'),
-        category_father: Yup.string().nullable(),
-      }).required('Campo requerido.'),
-      amount: Yup.number()
-      .typeError('Formato incorrecto')
-      .required('Campo requerido.'),
-      start_date: Yup.string().required('Campo requerido.'),
-      end_date: Yup.string(),
-      specific_day: Yup.string().required('Campo requerido.'),
-      description: Yup.string().nullable()
+    category_id: Yup.object({
+      id: Yup.string().required('Campo requerido.'),
+      title: Yup.string().required('Campo requerido.'),
+      category_father: Yup.string().nullable(),
+    }).required('Campo requerido.'),
+    amount: Yup.number().typeError('Formato incorrecto').required('Campo requerido.'),
+    start_date: Yup.string().required('Campo requerido.'),
+    end_date: Yup.string(),
+    specific_day: Yup.string().required('Campo requerido.'),
+    description: Yup.string().nullable(),
+  });
+
+  const filterReportValidator = Yup.object({
+    currency: Yup.string().required('Campo requerido.'),
+    init_date: Yup.string().required('Campo requerido.'),
+    end_date: Yup.string().required('Campo requerido.'),
   });
 
   return {
@@ -112,7 +114,8 @@ const useValidators = () => {
     categoryValidator,
     profileValidator,
     movementValidator,
-    paymentValidator
+    paymentValidator,
+    filterReportValidator,
   };
 };
 

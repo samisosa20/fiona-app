@@ -66,6 +66,7 @@ const TabsComponent = () => {
         name='Movement'
         component={Movement}
         options={{
+          unmountOnBlur: true,
           tabBarIcon: ({ focused }) => (
             <View alignItems='center' justifyContent='center' mb='10'>
               <View borderRadius='full' bg='cyan.400' p='4'>
@@ -74,6 +75,7 @@ const TabsComponent = () => {
             </View>
           ),
         }}
+        listeners={({navigation}) => ({blur: () => navigation.setParams({id: undefined})})}
       />
       <Tab.Screen
         name='Setting'

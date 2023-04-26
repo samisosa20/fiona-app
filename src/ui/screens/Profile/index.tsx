@@ -29,7 +29,7 @@ const Profile = () => {
       }
     >
       <View>
-        <Text fontSize='3xl' fontWeight='600' mt='4' textAlign='center'>
+        <Text fontSize='3xl' fontWeight='600' textAlign='center'>
           Perfil
         </Text>
         <Center w='90%' marginX='auto' mt='8'>

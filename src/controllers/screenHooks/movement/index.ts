@@ -64,13 +64,15 @@ type RootStackParamList = {
   };
 };
 
-type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'Movement'>;
+type MovementScreenRouteProp = RouteProp<RootStackParamList, 'Movement'>;
 
 const useMovement = () => {
   const isFocused = useIsFocused();
-  const autoCompleteFieldRef = useRef(null);
+  const autoCompleteFieldRef = useRef<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isReadOnly, setIsReadOnly] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [auxCategory, setAuxCategory] = useState<Options | null>(null);
   const [steps, setSteps] = useState(1);
   const [accounts, setAccounts] = useState<SelectField[]>([]);
   const [events, setEvents] = useState<SelectField[]>([]);
@@ -81,7 +83,7 @@ const useMovement = () => {
   const { movementValidator } = useValidators();
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const route = useRoute<ProfileScreenRouteProp>();
+  const route = useRoute<MovementScreenRouteProp>();
 
   // Actions
   const { useAccountActions, useEventActions, useCategoryActions, useMovementActions } =
@@ -89,7 +91,8 @@ const useMovement = () => {
   const { actGetListAccount } = useAccountActions();
   const { actGetListActiveEvent } = useEventActions();
   const { actGetListFieldCategory } = useCategoryActions();
-  const { actGetDetailMovement, actCreateMovement, actEditMovement } = useMovementActions();
+  const { actGetDetailMovement, actCreateMovement, actEditMovement, actDeleteMovement } =
+    useMovementActions();
 
   const { useAuthSelectors } = useSelectors();
   const { authSelector, loggedSelector } = useAuthSelectors();
@@ -129,6 +132,21 @@ const useMovement = () => {
     'Por ultimo agrega una descripcion, comentario u observacion o si pertenece algun evento',
   ];
 
+  const handleDelete = () => {
+    setShowModal(false);
+    const onSuccess = (message: string) => {
+      Toast.show({
+        type: 'success',
+        text1: message,
+      });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Movement' }],
+      });
+    };
+    actDeleteMovement(route.params.id, onSuccess);
+  };
+
   const onSubmit = (data: Form) => {
     setIsLoading(true);
     const onSucces = (data: ResponseData) => {
@@ -150,11 +168,11 @@ const useMovement = () => {
       });
       autoCompleteFieldRef.current?.setItem({});
       setSteps(1);
-      if(route?.params?.id){
+      if (route?.params?.id) {
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Movement' }]
-        })
+          routes: [{ name: 'Movement' }],
+        });
       }
     };
     const onError = () => {
@@ -205,8 +223,8 @@ const useMovement = () => {
         .toString()
         .padStart(2, '0')}`,
     };
-    if(route?.params?.id){
-      actEditMovement(route.params.id, form, onSucces, onError)
+    if (route?.params?.id) {
+      actEditMovement(route.params.id, form, onSucces, onError);
     } else {
       actCreateMovement(form, onSucces, onError);
     }
@@ -259,8 +277,8 @@ const useMovement = () => {
         amount_end: daraTransfer ? amount_end.toString() : null,
         category_id: null,
       });
-      autoCompleteFieldRef.current?.setItem(
-        daraTransfer ? null : { id: data.category?.id, title: data.category?.name },
+      setAuxCategory(
+        daraTransfer ? null : { id: data.category?.id.toString(), title: data.category?.name },
       );
     };
     if (!isAuth) {
@@ -270,11 +288,20 @@ const useMovement = () => {
       actGetListAccount(onSuccessAccount);
       actGetListActiveEvent(onSuccessEvent);
       actGetListFieldCategory(onSuccessCategory);
+      console.log(route);
       if (route?.params?.id) {
         actGetDetailMovement(route?.params?.id, onSuccessMovement);
+      } else {
+        reset();
       }
     }
   }, [isFocused]);
+
+  useEffect(()=> {
+    if(steps === 2 && route?.params?.id){
+      autoCompleteFieldRef.current?.setItem(auxCategory);
+    }
+  }, [steps])
 
   useEffect(() => {
     const account_init = accounts.filter((v) => v.value === watchAccountInitField);
@@ -304,6 +331,10 @@ const useMovement = () => {
     steps,
     setSteps,
     descriptionText,
+    route,
+    showModal,
+    setShowModal,
+    handleDelete,
   };
 };
 

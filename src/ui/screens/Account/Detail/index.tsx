@@ -37,7 +37,7 @@ const AccountDetail = () => {
     >
       <Center>
         <Text fontSize='xs' fontWeight='300' mt='4' w='80%' textAlign='right' lineHeight='sm'>
-          {account?.type}
+          {account?.type + ' - ' + account?.currency.code}
         </Text>
         <Text fontSize='3xl' fontWeight='600' w='80%' textAlign='center' lineHeight='sm'>
           {account?.name}
@@ -58,7 +58,7 @@ const AccountDetail = () => {
               <ArrowDownIcon color='white' size='md' px='4' />
             </Box>
             <Text fontSize='md' fontWeight='500' textAlign='center' lineHeight='sm' mt='1'>
-              {currencyFormat(account?.incomes ?? 0) + ' ' + account?.currency.code}
+              {currencyFormat(account?.incomes ?? 0)}
             </Text>
           </View>
           <View justifyContent='center' alignItems='center' ml='8'>
@@ -73,7 +73,7 @@ const AccountDetail = () => {
               <ArrowUpIcon color='white' size='md' px='4' />
             </Box>
             <Text fontSize='md' fontWeight='500' textAlign='center' lineHeight='sm' mt='1'>
-              {currencyFormat(account?.expensives ?? 0) + ' ' + account?.currency.code}
+              {currencyFormat(account?.expensives ?? 0)}
             </Text>
           </View>
         </View>
