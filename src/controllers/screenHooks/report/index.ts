@@ -25,6 +25,7 @@ interface Open {
 interface Amount {
   category: string;
   name?: string;
+  porcent?: string;
   amount: number;
 }
 interface Balance {

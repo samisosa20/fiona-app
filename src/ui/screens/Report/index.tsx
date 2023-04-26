@@ -260,7 +260,7 @@ const Report = () => {
                   textAlign='right'
                   color={item.amount < 0 ? 'neon.red' : 'neon.green'}
                 >
-                  {currencyFormat(item.amount)}
+                  {item.porcent !== undefined ? `${currencyFormat(item.amount)} (${item.porcent}%)` : currencyFormat(item.amount) }
                 </Text>
               </Box>
             ))}
