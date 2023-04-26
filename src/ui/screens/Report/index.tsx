@@ -301,7 +301,7 @@ const Report = () => {
           bg: 'warmGray.50',
         }}
       >
-        <Modal.Content maxWidth='350' maxH='300'>
+        <Modal.Content maxWidth='350'>
           <Modal.Header>Filtros</Modal.Header>
           <Modal.Body>
             <DateTimeControl control={control} errors={errors} name='init_date' label='Inicio' />

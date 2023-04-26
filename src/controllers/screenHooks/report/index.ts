@@ -120,7 +120,7 @@ const useReport = () => {
     mode: 'all'
   });
 
-  const onSubmit = (data: { init_date: Date; end_date: Date; currency: number }) => {
+  const onSubmit = (data: { init_date: string; end_date: string; currency: number }) => {
     const onSuccess = (data: Report) => {
       setOpenClose(data.open_close);
       setIncome(data.incomes);
@@ -142,12 +142,12 @@ const useReport = () => {
     const onError = () => {
       setIsLoading(false);
     };
-
+    
     setIsLoading(true);
     actGetReport(
       {
-        init_date: data.init_date.toISOString().slice(0, 10),
-        end_date: data.end_date.toISOString().slice(0, 10),
+        init_date: new Date(data.init_date).toISOString().slice(0, 10),
+        end_date: new Date(data.end_date).toISOString().slice(0, 10),
         currency: data.currency,
       },
       onSuccess,

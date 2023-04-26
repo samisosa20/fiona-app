@@ -288,7 +288,7 @@ const useMovement = () => {
       actGetListAccount(onSuccessAccount);
       actGetListActiveEvent(onSuccessEvent);
       actGetListFieldCategory(onSuccessCategory);
-      console.log(route);
+
       if (route?.params?.id) {
         actGetDetailMovement(route?.params?.id, onSuccessMovement);
       } else {

@@ -40,7 +40,7 @@
 		00E356EE1AD99517003FC87E /* fionaAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fionaAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* fionaAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = fionaAppTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* fionaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fionaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* FionaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FionaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = fionaApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = fionaApp/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = fionaApp/Images.xcassets; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* fionaApp.app */,
+				13B07F961A680F5B00A75B9A /* FionaApp.app */,
 				00E356EE1AD99517003FC87E /* fionaAppTests.xctest */,
 			);
 			name = Products;
@@ -229,7 +229,7 @@
 			);
 			name = fionaApp;
 			productName = fionaApp;
-			productReference = 13B07F961A680F5B00A75B9A /* fionaApp.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* FionaApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -554,7 +554,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "co.sammy.guttman.--PRODUCT-NAME-rfc1034identifier-";
-				PRODUCT_NAME = fionaApp;
+				PRODUCT_NAME = FionaApp;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -588,7 +588,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "co.sammy.guttman.--PRODUCT-NAME-rfc1034identifier-";
-				PRODUCT_NAME = fionaApp;
+				PRODUCT_NAME = FionaApp;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
