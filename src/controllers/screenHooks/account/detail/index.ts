@@ -14,6 +14,11 @@ import useApi from '../../../../api';
 import { ListAccount } from '../../../../ui/components/Carousel/Carousel.interface';
 import { Movements } from '../../../../ui/components/ListMovements/ListMovements.interface';
 
+interface TimeBalance {
+  id: 'month' | 'year' | 'total';
+  name: string;
+}
+
 type RootStackParamList = {
   AccountDetail: {
     id: number;
@@ -26,6 +31,7 @@ const useAccountDetail = () => {
   const isFocused = useIsFocused();
   const [account, setAccount] = useState<ListAccount>();
   const [movements, setMovements] = useState<Movements[]>();
+  const [balanceTime, setBalanceTime] = useState<'month' | 'year' | 'total'>('month');
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute<ProfileScreenRouteProp>();
@@ -37,6 +43,16 @@ const useAccountDetail = () => {
   const { useActions } = useApi();
   const { useAccountActions } = useActions();
   const { actGetDetailAccount, actGetMovementAccount } = useAccountActions();
+
+  const listTime: TimeBalance[] = [
+    { id: 'month', name: 'Mes' },
+    { id: 'year', name: 'Año' },
+    { id: 'total', name: 'Total' },
+  ];
+
+  const handleChangeTime = (time: 'month' | 'year' | 'total') =>{
+    setBalanceTime(time);
+  }
 
   useEffect(() => {
     const onSuccess = (data: ListAccount) => {
@@ -61,6 +77,9 @@ const useAccountDetail = () => {
     navigation,
     account,
     movements,
+    listTime,
+    handleChangeTime,
+    balanceTime,
   };
 };
 

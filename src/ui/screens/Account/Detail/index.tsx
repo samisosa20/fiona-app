@@ -16,7 +16,7 @@ import iconEdit from '../../../../assets/icons/icon-edit.png';
 const AccountDetail = () => {
   const { useScreenHooks } = useControllers();
   const { useAccountDetail } = useScreenHooks();
-  const { navigation, account, movements } = useAccountDetail();
+  const { navigation, account, movements, listTime, handleChangeTime, balanceTime, } = useAccountDetail();
 
   const { useQuickFunctions } = useHelpers();
   const { currencyFormat } = useQuickFunctions();
@@ -45,6 +45,29 @@ const AccountDetail = () => {
         <Text fontSize='lg' fontWeight='400' mt='2' w='80%' textAlign='center' lineHeight='sm'>
           {account?.description}
         </Text>
+        <View
+            flexDirection='row'
+            alignItems='center'
+            justifyContent='space-between'
+            mt='4'
+            w='257'
+          >
+            {listTime.map((v) => (
+              <Pressable key={v.id} onPress={() => handleChangeTime(v.id)}>
+                <Text
+                  borderColor={balanceTime === v.id ? 'yellow.300' : 'white'}
+                  borderWidth='1'
+                  rounded='20'
+                  py='2'
+                  px='5'
+                  color={balanceTime === v.id ? 'yellow.300' : 'white'}
+                  key={v.id}
+                >
+                  {v.name}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
         <View flexDirection='row' alignItems='center' my='8'>
           <View justifyContent='center' alignItems='center'>
             <Box
@@ -58,7 +81,7 @@ const AccountDetail = () => {
               <ArrowDownIcon color='white' size='md' px='4' />
             </Box>
             <Text fontSize='md' fontWeight='500' textAlign='center' lineHeight='sm' mt='1'>
-              {currencyFormat(account?.incomes ?? 0)}
+              {account ? currencyFormat(account[balanceTime]?.incomes ?? 0) : null}
             </Text>
           </View>
           <View justifyContent='center' alignItems='center' ml='8'>
@@ -73,7 +96,7 @@ const AccountDetail = () => {
               <ArrowUpIcon color='white' size='md' px='4' />
             </Box>
             <Text fontSize='md' fontWeight='500' textAlign='center' lineHeight='sm' mt='1'>
-              {currencyFormat(account?.expensives ?? 0)}
+            {account ? currencyFormat(account[balanceTime]?.expensives ?? 0) : null}
             </Text>
           </View>
         </View>

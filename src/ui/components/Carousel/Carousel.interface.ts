@@ -4,8 +4,18 @@ export interface ListAccount {
   balance: number;
   init_amount: number;
   description: string | null;
-  incomes?: number;
-  expensives?: number;
+  month?: {
+    incomes: number;
+    expensives: number;
+  };
+  year?: {
+    incomes: number;
+    expensives: number;
+  };
+  total?: {
+    incomes: number;
+    expensives: number;
+  };
   currency: {
     id: number;
     code: string;
