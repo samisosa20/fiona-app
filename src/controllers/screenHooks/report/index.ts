@@ -142,6 +142,9 @@ const useReport = () => {
     const onError = () => {
       setIsLoading(false);
     };
+
+    setIncome([])
+    setMainExpensive([])
     
     setIsLoading(true);
     actGetReport(
