@@ -31,7 +31,11 @@ const useAccountDetail = () => {
   const isFocused = useIsFocused();
   const [account, setAccount] = useState<ListAccount>();
   const [movements, setMovements] = useState<Movements[]>();
+  const [movementsFilter, setMovementsFilter] = useState<Movements[]>();
   const [balanceTime, setBalanceTime] = useState<'month' | 'year' | 'total'>('month');
+  const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [filter, setFilter] = useState('');
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute<ProfileScreenRouteProp>();
@@ -54,6 +58,18 @@ const useAccountDetail = () => {
     setBalanceTime(time);
   }
 
+  const handleFilter = () => {
+    setIsLoading(true)
+    setMovementsFilter(movements?.filter((v)=> {
+      return v.category.name.includes(filter) || v.description?.includes(filter) || v.date_purchase.includes(filter) || v.event?.name.includes(filter) || v.amount.toString().includes(filter)
+    }))
+    setShowModal(false)
+    setIsLoading(false)
+  }
+  const handleChane = (text: string) => {
+    setFilter(text)
+  }
+
   useEffect(() => {
     const onSuccess = (data: ListAccount) => {
       setAccount(data);
@@ -61,6 +77,7 @@ const useAccountDetail = () => {
 
     const onSuccessMovement = (data: Movements[]) => {
       setMovements(data);
+      setMovementsFilter(data);
     };
 
     if (!isAuth) {
@@ -76,10 +93,15 @@ const useAccountDetail = () => {
   return {
     navigation,
     account,
-    movements,
     listTime,
     handleChangeTime,
     balanceTime,
+    handleFilter,
+    movementsFilter,
+    setShowModal,
+    showModal,
+    isLoading,
+    handleChane,
   };
 };
 
