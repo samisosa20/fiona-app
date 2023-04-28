@@ -59,7 +59,7 @@ const AccountDetail = () => {
           <Pressable onPress={() => setShowModal(true)} ml='auto'>
             <Image source={iconFilter} alt='Filtrar' w='6' h='6' resizeMode='contain' />
           </Pressable>
-          <Pressable onPress={() => navigation.navigate('AccountCreate', { id: account?.id })}>
+          <Pressable onPress={() => navigation.navigate('AccountCreate', { id: account?.id })} ml='4'>
             <Image source={iconEdit} alt='Editar' w='6' h='6' resizeMode='contain' />
           </Pressable>
         </View>
