@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import * as RNLocalize from 'react-native-localize';
-import Config from 'react-native-config';
+import {API_URL} from "@env"
 import Toast from 'react-native-toast-message';
 
 import { AppDispatch } from '../redux';
@@ -14,8 +13,6 @@ interface storeRedux {
 }
 
 const useInterceptor = (store: storeRedux) => {
-  //localize
-  const localize = RNLocalize.getTimeZone();
 
   const handleRequestSuccess = async (request: any) => {
     const { getState } = store;
@@ -23,7 +20,6 @@ const useInterceptor = (store: storeRedux) => {
     const { auth_token } = auth;
 
     if (auth_token) request.headers.authorization = `Bearer ${auth_token}`;
-    request.headers['Time-zone'] = localize;
     request.headers['Content-Type'] = 'application/json';
     request.headers['accept'] = 'application/json';
     return await request;
@@ -67,7 +63,7 @@ const useInterceptor = (store: storeRedux) => {
   };
 
   useEffect(() => {
-    axios.defaults.baseURL = `${Config.API_URL}`;
+    axios.defaults.baseURL = `${API_URL}`;
     axios.defaults.params = {};
     axios.interceptors.request.use(handleRequestSuccess, handleRequestError);
     axios.interceptors.response.use(handleResponseSuccess, handleResponseError);

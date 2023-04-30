@@ -7,6 +7,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
+import { useFonts } from 'expo-font';
+import {LinearGradient} from 'expo-linear-gradient';
 
 // Configuration
 import useConfig from './src/config';
@@ -20,7 +22,7 @@ import theme from './src/styles';
 
 const config = {
   dependencies: {
-    'linear-gradient': require('react-native-linear-gradient').default,
+    'linear-gradient': LinearGradient,
   },
 };
 
@@ -52,6 +54,11 @@ const App = () => {
   const { useStoreConfig, useInterceptor } = useConfig();
   const { store, persistor } = useStoreConfig();
   useInterceptor(store);
+
+  const [fontsLoaded] = useFonts({
+    'Poppins': require('./src/assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-Bold': require('./src/assets/fonts/Poppins-Bold.ttf'),
+  });
 
   return (
     <SafeAreaProvider>
