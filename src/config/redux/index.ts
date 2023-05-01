@@ -33,11 +33,11 @@ const persistReduce = persistReducer(persistConfig, reducers);
     }) */
 
 if (__DEV__) {
-  const createFlipperDebugger = require('redux-flipper').default;
+  //const createFlipperDebugger = require('redux-flipper').default;
   const reduxInmmutableStateInvariant = require('redux-immutable-state-invariant').default();
   middlewaresToApply = [
     ...middlewaresToApply,
-    createFlipperDebugger(),
+    //createFlipperDebugger(),
     reduxInmmutableStateInvariant,
     //networkMiddleware,
   ];

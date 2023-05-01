@@ -61,6 +61,8 @@ interface ResponseData {
 type RootStackParamList = {
   Movement: {
     id: number;
+    account_id: number;
+    screen: string;
   };
 };
 
@@ -106,6 +108,8 @@ const useMovement = () => {
     reset,
     watch,
     setError,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -133,18 +137,28 @@ const useMovement = () => {
   ];
 
   const handleDelete = () => {
-    setShowModal(false);
+    setIsLoading(true);
     const onSuccess = (message: string) => {
+      setShowModal(false);
+      setIsLoading(false);
       Toast.show({
         type: 'success',
         text1: message,
       });
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Movement' }],
-      });
+      if (route?.params?.account_id) {
+        navigation.navigate(route?.params?.screen, {id: route.params?.account_id});
+      } else {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Movement' }],
+        });
+      }
     };
-    actDeleteMovement(route.params.id, onSuccess);
+    const onError = () => {
+      setIsLoading(false);
+      setShowModal(false);
+    };
+    actDeleteMovement(route.params.id, onSuccess, onError);
   };
 
   const onSubmit = (data: Form) => {
@@ -168,11 +182,8 @@ const useMovement = () => {
       });
       autoCompleteFieldRef.current?.setItem({});
       setSteps(1);
-      if (route?.params?.id) {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'Movement' }],
-        });
+      if (route?.params?.account_id) {
+        navigation.navigate(route?.params?.screen, {id: route.params?.account_id});
       }
     };
     const onError = () => {
@@ -206,7 +217,7 @@ const useMovement = () => {
     const date = new Date(data.date_purchase);
     const form = {
       type: data.type,
-      amount: data.type === 'move' ? data.amount : Math.abs(parseFloat(data.amount)),
+      amount: data.type === 'move' ? parseFloat(data.amount.replace(/[^\d.-]/g, '')) : Math.abs(parseFloat(data.amount.replace(/[^\d.-]/g, ''))),
       account_id: data.account_id,
       category_id: data.type === 'move' ? data.category_id?.id : user.transfer_id,
       description: data.description,
@@ -293,6 +304,9 @@ const useMovement = () => {
         actGetDetailMovement(route?.params?.id, onSuccessMovement);
       } else {
         reset();
+        if (route?.params?.account_id) {
+          setValue('account_id', route?.params?.account_id.toString());
+        }
       }
     }
   }, [isFocused]);
@@ -315,6 +329,11 @@ const useMovement = () => {
       setIsReadOnly(false);
     }
   }, [watchAccountInitField, watchAccountEndField]);
+
+  useEffect(() => {
+    const newFormatter = parseFloat(getValues('amount').replace(/[^\d.-]/g, '')).toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+    setValue('amount', getValues('amount') === '' ? '' : newFormatter)
+  }, [getValues('amount')])
 
   return {
     control,

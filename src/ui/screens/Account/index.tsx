@@ -37,6 +37,9 @@ const Account = () => {
     <PrivateLayout
       centerLayout
       showBack
+      params={{
+        screen: 'Home',
+      }}
       otherAction={
         <Pressable onPress={() => handleChangeView()}>
           <Image

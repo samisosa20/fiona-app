@@ -42,7 +42,8 @@ const Movement = () => {
     <PrivateLayout
       centerLayout
       pb='110px'
-      showBack={!!route?.params?.id}
+      showBack={!!route?.params?.id || !!route?.params?.account_id}
+      params={route?.params}
       otherAction={
         !!route?.params?.id ? (
           <View flexDirection='row' alignItems='center'>
@@ -218,6 +219,8 @@ const Movement = () => {
                 onPress={() => {
                   handleDelete();
                 }}
+                isLoading={isLoading}
+                isLoadingText='enviando'
                 colorScheme='danger'
               >
                 Eliminar
