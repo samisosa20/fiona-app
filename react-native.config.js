@@ -4,11 +4,11 @@ module.exports = {
       platforms: {
         ios: null,
       },
-      'react-native-vector-icons': {
+      /* 'react-native-vector-icons': {
         platforms: {
           ios: null,
         },
-      },
+      }, */
     },
   },
 

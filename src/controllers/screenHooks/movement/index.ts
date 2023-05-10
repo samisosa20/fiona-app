@@ -74,6 +74,7 @@ const useMovement = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [amountFormat, setAmountFormat] = useState('');
   const [auxCategory, setAuxCategory] = useState<Options | null>(null);
   const [steps, setSteps] = useState(1);
   const [accounts, setAccounts] = useState<SelectField[]>([]);
@@ -332,7 +333,7 @@ const useMovement = () => {
 
   useEffect(() => {
     const newFormatter = parseFloat(getValues('amount').replace(/[^\d.-]/g, '')).toLocaleString('en-US', { style: 'currency', currency: 'USD' })
-    setValue('amount', getValues('amount') === '' ? '' : newFormatter)
+    setAmountFormat(getValues('amount') === '' ? '' : newFormatter)
   }, [getValues('amount')])
 
   return {
@@ -354,6 +355,7 @@ const useMovement = () => {
     showModal,
     setShowModal,
     handleDelete,
+    amountFormat,
   };
 };
 
