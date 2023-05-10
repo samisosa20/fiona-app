@@ -6,6 +6,7 @@ const usePatterns = () => {
         /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
     const lettersPattern = /^[A-zÀ-ú\s]+$/
     const numbersPattern = /^[0-9]+\s*$/gm
+    const amountPattern = /^[\d,.-]+$/
     const alphanumericPattern = /^([A-zÀ-ú0-9]+\s?)*([A-zÀ-ú0-9]+)\s*$/gm
 
     return {
@@ -16,6 +17,7 @@ const usePatterns = () => {
         lettersPattern,
         numbersPattern,
         alphanumericPattern,
+        amountPattern,
     }
 }
 

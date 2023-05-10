@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { View, Pressable, ArrowBackIcon, Modal, Button } from 'native-base';
-import { useNavigation, ParamListBase } from '@react-navigation/native';
+import { useNavigation, ParamListBase, useRoute,  } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Dimensions } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
@@ -12,6 +12,11 @@ interface PLayout {
   centerLayout?: boolean;
   withOutPaddingH?: boolean;
   showBack?: boolean;
+  params?: {
+    id?: number;
+    account_id?: number;
+    screen?: string;
+  };
   pb?: number | string;
   children: JSX.Element | JSX.Element[] | string | string[];
   otherAction?: JSX.Element | JSX.Element[] | string | string[];
@@ -19,7 +24,7 @@ interface PLayout {
 
 const PrivateLayout = (props: PLayout) => {
   const [showModal, setShowModal] = useState(false);
-  const { children, centerLayout, otherAction, withOutPaddingH, showBack, pb, ...rest } = props;
+  const { children, centerLayout, otherAction, withOutPaddingH, showBack, pb, params, ...rest } = props;
   const { height } = Dimensions.get('window');
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
@@ -27,10 +32,22 @@ const PrivateLayout = (props: PLayout) => {
   const { loggedSelector, authSelector } = useAuthSelectors();
   const isAuth = loggedSelector();
   const auth = authSelector();
+  const route = useRoute();
 
   useEffect(() => {
     setShowModal(!isAuth);
   }, [isAuth, auth]);
+
+  const handleBack = () => {
+    if(!params) {
+      navigation.dispatch(CommonActions.goBack())
+    }
+    if(!!params?.account_id && !!params?.screen) {
+      navigation.navigate(params?.screen, {id: params?.account_id})
+    } else if(!!params?.screen) {
+      navigation.navigate(params?.screen)
+    }
+  }
 
   return (
     <View
@@ -50,7 +67,7 @@ const PrivateLayout = (props: PLayout) => {
         mt='3'
       >
         {showBack && (
-          <Pressable onPress={() => navigation.dispatch(CommonActions.goBack())}>
+          <Pressable onPress={() => handleBack()}>
             <ArrowBackIcon color='white' size='lg' />
           </Pressable>
         )}

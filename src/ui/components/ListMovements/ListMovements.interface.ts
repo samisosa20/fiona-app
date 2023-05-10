@@ -20,4 +20,5 @@ export interface Movements {
 
 export interface ListMovementsProps {
   movements?: Movements[];
+  pageName: string;
 }

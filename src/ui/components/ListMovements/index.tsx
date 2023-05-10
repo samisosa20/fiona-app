@@ -11,7 +11,7 @@ import { ListMovementsProps } from './ListMovements.interface';
 import iconCalendar from '../../../assets/icons/icon-calendar.png';
 
 const ListMovements = (props: ListMovementsProps) => {
-  const { movements } = props;
+  const { movements, pageName } = props;
   const navigation = useNavigation();
 
   const { useQuickFunctions } = useHelpers();
@@ -25,7 +25,7 @@ const ListMovements = (props: ListMovementsProps) => {
       bg='contrast'
       roundedTop='3xl'
       renderItem={({ item }) => (
-        <Pressable key={item.id} onPress={() => navigation.navigate('Movement', {id: item.id})}>
+        <Pressable key={item.id} onPress={() => navigation.navigate('Movement', {id: item.id, screen: pageName, account_id: pageName === 'EventDetail' ? item.event?.id : item.account.id})}>
           <Box borderBottomWidth='1' px='6' py='4' borderColor='white'>
             <HStack justifyContent='space-between'>
               <Text fontSize='md' fontWeight='500' lineHeight='sm'>

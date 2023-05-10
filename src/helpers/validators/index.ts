@@ -4,7 +4,7 @@ import usePatterns from '../patterns';
 
 const useValidators = () => {
   // Helpers
-  const { emailPattern, lettersPattern, numbersPattern } = usePatterns();
+  const { emailPattern, lettersPattern, amountPattern } = usePatterns();
 
   const loginValidator = Yup.object({
     email: Yup.string().required('Campo requerido.').matches(emailPattern, 'Formato incorrecto.'),
@@ -71,7 +71,7 @@ const useValidators = () => {
 
   const movementValidator = Yup.object({
     type: Yup.string().required('Campo requerido.'),
-    amount: Yup.number().typeError('Formato incorrecto').required('Campo requerido.'),
+    amount: Yup.string().matches(amountPattern, 'Formato incorrecto').required('Campo requerido.'),
     account_id: Yup.string().required('Campo requerido.'),
     category_id: Yup.object({
       id: Yup.string().required('Campo requerido.'),

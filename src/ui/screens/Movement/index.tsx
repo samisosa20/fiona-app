@@ -34,6 +34,7 @@ const Movement = () => {
     showModal,
     setShowModal,
     handleDelete,
+    amountFormat,
   } = useMovement();
 
   const { InputControl, SelectControl, AutocompleteControl, DateTimeControl } = useComponents();
@@ -42,7 +43,8 @@ const Movement = () => {
     <PrivateLayout
       centerLayout
       pb='110px'
-      showBack={!!route?.params?.id}
+      showBack={!!route?.params?.id || !!route?.params?.account_id}
+      params={route?.params}
       otherAction={
         !!route?.params?.id ? (
           <View flexDirection='row' alignItems='center'>
@@ -166,6 +168,66 @@ const Movement = () => {
                   options={events}
                 />
               )}
+              <Text fontWeight='600' fontSize='18px' mb='2'>
+                Resumen {watch('type') === 'move' ? 'del Movimiento' : 'de la transferencia'}:
+              </Text>
+              <HStack justifyContent='space-between'>
+                <Text fontWeight='600' fontSize='16px'>
+                  En la fecha:
+                </Text>
+                <Text>
+                  {`${watch('date_purchase').getFullYear()}-${(
+                    watch('date_purchase').getMonth() + 1
+                  )
+                    .toString()
+                    .padStart(2, '0')}-${watch('date_purchase')
+                    .getDate()
+                    .toString()
+                    .padStart(2, '0')} ${watch('date_purchase')
+                    .getHours()
+                    .toString()
+                    .padStart(2, '0')}:${watch('date_purchase')
+                    .getMinutes()
+                    .toString()
+                    .padStart(2, '0')}:${watch('date_purchase')
+                    .getSeconds()
+                    .toString()
+                    .padStart(2, '0')}`}
+                </Text>
+              </HStack>
+              <HStack justifyContent='space-between'>
+                <Text fontWeight='600' fontSize='16px'>
+                  Monto:
+                </Text>
+                <Text>{amountFormat}</Text>
+              </HStack>
+              <HStack justifyContent='space-between'>
+                <Text fontWeight='600' fontSize='16px'>
+                  {watch('type') === 'move' ? 'Cuenta:' : 'Cuenta salida:'}
+                </Text>
+                <Text>
+                  {accounts?.filter((v) => v.value === watch('account_id'))[0]?.label ?? ''}
+                </Text>
+              </HStack>
+              {watch('type') !== 'move' ? (
+                <HStack justifyContent='space-between'>
+                  <Text fontWeight='600' fontSize='16px'>
+                    Cuenta destino:
+                  </Text>
+                  <Text>
+                    {accounts?.filter((v) => v.value === watch('account_end_id'))[0]?.label ?? ''}
+                  </Text>
+                </HStack>
+              ) : (
+                <HStack justifyContent='space-between'>
+                  <Text fontWeight='600' fontSize='16px'>
+                    Categoria:
+                  </Text>
+                  <Text>
+                    {categories?.filter((v) => v.id === watch('category_id')?.id)[0]?.title ?? ''}
+                  </Text>
+                </HStack>
+              )}
             </View>
           )}
         </Center>
@@ -218,6 +280,8 @@ const Movement = () => {
                 onPress={() => {
                   handleDelete();
                 }}
+                isLoading={isLoading}
+                isLoadingText='enviando'
                 colorScheme='danger'
               >
                 Eliminar
