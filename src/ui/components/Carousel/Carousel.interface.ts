@@ -32,7 +32,10 @@ export interface ListAccount {
 export interface ListEvent {
   id: number;
   name: string;
-  balance: number;
+  balance: number| {
+    currency: string;
+    movements: number;
+  }[];
   currency: string;
   end_event: string;
   movements?: any;

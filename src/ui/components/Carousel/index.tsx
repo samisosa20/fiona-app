@@ -105,21 +105,32 @@ const Carousel = (props: CarouselProp) => {
                   lineHeight='20'
                   isTruncated
                   noOfLines={2}
-                  h='10'
                 >
                   {event.name}
                 </Text>
-                <Text
-                  fontSize='md'
-                  fontWeight='600'
-                  lineHeight='20'
-                  isTruncated
-                  noOfLines={2}
-                  color={event.balance < 0 ? 'neon.red' : 'neon.green'}
-                  textAlign='right'
-                >
-                  {currencyFormat(event.balance)}
-                </Text>
+                {event.balance &&
+                  event.balance.slice(0,2).map((event) => (
+                    <Text
+                      fontSize='md'
+                      fontWeight='600'
+                      lineHeight='20'
+                      isTruncated
+                      noOfLines={2}
+                      color={
+                        event.movements < 0
+                          ? 'neon.red'
+                          : 'neon.green'
+                      }
+                      textAlign='right'
+                      key={event.currency}
+                    >
+                      {currencyFormat(
+                        event.movements,
+                      ) +
+                        ' ' +
+                        event.currency}
+                    </Text>
+                  ))}
               </Box>
             </Pressable>
           ))}

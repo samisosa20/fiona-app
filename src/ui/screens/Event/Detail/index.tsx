@@ -43,7 +43,7 @@ const EventDetail = () => {
           {event?.name}
         </Text>
       </Center>
-      <ListMovements movements={event?.movements} pageName='EventDetail' />
+      <ListMovements movements={event?.movements} pageName='EventDetail' showAccount />
       <Modal
         isOpen={showModal}
         onClose={() => setShowModal(false)}

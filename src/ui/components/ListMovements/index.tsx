@@ -11,7 +11,7 @@ import { ListMovementsProps } from './ListMovements.interface';
 import iconCalendar from '../../../assets/icons/icon-calendar.png';
 
 const ListMovements = (props: ListMovementsProps) => {
-  const { movements, pageName } = props;
+  const { movements, pageName, showAccount } = props;
   const navigation = useNavigation();
 
   const { useQuickFunctions } = useHelpers();
@@ -44,7 +44,7 @@ const ListMovements = (props: ListMovementsProps) => {
               <Text fontSize='sm' fontWeight='300' lineHeight='sm'>
                 {item.date_purchase}
               </Text>
-              {item.event && (
+              {item.event && !showAccount ? (
                 <Text fontSize='sm' fontWeight='300' lineHeight='sm' alignItems='center'>
                   <Image
                     source={iconCalendar}
@@ -57,7 +57,11 @@ const ListMovements = (props: ListMovementsProps) => {
                   />
                   {item.event?.name}
                 </Text>
-              )}
+              ) : 
+              <Text fontSize='sm' fontWeight='300' lineHeight='sm' alignItems='center'>
+                  {item.account?.name}
+                </Text>
+              }
             </HStack>
             {item.description && <Divider my='2' />}
             {item.description && (
