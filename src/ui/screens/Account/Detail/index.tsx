@@ -4,8 +4,8 @@ import {
   Box,
   Center,
   Pressable,
-  ArrowDownIcon,
-  ArrowUpIcon,
+  AddIcon,
+  HStack,
   Image,
   Input,
   Modal,
@@ -54,18 +54,33 @@ const AccountDetail = () => {
     <PrivateLayout
       withOutPaddingH
       showBack
+      params={{
+        screen: 'Account'
+      }}
       otherAction={
         <View flexDirection='row' alignItems='center'>
           <Pressable onPress={() => setShowModal(true)} ml='auto'>
             <Image source={iconFilter} alt='Filtrar' w='6' h='6' resizeMode='contain' />
           </Pressable>
-          <Pressable onPress={() => navigation.navigate('AccountCreate', { id: account?.id })} ml='4'>
+          <Pressable
+            onPress={() => navigation.navigate('AccountCreate', { id: account?.id })}
+            ml='4'
+          >
             <Image source={iconEdit} alt='Editar' w='6' h='6' resizeMode='contain' />
+          </Pressable>
+          <Pressable
+            bg='tertiary.500'
+            rounded='full'
+            p='2'
+            ml='4'
+            onPress={() => navigation.navigate('Movement', { account_id: account?.id, screen: 'AccountDetail'})}
+          >
+            <AddIcon color='white' sixe='lg' />
           </Pressable>
         </View>
       }
     >
-      <Center>
+      <Center mb='6'>
         <Text fontSize='xs' fontWeight='300' mt='4' w='80%' textAlign='right' lineHeight='sm'>
           {account?.type + ' - ' + account?.currency.code}
         </Text>
@@ -75,6 +90,60 @@ const AccountDetail = () => {
         <Text fontSize='lg' fontWeight='400' mt='2' w='80%' textAlign='center' lineHeight='sm'>
           {account?.description}
         </Text>
+        <Box
+          h='122px'
+          w='257'
+          bg={{
+            linearGradient: {
+              colors: ['lightBlue.300', 'violet.800'],
+              start: [0, 0],
+              end: [1, 1],
+            },
+          }}
+          rounded='xl'
+          mr='3'
+          py='3'
+          px='2'
+          borderColor='#344155'
+          borderWidth='1'
+          justifyContent='space-around'
+        >
+            <HStack justifyContent='space-between' alignItems='center'>
+              <Text fontSize='lg' fontWeight='600'>
+                Ingresos
+              </Text>
+              <Text fontSize='sm' fontWeight='600' textAlign='right'>
+                {account
+                  ? '...............'.substring(
+                      0,
+                      15 - currencyFormat(account[balanceTime]?.incomes ?? 0).length - 1,
+                    ) + currencyFormat(account[balanceTime]?.incomes ?? 0)
+                  : null}
+              </Text>
+            </HStack>
+            <HStack justifyContent='space-between' alignItems='center'>
+              <Text fontSize='lg' fontWeight='600'>
+                Egresos
+              </Text>
+              <Text fontSize='sm' fontWeight='600' textAlign='right'>
+                {account
+                  ? '...............'.substring(
+                      0,
+                      15 - currencyFormat(account[balanceTime]?.expensives ?? 0).length - 1,
+                    ) + currencyFormat(account[balanceTime]?.expensives ?? 0)
+                  : null}
+              </Text>
+            </HStack>
+            <HStack justifyContent='space-between' alignItems='center'>
+              <Text fontSize='lg' fontWeight='600'>
+                Utilidad
+              </Text>
+              <Text fontSize='sm' fontWeight='600' textAlign='right'>
+                {'...............'.substring(0, 15 - currencyFormat(account?.balance?.filter(v => v.type === balanceTime)[0].balance ?? 0).length - 1) +
+                  currencyFormat(account?.balance?.filter(v => v.type === balanceTime)[0].balance ?? 0)}
+              </Text>
+            </HStack>
+        </Box>
         <View flexDirection='row' alignItems='center' justifyContent='space-between' mt='4' w='257'>
           {listTime.map((v) => (
             <Pressable key={v.id} onPress={() => handleChangeTime(v.id)}>
@@ -92,40 +161,8 @@ const AccountDetail = () => {
             </Pressable>
           ))}
         </View>
-        <View flexDirection='row' alignItems='center' my='8'>
-          <View justifyContent='center' alignItems='center'>
-            <Box
-              w='40px'
-              h='40px'
-              bg='tertiary.600'
-              rounded='lg'
-              justifyContent='center'
-              alignItems='center'
-            >
-              <ArrowDownIcon color='white' size='md' px='4' />
-            </Box>
-            <Text fontSize='md' fontWeight='500' textAlign='center' lineHeight='sm' mt='1'>
-              {account ? currencyFormat(account[balanceTime]?.incomes ?? 0) : null}
-            </Text>
-          </View>
-          <View justifyContent='center' alignItems='center' ml='8'>
-            <Box
-              w='40px'
-              h='40px'
-              bg='danger.600'
-              rounded='lg'
-              justifyContent='center'
-              alignItems='center'
-            >
-              <ArrowUpIcon color='white' size='md' px='4' />
-            </Box>
-            <Text fontSize='md' fontWeight='500' textAlign='center' lineHeight='sm' mt='1'>
-              {account ? currencyFormat(account[balanceTime]?.expensives ?? 0) : null}
-            </Text>
-          </View>
-        </View>
       </Center>
-      <ListMovements movements={movementsFilter} />
+      <ListMovements movements={movementsFilter} pageName='AccountDetail' />
       <Modal
         isOpen={showModal}
         onClose={() => setShowModal(false)}

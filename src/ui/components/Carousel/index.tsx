@@ -1,6 +1,7 @@
 import { View, Center, Text, Pressable, ScrollView, Box } from 'native-base';
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Dimensions } from 'react-native';
 
 // Helpers
 import useHelper from '../../../helpers';
@@ -10,6 +11,8 @@ import { CarouselProp } from './Carousel.interface';
 
 const Carousel = (props: CarouselProp) => {
   const { listAccount, label, type, listEvent, listBudget, listHeritage } = props;
+
+  const { width } = Dimensions.get('window');
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
@@ -34,7 +37,7 @@ const Carousel = (props: CarouselProp) => {
           <Text underline>Ver mas</Text>
         </Pressable>
       </View>
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={width > 1200}>
         {listAccount &&
           listAccount.map((account) => (
             <Pressable

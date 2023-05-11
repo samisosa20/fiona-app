@@ -146,7 +146,7 @@ const Report = () => {
             <ScrollView flex='1' mt='5' h='220'>
               {income?.map(({ category, amount }, i) => {
                 return (
-                  <View key={category} mb='1'>
+                  <View key={category} mb='1' alignItems='flex-start'>
                     <Text fontSize='xs' fontWeight='400'>
                       <CircleIcon mr='1' color={colorChart[i]} />
                       {category}
@@ -191,7 +191,7 @@ const Report = () => {
             <ScrollView flex='1' mt='5' h='220'>
               {mainExpensive?.map(({ category, amount }, i) => {
                 return (
-                  <View key={category} mb='1'>
+                  <View key={category} mb='1' alignItems='flex-start'>
                     <Text fontSize='xs' fontWeight='400'>
                       <CircleIcon mr='1' color={colorChart[i]} />
                       {category}

@@ -6,6 +6,8 @@ import { useNavigation, ParamListBase, useRoute } from '@react-navigation/native
 import type { RouteProp } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { useIsFocused } from '@react-navigation/native';
+import dayjs from 'dayjs'
+import { Platform } from 'react-native';
 
 // Helpers
 import useHelpers from '../../../helpers';
@@ -61,6 +63,8 @@ interface ResponseData {
 type RootStackParamList = {
   Movement: {
     id: number;
+    account_id: number;
+    screen: string;
   };
 };
 
@@ -72,6 +76,7 @@ const useMovement = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [amountFormat, setAmountFormat] = useState('');
   const [auxCategory, setAuxCategory] = useState<Options | null>(null);
   const [steps, setSteps] = useState(1);
   const [accounts, setAccounts] = useState<SelectField[]>([]);
@@ -106,6 +111,8 @@ const useMovement = () => {
     reset,
     watch,
     setError,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -133,18 +140,28 @@ const useMovement = () => {
   ];
 
   const handleDelete = () => {
-    setShowModal(false);
+    setIsLoading(true);
     const onSuccess = (message: string) => {
+      setShowModal(false);
+      setIsLoading(false);
       Toast.show({
         type: 'success',
         text1: message,
       });
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Movement' }],
-      });
+      if (route?.params?.account_id) {
+        navigation.navigate(route?.params?.screen, {id: route.params?.account_id});
+      } else {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Movement' }],
+        });
+      }
     };
-    actDeleteMovement(route.params.id, onSuccess);
+    const onError = () => {
+      setIsLoading(false);
+      setShowModal(false);
+    };
+    actDeleteMovement(route.params.id, onSuccess, onError);
   };
 
   const onSubmit = (data: Form) => {
@@ -168,11 +185,8 @@ const useMovement = () => {
       });
       autoCompleteFieldRef.current?.setItem({});
       setSteps(1);
-      if (route?.params?.id) {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'Movement' }],
-        });
+      if (route?.params?.account_id) {
+        navigation.navigate(route?.params?.screen, {id: route.params?.account_id});
       }
     };
     const onError = () => {
@@ -213,7 +227,7 @@ const useMovement = () => {
       event_id: data.type === 'move' ? data.event_id : null,
       account_end_id: data.type === 'move' ? null : data.account_end_id,
       amount_end: data.type === 'move' ? null : isReadOnly ? data.amount_end : data.amount,
-      date_purchase: `${date.getFullYear()}-${(date.getMonth() + 1)
+      date_purchase: Platform.OS !== 'web' ?  `${date.getFullYear()}-${(date.getMonth() + 1)
         .toString()
         .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date
         .getHours()
@@ -221,7 +235,7 @@ const useMovement = () => {
         .padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date
         .getSeconds()
         .toString()
-        .padStart(2, '0')}`,
+        .padStart(2, '0')}` : dayjs(date).format('YYYY-MM-DD HH:mm:ss'),
     };
     if (route?.params?.id) {
       actEditMovement(route.params.id, form, onSucces, onError);
@@ -293,6 +307,9 @@ const useMovement = () => {
         actGetDetailMovement(route?.params?.id, onSuccessMovement);
       } else {
         reset();
+        if (route?.params?.account_id) {
+          setValue('account_id', route?.params?.account_id.toString());
+        }
       }
     }
   }, [isFocused]);
@@ -316,6 +333,11 @@ const useMovement = () => {
     }
   }, [watchAccountInitField, watchAccountEndField]);
 
+  useEffect(() => {
+    const newFormatter = parseFloat(getValues('amount').replace(/[^\d.-]/g, '')).toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+    setAmountFormat(getValues('amount') === '' ? '' : newFormatter)
+  }, [getValues('amount')])
+
   return {
     control,
     handleSubmit,
@@ -335,6 +357,7 @@ const useMovement = () => {
     showModal,
     setShowModal,
     handleDelete,
+    amountFormat,
   };
 };
 

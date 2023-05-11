@@ -70,10 +70,10 @@ const useHome = () => {
 
   useEffect(() => {
     const onSuccess = (data: ListAccount[]) => {
-      setAccounts(data.filter((v) => !v.deleted_at).slice(0, 5));
+      setAccounts(data.filter((v) => !v.deleted_at));
     };
     const onSuccessEvent = (data: ListEvent[]) => {
-      setEvents(data.slice(0, 5));
+      setEvents(data);
     };
     const onSuccessHeritage = (data: ListHeritage[]) => {
       setHeritage(data.sort((a, b) => {

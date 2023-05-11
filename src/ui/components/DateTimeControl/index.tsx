@@ -1,6 +1,9 @@
 import { Controller } from 'react-hook-form';
+import { Platform } from 'react-native';
+import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { FormControl, WarningOutlineIcon, HStack } from 'native-base';
+import dayjs from 'dayjs'
 
 // Interface
 import { InputProps } from './DateTimeControl.interface';
@@ -16,7 +19,19 @@ const DateTimeControl = (props: InputProps) => {
         name={name}
         render={({ field: { onChange, onBlur, value } }) => (
           <HStack alignItems='center' space={4}>
-            <DateTimePicker onChange={(event, date) => onChange(date)} value={value} mode={mode ? mode : 'date'}  textColor="white"/>
+            {Platform.OS !== 'web' ? (
+              <DateTimePicker
+                onChange={(event, date) => onChange(date)}
+                value={value}
+                mode={mode ? mode : 'date'}
+                textColor='white'
+              />
+            ) : (
+              <MobileDateTimePicker
+              onChange={(date) => onChange(date)}
+              value={dayjs(value)}
+              />
+            )}
           </HStack>
         )}
       />

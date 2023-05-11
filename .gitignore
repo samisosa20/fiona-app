@@ -65,4 +65,5 @@ ios/Pods/
 package-lock.json
 yarn.lock
 ios/Podfile.lock
-.expo
+.expo/
+.web-build/

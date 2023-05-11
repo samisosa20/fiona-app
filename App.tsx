@@ -10,6 +10,9 @@ import Toast from 'react-native-toast-message';
 import { useFonts } from 'expo-font';
 import {LinearGradient} from 'expo-linear-gradient';
 
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+
 // Configuration
 import useConfig from './src/config';
 
@@ -64,6 +67,7 @@ const App = () => {
     <SafeAreaProvider>
       <StatusBar barStyle='light-content' />
       <Provider store={store}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
         <PersistGate loading={null} persistor={persistor}>
           <NativeBaseProvider theme={theme} config={config}>
             <NavigationContainer>
@@ -97,6 +101,7 @@ const App = () => {
             <Toast />
           </NativeBaseProvider>
         </PersistGate>
+        </LocalizationProvider>
       </Provider>
     </SafeAreaProvider>
   );

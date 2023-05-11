@@ -1,7 +1,12 @@
 export interface ListAccount {
   id: number;
   name: string;
-  balance: number;
+  balance: number
+  | {
+      type: string;
+      currency: string;
+      balance: number;
+    }[];
   init_amount: number;
   description: string | null;
   month?: {
@@ -59,5 +64,5 @@ export interface CarouselProp {
   listBudget?: listBudget[];
   listHeritage?: ListHeritage[];
   label: string;
-  type: 'Account'| 'Event' | 'Budget' | 'Heritage';
+  type: 'Account' | 'Event' | 'Budget' | 'Heritage';
 }

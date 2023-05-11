@@ -75,7 +75,7 @@ const TabsComponent = () => {
             </View>
           ),
         }}
-        listeners={({navigation}) => ({blur: () => navigation.setParams({id: undefined})})}
+        listeners={({navigation}) => ({blur: () => navigation.setParams({id: undefined, screen: undefined, account_id: undefined})})}
       />
       <Tab.Screen
         name='Setting'
