@@ -36,7 +36,10 @@ const PrivateLayout = (props: PLayout) => {
     <View
       bg='bg'
       h={height}
-      pt='10'
+      pt={{
+        base: 10,
+        lg: 0
+      }}
       pb={pb ? pb : 0}
       pl={withOutPaddingH ? 0 : 4}
       pr={centerLayout ? 4 : 0}

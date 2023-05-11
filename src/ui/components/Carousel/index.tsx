@@ -23,7 +23,9 @@ const Carousel = (props: CarouselProp) => {
   const { useQuickFunctions } = useHelper();
   const { currencyFormat } = useQuickFunctions();
   return (
-    <View mt='4'>
+    <View mt='4' w={{
+      lg: '750px'
+      }} mx={{lg:'auto'}}>
       <View flexDirection='row' justifyContent='space-between' alignItems='center' mb='2' pr='4'>
         <Text fontSize='lg' fontWeight='700'>
           {label}

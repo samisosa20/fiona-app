@@ -28,7 +28,7 @@ const Login = () => {
             Ingresa tus credenciales para continuar.
           </Text>
         </Center>
-        <Center w='90%' marginX='auto' mt='8'>
+        <Center w='90%' marginX='auto' mt='8' maxW='750px'>
           <InputControl
             label='Email'
             placeholder='Escribe tu email aqui'
@@ -54,7 +54,7 @@ const Login = () => {
         </Center>
       </View>
       <Center>
-        <View flexDirection='column' w='90%' borderRadius='10'>
+        <View flexDirection='column' w='90%' borderRadius='10' maxW='750px'>
           <Center w='100%' borderRadius='10' bg='white'>
             <Button
               isLoading={isLoading}

@@ -26,7 +26,7 @@ const Welcome = () => {
         </Center>
       </View>
       <Center>
-        <View bg='primary.500' flexDirection='row' h='45px' w='90%' borderRadius='10'>
+        <View bg='primary.500' flexDirection='row' h='45px' w='90%' borderRadius='10' maxW='750px'>
           <Center w='50%' bg='white' borderRadius='10'>
             <Pressable onPress={() => navigation.navigate('Register')}>
               <Text color='#19181f'>Registro</Text>
