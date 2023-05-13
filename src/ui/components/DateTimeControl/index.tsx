@@ -30,6 +30,7 @@ const DateTimeControl = (props: InputProps) => {
               <MobileDateTimePicker
               onChange={(date) => onChange(date)}
               value={dayjs(value)}
+              className='text-white'
               />
             )}
           </HStack>

@@ -68,7 +68,7 @@ const Report = () => {
       <Text fontSize='3xl' fontWeight='600' textAlign='center'>
         ¿Como te fue?
       </Text>
-      <ScrollView showsVerticalScrollIndicator={false} mb='110px' nestedScrollEnabled={true}>
+      <ScrollView showsVerticalScrollIndicator={false} mb='110px' nestedScrollEnabled={true} maxW='1024px' mx='auto'>
         <HStack justifyContent='space-between'>
           <Box mt='4' bg='contrast' p='2' w='48%' rounded='md'>
             <Text fontSize='sm' fontWeight='300'>
@@ -251,7 +251,7 @@ const Report = () => {
           <View bg='contrast' rounded='lg'>
             {groupExpensive?.map((item, i) => (
               <Box py='4' px='3' borderBottomWidth='1' borderColor='white' key={i}>
-                <Text fontSize='sm' fontWeight='300'>
+                <Text fontSize='sm' fontWeight='300' textAlign='left'>
                   {item.name}
                 </Text>
                 <Text
@@ -277,8 +277,8 @@ const Report = () => {
               rounded='lg'
               nestedScrollEnabled={true}
               renderItem={({ item }) => (
-                <Box w={width - 32} flex='1' py='4' px='3' borderBottomWidth='1' borderColor='white'>
-                  <Text fontSize='sm' fontWeight='300'>
+                <Box w={width - 32} maxW='1024px' flex='1' py='4' px='3' borderBottomWidth='1' borderColor='white'>
+                  <Text fontSize='sm' fontWeight='300' textAlign='left'>
                     {item.category}
                   </Text>
                   <Text fontSize='md' fontWeight='500' textAlign='right' color='neon.red'>

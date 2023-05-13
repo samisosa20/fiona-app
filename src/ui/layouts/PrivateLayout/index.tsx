@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { View, Pressable, ArrowBackIcon, Modal, Button } from 'native-base';
 import { useNavigation, ParamListBase, useRoute,  } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 
 // Selectors
@@ -53,7 +53,7 @@ const PrivateLayout = (props: PLayout) => {
     <View
       bg='bg'
       h={height}
-      pt='10'
+      pt={Platform.OS !== 'web' ? 10 : 0}
       pb={pb ? pb : 0}
       pl={withOutPaddingH ? 0 : 4}
       pr={centerLayout ? 4 : 0}
@@ -73,7 +73,7 @@ const PrivateLayout = (props: PLayout) => {
         )}
         {otherAction}
       </View>
-      {children}
+        {children}
       <Modal
         isOpen={showModal}
         _backdrop={{

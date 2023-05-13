@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { StatusBar } from 'react-native';
+import { StatusBar, Platform } from 'react-native';
 import { NativeBaseProvider } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,6 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import { useFonts } from 'expo-font';
 import {LinearGradient} from 'expo-linear-gradient';
+import './src/styles/index.css';
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -65,7 +66,7 @@ const App = () => {
 
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle='light-content' />
+      { Platform.OS !== 'web' && <StatusBar barStyle='light-content' />}
       <Provider store={store}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <PersistGate loading={null} persistor={persistor}>

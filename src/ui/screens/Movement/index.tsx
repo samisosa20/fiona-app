@@ -59,7 +59,7 @@ const Movement = () => {
         )
       }
     >
-      <ScrollView >
+      <ScrollView mx='auto' maxW='1024px' showsVerticalScrollIndicator={false}>
         <Text fontSize='3xl' fontWeight='600' mt='4' textAlign='center'>
           Movimientos
         </Text>

@@ -38,5 +38,8 @@ module.exports = {
       package: 'com.papirico69.fionaapp',
       versionCode: 1,
     },
+    web: {
+      favicon: './assets/favicon.png',
+    }
   },
 };
